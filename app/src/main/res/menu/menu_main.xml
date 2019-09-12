@@ -13,7 +13,7 @@
         android:icon="@drawable/ic_search"
         android:orderInCategory="99"
         android:title="@string/pesquisar"
-        app:showAsAction="ifRoom"
+        app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.widget.SearchView"/>
 
 </menu>
