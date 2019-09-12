@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "237237182115",
+    "firebase_url": "https://apprifa-b89c1.firebaseio.com",
+    "project_id": "apprifa-b89c1",
+    "storage_bucket": "apprifa-b89c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:237237182115:android:44e6afe00248ed3c",
+        "android_client_info": {
+          "package_name": "com.example.apprifa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "237237182115-qfe42uoggi5spt9kt24viq96gc63qdjb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.apprifa",
+            "certificate_hash": "1a25dcd749a38cedda61870799afefb2985f9d05"
+          }
+        },
+        {
+          "client_id": "237237182115-nn2rqtqf5tncppb6a34n50imiivhocek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlK9m9ih7RUkySxJo4SdeplTTWqhGYB3M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "237237182115-nn2rqtqf5tncppb6a34n50imiivhocek.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

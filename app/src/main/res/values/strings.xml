@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Rifa App</string>
+    <string name="action_settings">Sair</string>
+    <string name="nome_do_cliente">Nome do cliente:</string>
+    <string name="endereco">Endereço</string>
+    <string name="numero">Número:</string>
+    <string name="bairro">Bairro:</string>
+    <string name="cidade">Cidade</string>
+    <string name="title_activity_entrar_usuario">EntrarUsuario</string>
+    <string name="email">E-mail</string>
+    <string name="senha">Senha</string>
+    <string name="entrar">Entrar</string>
+    <string name="esqueceu_sua_senha_clique_aqui">Esqueceu sua senha ? Clique aqui.</string>
+    <string name="title_activity_cadastro_user">CadastroUser</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="feminino">Feminino</string>
+    <string name="masculino">Masculino</string>
+    <string name="confirma_senha">Confirma senha</string>
+    <string name="nome">Nome</string>
+    <string name="title_activity_produtos_cliente">ProdutosCliente</string>
+    <string name="quantidade">Quantidade</string>
+    <string name="nome_do_produto_dialog">Nome do produto</string>
+    <string name="preco_do_produto">Preço do produto</string>
+    <string name="nome_do_produto">Nome do produto</string>
+    <string name="quantidade_de_produtos">Quantidade de produtos</string>
+    <string name="valor_do_produto">Valor do produto</string>
+    <string name="excluir">Excluir</string>
+    <string name="atualizar">Atualizar</string>
+    <string name="pesquisar">Pesquisar</string>
+</resources>
