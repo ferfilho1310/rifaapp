@@ -10,7 +10,9 @@ public class Cliente implements Parcelable {
     private String numero;
     private String bairro;
     private String cidade;
+    private String estado;
     private String pais;
+    private String cep;
 
     public Cliente(String nome, String endereco, String numero, String bairro, String cidade, String pais) {
         Nome = nome;
@@ -93,6 +95,22 @@ public class Cliente implements Parcelable {
         this.pais = pais;
     }
 
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -107,4 +125,5 @@ public class Cliente implements Parcelable {
         parcel.writeString(cidade);
         parcel.writeString(pais);
     }
+
 }

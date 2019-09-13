@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SearchView;
 
@@ -23,6 +24,7 @@ import com.example.apprifa.Adapters.Adapter_cliente;
 import com.example.apprifa.Helpers.AccessFirebase;
 import com.example.apprifa.Models.Cliente;
 import com.example.apprifa.R;
+import com.example.apprifa.Retrofit.PostmonService;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +34,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 @SuppressLint("Registered")
 public class MainActivity extends AppCompatActivity {
@@ -52,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
             .collection("cliente");
 
     Adapter_cliente adapter_cliente;
-    List<Cliente> ls_cl;
 
     Cliente cliente = new Cliente();
+    Retrofit retrofit;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -63,6 +71,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://viacep.com.br/ws/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        Log.d("retrofit",retrofit.toString());
 
         rc_produto = findViewById(R.id.rc_cad_clientes);
         fab_cad_cliente = findViewById(R.id.fab_cad_clientes);
@@ -96,22 +111,54 @@ public class MainActivity extends AppCompatActivity {
 
     public void salva_dados_cliente(View view) {
 
+        Button btn_busca = view.findViewById(R.id.btn_busca_cep);
+
         EditText ed_nome = view.findViewById(R.id.ed_nome);
-        EditText ed_endereco = view.findViewById(R.id.ed_endereco);
+        final EditText ed_endereco = view.findViewById(R.id.ed_endereco);
         EditText ed_numero = view.findViewById(R.id.ed_numero);
-        EditText ed_bairro = view.findViewById(R.id.ed_bairro);
-        EditText ed_cidade = view.findViewById(R.id.ed_cidade);
+        final EditText ed_bairro = view.findViewById(R.id.ed_bairro);
+        final EditText ed_cidade = view.findViewById(R.id.ed_cidade);
+        final EditText ed_cep = view.findViewById(R.id.ed_cep);
 
         cliente.setNome(ed_nome.getText().toString());
         cliente.setEndereco(ed_endereco.getText().toString());
         cliente.setNumero(ed_numero.getText().toString());
         cliente.setBairro(ed_bairro.getText().toString());
         cliente.setCidade(ed_cidade.getText().toString());
+        cliente.setCep(ed_cep.getText().toString());
 
-        ls_cl.add(cliente);
+        btn_busca.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                PostmonService cep = retrofit.create(PostmonService.class);
+
+                Call<Cliente> call_cepp = cep.cep(cliente.getCep());
+
+                call_cepp.enqueue(new Callback<Cliente>() {
+                    @Override
+                    public void onResponse(Call<Cliente> call, Response<Cliente> response) {
+
+                        Cliente cep_cliente = response.body();
+
+                        ed_endereco.setText(cep_cliente.getEndereco());
+                        ed_bairro.setText(cep_cliente.getBairro());
+                        ed_cidade.setText(cep_cliente.getCidade());
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Cliente> call, Throwable t) {
+
+                    }
+                });
+
+            }
+        });
+
 
         new AccessFirebase().salva_clientes(cliente.getNome(), cliente.getEndereco(), cliente.getNumero()
-                , cliente.getBairro(), cliente.getCidade());
+                , cliente.getBairro(), cliente.getCidade(), cliente.getCep());
 
     }
 
@@ -147,11 +194,11 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("WrongConstant")
     public void seachview(String search) {
 
-        query = cl_clientes.whereEqualTo("nome",search).orderBy("nome",Query.Direction.ASCENDING).startAt(search).endAt(search + "\uf8ff");
+        query = cl_clientes.whereEqualTo("nome", search).orderBy("nome", Query.Direction.ASCENDING).startAt(search).endAt(search + "\uf8ff");
 
         Log.d("Retorno Search", search);
 
-        adapter_cliente = new Adapter_cliente(firt_cad_clientes,ls_cl);
+        adapter_cliente = new Adapter_cliente(firt_cad_clientes);
         rc_produto.setAdapter(adapter_cliente);
 
         adapter_cliente.setOnItemClicklistener(new Adapter_cliente.OnItemClickListener() {
@@ -233,12 +280,11 @@ public class MainActivity extends AppCompatActivity {
 
             new AccessFirebase().sign_out_firebase(MainActivity.this);
             return true;
-        } else if (id == R.id.search){
+        } else if (id == R.id.search) {
 
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }
