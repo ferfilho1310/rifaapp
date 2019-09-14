@@ -27,4 +27,6 @@
     <string name="excluir">Excluir</string>
     <string name="atualizar">Atualizar</string>
     <string name="pesquisar">Pesquisar</string>
+    <string name="buscar">Buscar</string>
+    <string name="estado">Estado</string>
 </resources>

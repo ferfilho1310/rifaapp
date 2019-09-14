@@ -36,7 +36,7 @@ public class AccessFirebase extends AppCompatActivity {
 
     }
 
-    public void salva_clientes(String nome, String endereco, String numero, String bairro, String cidade, String cep) {
+    public void salva_clientes(String nome, String endereco, String numero, String bairro, String cidade, String cep,String estado) {
 
         Map<String, String> map_categ_serv = new HashMap<>();
 
@@ -46,6 +46,7 @@ public class AccessFirebase extends AppCompatActivity {
         map_categ_serv.put("bairro", bairro);
         map_categ_serv.put("cidade", cidade);
         map_categ_serv.put("cep",cep);
+        map_categ_serv.put("estado",estado);
 
         /*databaseReference.child(firebaseAuth.getUid()).child("Serviços").push().setValue(map_categ_serv);*/
 

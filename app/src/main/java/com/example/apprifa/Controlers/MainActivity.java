@@ -3,16 +3,22 @@ package com.example.apprifa.Controlers;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.LabeledIntent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,6 +31,7 @@ import com.example.apprifa.Helpers.AccessFirebase;
 import com.example.apprifa.Models.Cliente;
 import com.example.apprifa.R;
 import com.example.apprifa.Retrofit.PostmonService;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,8 +39,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,9 +49,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @SuppressLint("Registered")
 public class MainActivity extends AppCompatActivity {
 
+
     FloatingActionButton fab_cad_cliente;
     RecyclerView rc_produto;
-    SearchView searchView;
 
     FirestoreRecyclerOptions firt_cad_clientes;
 
@@ -62,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
     Adapter_cliente adapter_cliente;
 
     Cliente cliente = new Cliente();
-    Retrofit retrofit;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -71,13 +75,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        retrofit = new Retrofit.Builder()
-                .baseUrl("https://viacep.com.br/ws/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        Log.d("retrofit",retrofit.toString());
 
         rc_produto = findViewById(R.id.rc_cad_clientes);
         fab_cad_cliente = findViewById(R.id.fab_cad_clientes);
@@ -90,11 +87,74 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder cliente = new AlertDialog.Builder(MainActivity.this);
+                final AlertDialog.Builder cliente_dialog = new AlertDialog.Builder(MainActivity.this);
                 final View custom_layout = getLayoutInflater().inflate(R.layout.dialog_cad_clientes, null);
-                cliente.setView(custom_layout);
+                cliente_dialog.setView(custom_layout);
 
-                cliente.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                Button btn_cep = custom_layout.findViewById(R.id.btn_busca_cep);
+
+                btn_cep.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+
+                        EditText ed_cep = custom_layout.findViewById(R.id.ed_cep);
+
+                        final EditText ed_endereco = custom_layout.findViewById(R.id.ed_endereco);
+                        final EditText ed_bairro = custom_layout.findViewById(R.id.ed_bairro);
+                        final EditText ed_cidade = custom_layout.findViewById(R.id.ed_cidade);
+                        final EditText ed_estado = custom_layout.findViewById(R.id.ed_estado);
+
+                        cliente.setCep(ed_cep.getText().toString());
+
+                        Retrofit cep_busca = new Retrofit.Builder()
+                                .baseUrl("http://api.postmon.com.br/v1/cep/")
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+
+                        PostmonService service = cep_busca.create(PostmonService.class);
+
+                        Call<Cliente> call_cep = service.cep(ed_cep.getText().toString());
+
+                        Log.d("CEP", cliente.getCep());
+
+                        call_cep.enqueue(new Callback<Cliente>() {
+                            @Override
+                            public void onResponse(Call<Cliente> call, Response<Cliente> response) {
+
+                                if (response.isSuccessful()) {
+
+                                    Cliente cliente_cep = response.body();
+
+                                    String cl_bairro = cliente_cep.getBairro();
+                                    String cl_endereco = cliente_cep.getEndereco();
+                                    String cl_cidade = cliente_cep.getCidade();
+                                    String cl_estado = cliente_cep.getEstado();
+
+                                    Log.d("Endereco", cl_bairro + "\n" + cl_endereco + "\n" + cl_cidade + "\n" + cl_estado);
+
+                                    ed_endereco.setText(cl_endereco);
+                                    ed_bairro.setText(cl_bairro);
+                                    ed_cidade.setText(cl_cidade);
+                                    ed_estado.setText(cl_estado);
+
+                                    Toast.makeText(getApplicationContext(), "Dados encotrados", Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<Cliente> call, Throwable t) {
+
+                                Toast.makeText(getApplicationContext(), "Erro ao buscar os dados", Toast.LENGTH_LONG).show();
+
+                            }
+                        });
+
+                    }
+                });
+
+                cliente_dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -103,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).setNegativeButton("Cancelar", null);
 
-                cliente.show();
+                cliente_dialog.show();
             }
         });
 
@@ -111,54 +171,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void salva_dados_cliente(View view) {
 
-        Button btn_busca = view.findViewById(R.id.btn_busca_cep);
-
         EditText ed_nome = view.findViewById(R.id.ed_nome);
-        final EditText ed_endereco = view.findViewById(R.id.ed_endereco);
+        EditText ed_endereco = view.findViewById(R.id.ed_endereco);
         EditText ed_numero = view.findViewById(R.id.ed_numero);
-        final EditText ed_bairro = view.findViewById(R.id.ed_bairro);
-        final EditText ed_cidade = view.findViewById(R.id.ed_cidade);
-        final EditText ed_cep = view.findViewById(R.id.ed_cep);
+        EditText ed_bairro = view.findViewById(R.id.ed_bairro);
+        EditText ed_cidade = view.findViewById(R.id.ed_cidade);
+        EditText ed_estado = view.findViewById(R.id.ed_estado);
 
         cliente.setNome(ed_nome.getText().toString());
         cliente.setEndereco(ed_endereco.getText().toString());
         cliente.setNumero(ed_numero.getText().toString());
         cliente.setBairro(ed_bairro.getText().toString());
         cliente.setCidade(ed_cidade.getText().toString());
-        cliente.setCep(ed_cep.getText().toString());
-
-        btn_busca.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                PostmonService cep = retrofit.create(PostmonService.class);
-
-                Call<Cliente> call_cepp = cep.cep(cliente.getCep());
-
-                call_cepp.enqueue(new Callback<Cliente>() {
-                    @Override
-                    public void onResponse(Call<Cliente> call, Response<Cliente> response) {
-
-                        Cliente cep_cliente = response.body();
-
-                        ed_endereco.setText(cep_cliente.getEndereco());
-                        ed_bairro.setText(cep_cliente.getBairro());
-                        ed_cidade.setText(cep_cliente.getCidade());
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<Cliente> call, Throwable t) {
-
-                    }
-                });
-
-            }
-        });
-
+        cliente.setEstado(ed_estado.getText().toString());
 
         new AccessFirebase().salva_clientes(cliente.getNome(), cliente.getEndereco(), cliente.getNumero()
-                , cliente.getBairro(), cliente.getCidade(), cliente.getCep());
+                , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado());
 
     }
 
@@ -194,63 +222,21 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("WrongConstant")
     public void seachview(String search) {
 
-        query = cl_clientes.whereEqualTo("nome", search).orderBy("nome", Query.Direction.ASCENDING).startAt(search).endAt(search + "\uf8ff");
+        query = cl_clientes.orderBy("nome", Query.Direction.ASCENDING);
 
-        Log.d("Retorno Search", search);
+        firt_cad_clientes = new FirestoreRecyclerOptions.Builder<Cliente>()
+                .setQuery(query, Cliente.class)
+                .build();
 
         adapter_cliente = new Adapter_cliente(firt_cad_clientes);
+
         rc_produto.setAdapter(adapter_cliente);
-
-        adapter_cliente.setOnItemClicklistener(new Adapter_cliente.OnItemClickListener() {
-            @Override
-            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-
-                Cliente cliente = documentSnapshot.toObject(Cliente.class);
-
-                Intent i_cliente = new Intent(getApplicationContext(), ProdutosCliente.class);
-                i_cliente.putExtra("info_cliente", cliente);
-                startActivity(i_cliente);
-            }
-        });
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-
-        MenuItem searchitem = menu.findItem(R.id.search);
-        searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
-
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-        searchView.setQueryHint("Pesquisar");
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                seachview(s);
-                adapter_cliente.startListening();
-
-                Log.d("Retorno", s);
-
-                return false;
-            }
-        });
-        return true;
+        adapter_cliente.notifyDataSetChanged();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
         adapter_cliente.startListening();
     }
 
@@ -260,12 +246,35 @@ public class MainActivity extends AppCompatActivity {
         adapter_cliente.stopListening();
     }
 
+
     @Override
-    public void onBackPressed() {
-        if (searchView.isIconified()) {
-            searchView.setIconified(true);
-        }
-        super.onBackPressed();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem searchitem = menu.findItem(R.id.search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                seachview(s.toLowerCase());
+                adapter_cliente.startListening();
+
+                return false;
+            }
+        });
+        return true;
     }
 
     @Override
@@ -280,11 +289,11 @@ public class MainActivity extends AppCompatActivity {
 
             new AccessFirebase().sign_out_firebase(MainActivity.this);
             return true;
-        } else if (id == R.id.search) {
 
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
 }
