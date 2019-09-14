@@ -56,7 +56,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
     protected void onBindViewHolder(@NonNull final Adapter_cliente.Viewholder_clientes viewholder_clientes, int i, @NonNull Cliente cliente) {
 
         viewholder_clientes.nome.setText(cliente.getNome());
-        viewholder_clientes.endereco.setText(cliente.getEndereco());
+        viewholder_clientes.endereco.setText(cliente.getLogradouro());
         viewholder_clientes.numero.setText(cliente.getNumero());
         viewholder_clientes.bairro.setText(cliente.getBairro());
         viewholder_clientes.cidade.setText(cliente.getCidade());

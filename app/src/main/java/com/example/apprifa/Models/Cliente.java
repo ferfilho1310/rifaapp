@@ -55,11 +55,11 @@ public class Cliente implements Parcelable {
         Nome = nome;
     }
 
-    public String getEndereco() {
+    public String getLogradouro() {
         return endereco;
     }
 
-    public void setEndereco(String endereco) {
+    public void setLogradouro(String endereco) {
         this.endereco = endereco;
     }
 

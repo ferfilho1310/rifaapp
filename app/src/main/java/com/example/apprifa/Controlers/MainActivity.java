@@ -100,23 +100,22 @@ public class MainActivity extends AppCompatActivity {
 
                         EditText ed_cep = custom_layout.findViewById(R.id.ed_cep);
 
-                        final EditText ed_endereco = custom_layout.findViewById(R.id.ed_endereco);
+                        final EditText ed_endereco_dialog = custom_layout.findViewById(R.id.ed_end);
                         final EditText ed_bairro = custom_layout.findViewById(R.id.ed_bairro);
                         final EditText ed_cidade = custom_layout.findViewById(R.id.ed_cidade);
                         final EditText ed_estado = custom_layout.findViewById(R.id.ed_estado);
+                        final EditText ed_numero = custom_layout.findViewById(R.id.ed_numero);
 
                         cliente.setCep(ed_cep.getText().toString());
 
                         Retrofit cep_busca = new Retrofit.Builder()
-                                .baseUrl("http://api.postmon.com.br/v1/cep/")
+                                .baseUrl("http://ws.matheuscastiglioni.com.br/ws/")
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
 
                         PostmonService service = cep_busca.create(PostmonService.class);
 
                         Call<Cliente> call_cep = service.cep(ed_cep.getText().toString());
-
-                        Log.d("CEP", cliente.getCep());
 
                         call_cep.enqueue(new Callback<Cliente>() {
                             @Override
@@ -126,17 +125,19 @@ public class MainActivity extends AppCompatActivity {
 
                                     Cliente cliente_cep = response.body();
 
+                                    String cl_numero = cliente_cep.getNumero();
+                                    String cl_endereco = cliente_cep.getLogradouro();
                                     String cl_bairro = cliente_cep.getBairro();
-                                    String cl_endereco = cliente_cep.getEndereco();
                                     String cl_cidade = cliente_cep.getCidade();
                                     String cl_estado = cliente_cep.getEstado();
 
                                     Log.d("Endereco", cl_bairro + "\n" + cl_endereco + "\n" + cl_cidade + "\n" + cl_estado);
 
-                                    ed_endereco.setText(cl_endereco);
+                                    ed_endereco_dialog.setText(cl_endereco);
                                     ed_bairro.setText(cl_bairro);
                                     ed_cidade.setText(cl_cidade);
                                     ed_estado.setText(cl_estado);
+                                    ed_numero.setText(cl_numero);
 
                                     Toast.makeText(getApplicationContext(), "Dados encotrados", Toast.LENGTH_LONG).show();
                                 }
@@ -172,20 +173,20 @@ public class MainActivity extends AppCompatActivity {
     public void salva_dados_cliente(View view) {
 
         EditText ed_nome = view.findViewById(R.id.ed_nome);
-        EditText ed_endereco = view.findViewById(R.id.ed_endereco);
+        EditText ed_endereco = view.findViewById(R.id.ed_end);
         EditText ed_numero = view.findViewById(R.id.ed_numero);
         EditText ed_bairro = view.findViewById(R.id.ed_bairro);
         EditText ed_cidade = view.findViewById(R.id.ed_cidade);
         EditText ed_estado = view.findViewById(R.id.ed_estado);
 
         cliente.setNome(ed_nome.getText().toString());
-        cliente.setEndereco(ed_endereco.getText().toString());
+        cliente.setLogradouro(ed_endereco.getText().toString());
         cliente.setNumero(ed_numero.getText().toString());
         cliente.setBairro(ed_bairro.getText().toString());
         cliente.setCidade(ed_cidade.getText().toString());
         cliente.setEstado(ed_estado.getText().toString());
 
-        new AccessFirebase().salva_clientes(cliente.getNome(), cliente.getEndereco(), cliente.getNumero()
+        new AccessFirebase().salva_clientes(cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
                 , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado());
 
     }
@@ -246,7 +247,6 @@ public class MainActivity extends AppCompatActivity {
         adapter_cliente.stopListening();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -294,6 +294,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }
