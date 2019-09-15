@@ -36,12 +36,12 @@ public class AccessFirebase extends AppCompatActivity {
 
     }
 
-    public void salva_clientes(String nome, String endereco, String numero, String bairro, String cidade, String cep,String estado) {
+    public void salva_clientes(String nome, String endereco_cliente, String numero, String bairro, String cidade, String cep,String estado) {
 
         Map<String, String> map_categ_serv = new HashMap<>();
 
         map_categ_serv.put("nome", nome);
-        map_categ_serv.put("endereco", endereco);
+        map_categ_serv.put("endereco", endereco_cliente);
         map_categ_serv.put("numero", numero);
         map_categ_serv.put("bairro", bairro);
         map_categ_serv.put("cidade", cidade);

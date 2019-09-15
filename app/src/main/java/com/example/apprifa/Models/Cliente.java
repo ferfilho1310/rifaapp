@@ -5,34 +5,25 @@ import android.os.Parcelable;
 
 public class Cliente implements Parcelable {
 
+    private String id;
+    private String local;
     private String Nome;
-    private String endereco;
     private String numero;
     private String bairro;
     private String cidade;
     private String estado;
-    private String pais;
     private String cep;
 
-    public Cliente(String nome, String endereco, String numero, String bairro, String cidade, String pais) {
-        Nome = nome;
-        this.endereco = endereco;
-        this.numero = numero;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.pais = pais;
-    }
 
     public Cliente() {
     }
 
     protected Cliente(Parcel in) {
         Nome = in.readString();
-        endereco = in.readString();
         numero = in.readString();
         bairro = in.readString();
         cidade = in.readString();
-        pais = in.readString();
+        local = in.readString();
     }
 
     public static final Creator<Cliente> CREATOR = new Creator<Cliente>() {
@@ -53,14 +44,6 @@ public class Cliente implements Parcelable {
 
     public void setNome(String nome) {
         Nome = nome;
-    }
-
-    public String getLogradouro() {
-        return endereco;
-    }
-
-    public void setLogradouro(String endereco) {
-        this.endereco = endereco;
     }
 
     public String getNumero() {
@@ -87,12 +70,12 @@ public class Cliente implements Parcelable {
         this.cidade = cidade;
     }
 
-    public String getPais() {
-        return pais;
+    public String getLocal() {
+        return local;
     }
 
-    public void setPais(String pais) {
-        this.pais = pais;
+    public void setLocal(String local) {
+        this.local = local;
     }
 
     public String getCep() {
@@ -111,6 +94,14 @@ public class Cliente implements Parcelable {
         this.estado = estado;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -119,11 +110,10 @@ public class Cliente implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(Nome);
-        parcel.writeString(endereco);
+        parcel.writeString(local);
         parcel.writeString(numero);
         parcel.writeString(bairro);
         parcel.writeString(cidade);
-        parcel.writeString(pais);
     }
 
 }

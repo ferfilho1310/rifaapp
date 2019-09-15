@@ -43,6 +43,8 @@ public class CadastroUser extends AppCompatActivity {
         rd_feminino = findViewById(R.id.femi);
         rd_masculino = findViewById(R.id.masc);
 
+        setTitle("Cadastro de usuário");
+
         rd_sexo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {

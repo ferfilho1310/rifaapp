@@ -56,10 +56,11 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
     protected void onBindViewHolder(@NonNull final Adapter_cliente.Viewholder_clientes viewholder_clientes, int i, @NonNull Cliente cliente) {
 
         viewholder_clientes.nome.setText(cliente.getNome());
-        viewholder_clientes.endereco.setText(cliente.getLogradouro());
+        viewholder_clientes.endereco_cli.setText(cliente.getLocal());
         viewholder_clientes.numero.setText(cliente.getNumero());
         viewholder_clientes.bairro.setText(cliente.getBairro());
         viewholder_clientes.cidade.setText(cliente.getCidade());
+        viewholder_clientes.estado.setText(cliente.getEstado());
 
         viewholder_clientes.excluir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,22 +119,22 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
 
     }
 
-
     public class Viewholder_clientes extends RecyclerView.ViewHolder {
 
-        public TextView nome, endereco, numero, bairro, cidade;
+        public TextView nome, endereco_cli, numero, bairro, cidade,estado;
         Button excluir, atualizar;
 
         public Viewholder_clientes(@NonNull View itemView) {
             super(itemView);
 
             nome = itemView.findViewById(R.id.txt_nome_cliente);
-            endereco = itemView.findViewById(R.id.txt_endereco);
+            endereco_cli = itemView.findViewById(R.id.txt_local);
             numero = itemView.findViewById(R.id.txt_numero);
             bairro = itemView.findViewById(R.id.txt_bairro);
             cidade = itemView.findViewById(R.id.txt_cidade);
             excluir = itemView.findViewById(R.id.btn_excluir_cliente);
             atualizar = itemView.findViewById(R.id.btn_atualizar_cliente);
+            estado = itemView.findViewById(R.id.txt_estado);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

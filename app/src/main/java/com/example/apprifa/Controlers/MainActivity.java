@@ -33,12 +33,15 @@ import com.example.apprifa.R;
 import com.example.apprifa.Retrofit.PostmonService;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +52,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @SuppressLint("Registered")
 public class MainActivity extends AppCompatActivity {
 
+    EditText ed_nome;
+    EditText ed_endereco;
+    EditText ed_numero;
+    EditText ed_bairro;
+    EditText ed_cidade;
+    EditText ed_estado;
+    EditText ed_cep;
 
     FloatingActionButton fab_cad_cliente;
     RecyclerView rc_produto;
@@ -91,22 +101,25 @@ public class MainActivity extends AppCompatActivity {
                 final View custom_layout = getLayoutInflater().inflate(R.layout.dialog_cad_clientes, null);
                 cliente_dialog.setView(custom_layout);
 
+                ed_nome = custom_layout.findViewById(R.id.ed_nome);
+                ed_endereco = custom_layout.findViewById(R.id.ed_end);
+                ed_numero = custom_layout.findViewById(R.id.ed_numero);
+                ed_bairro = custom_layout.findViewById(R.id.ed_bairro);
+                ed_cidade = custom_layout.findViewById(R.id.ed_cidade);
+                ed_estado = custom_layout.findViewById(R.id.ed_estado);
+                ed_cep = custom_layout.findViewById(R.id.ed_cep);
+
                 Button btn_cep = custom_layout.findViewById(R.id.btn_busca_cep);
+
 
                 btn_cep.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-
-                        EditText ed_cep = custom_layout.findViewById(R.id.ed_cep);
-
-                        final EditText ed_endereco_dialog = custom_layout.findViewById(R.id.ed_end);
-                        final EditText ed_bairro = custom_layout.findViewById(R.id.ed_bairro);
-                        final EditText ed_cidade = custom_layout.findViewById(R.id.ed_cidade);
-                        final EditText ed_estado = custom_layout.findViewById(R.id.ed_estado);
-                        final EditText ed_numero = custom_layout.findViewById(R.id.ed_numero);
-
-                        cliente.setCep(ed_cep.getText().toString());
+                        if(ed_cep.length() < 8){
+                            Toast.makeText(getApplicationContext(),"CEP inválido",Toast.LENGTH_LONG).show();
+                            return;
+                        }
 
                         Retrofit cep_busca = new Retrofit.Builder()
                                 .baseUrl("http://ws.matheuscastiglioni.com.br/ws/")
@@ -121,37 +134,37 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<Cliente> call, Response<Cliente> response) {
 
-                                if (response.isSuccessful()) {
 
-                                    Cliente cliente_cep = response.body();
+                                    if (response.isSuccessful()) {
 
-                                    String cl_numero = cliente_cep.getNumero();
-                                    String cl_endereco = cliente_cep.getLogradouro();
-                                    String cl_bairro = cliente_cep.getBairro();
-                                    String cl_cidade = cliente_cep.getCidade();
-                                    String cl_estado = cliente_cep.getEstado();
+                                        Cliente cliente_cep = response.body();
 
-                                    Log.d("Endereco", cl_bairro + "\n" + cl_endereco + "\n" + cl_cidade + "\n" + cl_estado);
+                                        String cl_numero = cliente_cep.getNumero();
+                                        String cl_endereco = cliente_cep.getLocal();
+                                        String cl_bairro = cliente_cep.getBairro();
+                                        String cl_cidade = cliente_cep.getCidade();
+                                        String cl_estado = cliente_cep.getEstado();
 
-                                    ed_endereco_dialog.setText(cl_endereco);
-                                    ed_bairro.setText(cl_bairro);
-                                    ed_cidade.setText(cl_cidade);
-                                    ed_estado.setText(cl_estado);
-                                    ed_numero.setText(cl_numero);
+                                        Log.d("Endereco", cl_bairro + "\n" + cl_endereco + "\n" + cl_cidade + "\n" + cl_estado);
 
-                                    Toast.makeText(getApplicationContext(), "Dados encotrados", Toast.LENGTH_LONG).show();
-                                }
+                                        ed_endereco.setText(cl_endereco);
+                                        ed_bairro.setText(cl_bairro);
+                                        ed_cidade.setText(cl_cidade);
+                                        ed_estado.setText(cl_estado);
+                                        ed_numero.setText(cl_numero);
 
+                                        Toast.makeText(getApplicationContext(), "Dados encotrados", Toast.LENGTH_LONG).show();
+                                    }
                             }
+
 
                             @Override
                             public void onFailure(Call<Cliente> call, Throwable t) {
 
-                                Toast.makeText(getApplicationContext(), "Erro ao buscar os dados", Toast.LENGTH_LONG).show();
-
+                                Toast.makeText(getApplicationContext(),"Erro ao consultar o CEP. \nVerifique o CEP digitado.",Toast.LENGTH_LONG).show();
+                                Log.e("Error",t.getMessage());
                             }
                         });
-
                     }
                 });
 
@@ -159,7 +172,17 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        salva_dados_cliente(custom_layout);
+
+                        cliente.setNome(ed_nome.getText().toString());
+                        cliente.setLocal(ed_endereco.getText().toString());
+                        cliente.setNumero(ed_numero.getText().toString());
+                        cliente.setBairro(ed_bairro.getText().toString());
+                        cliente.setCidade(ed_cidade.getText().toString());
+                        cliente.setEstado(ed_estado.getText().toString());
+                        cliente.setCep(ed_cep.getText().toString());
+
+                        new AccessFirebase().salva_clientes(cliente.getNome(), cliente.getLocal(), cliente.getNumero()
+                                , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado());
 
                     }
                 }).setNegativeButton("Cancelar", null);
@@ -167,28 +190,6 @@ public class MainActivity extends AppCompatActivity {
                 cliente_dialog.show();
             }
         });
-
-    }
-
-    public void salva_dados_cliente(View view) {
-
-        EditText ed_nome = view.findViewById(R.id.ed_nome);
-        EditText ed_endereco = view.findViewById(R.id.ed_end);
-        EditText ed_numero = view.findViewById(R.id.ed_numero);
-        EditText ed_bairro = view.findViewById(R.id.ed_bairro);
-        EditText ed_cidade = view.findViewById(R.id.ed_cidade);
-        EditText ed_estado = view.findViewById(R.id.ed_estado);
-
-        cliente.setNome(ed_nome.getText().toString());
-        cliente.setLogradouro(ed_endereco.getText().toString());
-        cliente.setNumero(ed_numero.getText().toString());
-        cliente.setBairro(ed_bairro.getText().toString());
-        cliente.setCidade(ed_cidade.getText().toString());
-        cliente.setEstado(ed_estado.getText().toString());
-
-        new AccessFirebase().salva_clientes(cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
-                , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado());
-
     }
 
     @SuppressLint("WrongConstant")
@@ -209,15 +210,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 
-                Cliente cliente = documentSnapshot.toObject(Cliente.class);
+                Cliente cliente_snap = documentSnapshot.toObject(Cliente.class);
 
                 Intent i_cliente = new Intent(getApplicationContext(), ProdutosCliente.class);
-                i_cliente.putExtra("info_cliente", cliente);
+                i_cliente.putExtra("info_cliente", cliente_snap);
                 startActivity(i_cliente);
 
             }
         });
-
     }
 
     @SuppressLint("WrongConstant")
