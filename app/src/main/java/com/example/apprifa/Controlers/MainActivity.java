@@ -111,15 +111,15 @@ public class MainActivity extends AppCompatActivity {
 
                 Button btn_cep = custom_layout.findViewById(R.id.btn_busca_cep);
 
-
                 btn_cep.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        if(ed_cep.length() < 8){
+                        if(ed_cep.length() < 8 || ed_cep.length()>8){
                             Toast.makeText(getApplicationContext(),"CEP inválido",Toast.LENGTH_LONG).show();
                             return;
                         }
+
 
                         Retrofit cep_busca = new Retrofit.Builder()
                                 .baseUrl("http://ws.matheuscastiglioni.com.br/ws/")
@@ -133,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
                         call_cep.enqueue(new Callback<Cliente>() {
                             @Override
                             public void onResponse(Call<Cliente> call, Response<Cliente> response) {
-
 
                                     if (response.isSuccessful()) {
 
@@ -153,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
                                         ed_estado.setText(cl_estado);
                                         ed_numero.setText(cl_numero);
 
-                                        Toast.makeText(getApplicationContext(), "Dados encotrados", Toast.LENGTH_LONG).show();
                                     }
                             }
 
@@ -171,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
                 cliente_dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
 
                         cliente.setNome(ed_nome.getText().toString());
                         cliente.setLocal(ed_endereco.getText().toString());

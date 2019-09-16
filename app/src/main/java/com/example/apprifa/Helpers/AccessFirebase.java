@@ -41,7 +41,7 @@ public class AccessFirebase extends AppCompatActivity {
         Map<String, String> map_categ_serv = new HashMap<>();
 
         map_categ_serv.put("nome", nome);
-        map_categ_serv.put("endereco", endereco_cliente);
+        map_categ_serv.put("logradouro", endereco_cliente);
         map_categ_serv.put("numero", numero);
         map_categ_serv.put("bairro", bairro);
         map_categ_serv.put("cidade", cidade);
