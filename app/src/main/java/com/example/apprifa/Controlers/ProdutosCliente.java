@@ -49,7 +49,7 @@ public class ProdutosCliente extends AppCompatActivity {
     private Cliente cliente;
     Produto produto = new Produto();
 
-    String nome;
+    String nome,id_cliente_2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +65,8 @@ public class ProdutosCliente extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         cliente = getIntent().getExtras().getParcelable("info_cliente");
+        id_cliente_2 = getIntent().getExtras().getString("id_cliente");
+
 
         nome = cliente.getNome();
 
@@ -106,7 +108,7 @@ public class ProdutosCliente extends AppCompatActivity {
         produto.setQuantidade(qtd_produto.getText().toString());
         produto.setValor(vl_produto.getText().toString());
 
-        new AccessFirebase().salva_produtos(produto.getNomeproduto(),produto.getQuantidade(),produto.getValor(), cliente.getNome());
+        new AccessFirebase().salva_produtos(produto.getNomeproduto(),produto.getQuantidade(),produto.getValor(), id_cliente_2);
 
     }
 
@@ -114,7 +116,7 @@ public class ProdutosCliente extends AppCompatActivity {
     public void ler_dados_clientes() {
 
         query = cl_clientes
-                .whereEqualTo("id",nome)
+                .whereEqualTo("id",id_cliente_2)
                 .orderBy("nome do produto", Query.Direction.ASCENDING);
 
         firt_cad_clientes = new FirestoreRecyclerOptions.Builder<Produto>()

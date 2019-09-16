@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("WrongConstant")
     public void ler_dados_clientes() {
 
-        query = cl_clientes.orderBy("nome", Query.Direction.ASCENDING);
+        query = cl_clientes.orderBy("nome", Query.Direction.DESCENDING);
 
         firt_cad_clientes = new FirestoreRecyclerOptions.Builder<Cliente>()
                 .setQuery(query, Cliente.class)
@@ -211,9 +211,11 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 
                 Cliente cliente_snap = documentSnapshot.toObject(Cliente.class);
+                String id_cliente = documentSnapshot.getId();
 
                 Intent i_cliente = new Intent(getApplicationContext(), ProdutosCliente.class);
                 i_cliente.putExtra("info_cliente", cliente_snap);
+                i_cliente.putExtra("id_cliente",id_cliente);
                 startActivity(i_cliente);
 
             }
