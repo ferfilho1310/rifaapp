@@ -24,55 +24,43 @@ import java.util.Map;
 public class AccessFirebase extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    CollectionReference firebaseFirestore = FirebaseFirestore.getInstance().collection("cadastro de clientes");
-    CollectionReference db_prod_cliente = FirebaseFirestore.getInstance().collection("produtos do cliente");
+    CollectionReference firebaseFirestore = FirebaseFirestore.getInstance().collection("cadastro_clientes");
+    CollectionReference db_prod_cliente = FirebaseFirestore.getInstance().collection("produtos_cliente");
     CollectionReference db_users = FirebaseFirestore.getInstance().collection("Users");
-    /*DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference db_users = FirebaseDatabase.getInstance().getReference().child("Users");
-*/
-
 
     public AccessFirebase() {
 
     }
 
-    public void salva_clientes(String nome, String endereco_cliente, String numero, String bairro, String cidade, String cep,String estado) {
+    public void salva_clientes(String nome, String enderecocliente, String numero, String bairro, String cidade, String cep,String estado) {
 
-        Map<String, String> map_categ_serv = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
 
-        map_categ_serv.put("logradourou",endereco_cliente);
-        map_categ_serv.put("nome", nome);
-        map_categ_serv.put("numero", numero);
-        map_categ_serv.put("bairro", bairro);
-        map_categ_serv.put("cidade", cidade);
-        map_categ_serv.put("cep",cep);
-        map_categ_serv.put("estado",estado);
+        map.put("nome", nome);
+        map.put("logradouro",enderecocliente);
+        map.put("numero", numero);
+        map.put("bairro", bairro);
+        map.put("cidade", cidade);
+        map.put("cep",cep);
+        map.put("estado",estado);
 
         /*databaseReference.child(firebaseAuth.getUid()).child("Serviços").push().setValue(map_categ_serv);*/
 
-        firebaseFirestore.document(firebaseAuth.getUid()).collection("cliente").add(map_categ_serv);
+        firebaseFirestore.document(firebaseAuth.getUid()).collection("cliente").add(map);
     }
 
-    public void salva_produtos(String nome_do_produto, String quantidade, String valor, String id) {
+    public void salva_produtos(String nomedoproduto, String quantidade, String valor, String id) {
 
-        Map<String, String> map_func = new HashMap<>();
-
-        map_func.put("id", id);
-        map_func.put("nome do produto", nome_do_produto);
-        map_func.put("quantidade", quantidade);
-        map_func.put("valor", valor);
-
-        db_prod_cliente.document(firebaseAuth.getUid()).collection("produtos").add(map_func);
-
-    }
-
-    /*public void salva_especialidades(String espec, String valor) {
         Map<String, String> map = new HashMap<>();
-        map.put("Serviços", espec);
-        map.put("Valor do serviço", valor);
-        databaseReference.child(firebaseAuth.getUid()).child("Categorias").child("Cabelos")
-                .push().setValue(map);
-    }*/
+
+        map.put("id", id);
+        map.put("nomedoproduto", nomedoproduto);
+        map.put("quantidade", quantidade);
+        map.put("valor", valor);
+
+        db_prod_cliente.document(firebaseAuth.getUid()).collection("produtos").add(map);
+
+    }
 
     public void cadastrar_user(final String nome, final String email, final String senha, final String senhaconfir, final String sexo, final Activity activity) {
 
@@ -153,7 +141,6 @@ public class AccessFirebase extends AppCompatActivity {
             activity.startActivity(intent);
             activity.finish();
         }
-
     }
 
     public void sign_out_firebase(Activity activity) {

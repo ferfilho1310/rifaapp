@@ -40,7 +40,7 @@ public class ProdutosCliente extends AppCompatActivity {
     FirebaseAuth db_users = FirebaseAuth.getInstance();
 
     FirebaseFirestore db_clientes = FirebaseFirestore.getInstance();
-    CollectionReference cl_clientes = db_clientes.collection("produtos do cliente")
+    CollectionReference cl_clientes = db_clientes.collection("produtos_cliente")
             .document(db_users.getUid())
             .collection("produtos");
 
@@ -48,8 +48,9 @@ public class ProdutosCliente extends AppCompatActivity {
 
     private Cliente cliente;
     Produto produto = new Produto();
+    AccessFirebase accessFirebase = new AccessFirebase();
 
-    String nome,id_cliente_2;
+    String nome, id_cliente_2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,7 @@ public class ProdutosCliente extends AppCompatActivity {
 
         nome = cliente.getNome();
 
-        getSupportActionBar().setTitle("Produtos da(o) "+nome);
+        getSupportActionBar().setTitle("Produtos da(o) " + nome);
         ler_dados_clientes();
 
         fb_prod_cliente.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +89,7 @@ public class ProdutosCliente extends AppCompatActivity {
                         salva_produto_cliente(custom_layout);
 
                     }
-                }).setNegativeButton("Cancelar",null);
+                }).setNegativeButton("Cancelar", null);
 
                 cliente.show();
             }
@@ -104,11 +105,11 @@ public class ProdutosCliente extends AppCompatActivity {
         EditText vl_produto = custom_layout.findViewById(R.id.ed_preco_produto);
         EditText qtd_produto = custom_layout.findViewById(R.id.ed_quantidade);
 
-        produto.setNomeproduto(nm_produto.getText().toString());
+        produto.setNomedoproduto(nm_produto.getText().toString());
         produto.setQuantidade(qtd_produto.getText().toString());
         produto.setValor(vl_produto.getText().toString());
 
-        new AccessFirebase().salva_produtos(produto.getNomeproduto(),produto.getQuantidade(),produto.getValor(), id_cliente_2);
+        accessFirebase.salva_produtos(produto.getNomedoproduto(), produto.getQuantidade(), produto.getValor(), id_cliente_2);
 
     }
 
@@ -116,8 +117,8 @@ public class ProdutosCliente extends AppCompatActivity {
     public void ler_dados_clientes() {
 
         query = cl_clientes
-                .whereEqualTo("id",id_cliente_2)
-                .orderBy("nome do produto", Query.Direction.ASCENDING);
+                .whereEqualTo("id", id_cliente_2)
+                .orderBy("nomedoproduto", Query.Direction.DESCENDING);
 
         firt_cad_clientes = new FirestoreRecyclerOptions.Builder<Produto>()
                 .setQuery(query, Produto.class)
@@ -128,13 +129,6 @@ public class ProdutosCliente extends AppCompatActivity {
         rc_prod_cliente.setHasFixedSize(true);
         rc_prod_cliente.setAdapter(adapter_produtos_cliente);
 
-        adapter_produtos_cliente.setOnItemClicklistener(new Adapter_produtos_cliente.OnItemClickListener() {
-            @Override
-            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
-
-
-            }
-        });
     }
 
     @Override

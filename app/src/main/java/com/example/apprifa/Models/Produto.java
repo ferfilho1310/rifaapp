@@ -2,12 +2,12 @@ package com.example.apprifa.Models;
 
 public class Produto {
 
-    private String nomeproduto;
+    private String nomedoproduto;
     private String quantidade;
     private String valor;
 
-    public Produto(String nomeproduto, String quantidade, String valor) {
-        this.nomeproduto = nomeproduto;
+    public Produto(String nomedoproduto, String quantidade, String valor) {
+        this.nomedoproduto = nomedoproduto;
         this.quantidade = quantidade;
         this.valor = valor;
     }
@@ -15,12 +15,12 @@ public class Produto {
     public Produto() {
     }
 
-    public String getNomeproduto() {
-        return nomeproduto;
+    public String getNomedoproduto() {
+        return nomedoproduto;
     }
 
-    public void setNomeproduto(String nomeproduto) {
-        this.nomeproduto = nomeproduto;
+    public void setNomedoproduto(String nomedoproduto) {
+        this.nomedoproduto = nomedoproduto;
     }
 
     public String getQuantidade() {
@@ -38,5 +38,4 @@ public class Produto {
     public void setValor(String valor) {
         this.valor = valor;
     }
-
 }

@@ -42,9 +42,9 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
     @Override
     protected void onBindViewHolder(@NonNull Viewholder_prod_cliente viewholder_prod_cliente, int i, @NonNull Produto produto) {
 
+        viewholder_prod_cliente.nome_produto.setText(produto.getNomedoproduto());
         viewholder_prod_cliente.quantidade_produto.setText(produto.getQuantidade());
         viewholder_prod_cliente.valor_produto.setText(produto.getValor());
-        viewholder_prod_cliente.nome_produto.setText(produto.getNomeproduto());
 
     }
 

@@ -6,7 +6,7 @@ import android.os.Parcelable;
 public class Cliente implements Parcelable {
 
     private String id;
-    private String local;
+    private String logradouro;
     private String nome;
     private String numero;
     private String bairro;
@@ -14,12 +14,23 @@ public class Cliente implements Parcelable {
     private String estado;
     private String cep;
 
+    public Cliente(String id, String logradouro, String nome, String numero, String bairro, String cidade, String estado, String cep) {
+        this.id = id;
+        this.logradouro = logradouro;
+        this.nome = nome;
+        this.numero = numero;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.cep = cep;
+    }
+
     public Cliente() {
     }
 
     protected Cliente(Parcel in) {
         id = in.readString();
-        local = in.readString();
+        logradouro = in.readString();
         nome = in.readString();
         numero = in.readString();
         bairro = in.readString();
@@ -48,12 +59,12 @@ public class Cliente implements Parcelable {
         this.id = id;
     }
 
-    public String getLocal() {
-        return local;
+    public String getLogradouro() {
+        return logradouro;
     }
 
-    public void setLocal(String local) {
-        this.local = local;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 
     public String getNome() {
@@ -112,7 +123,7 @@ public class Cliente implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(id);
-        parcel.writeString(local);
+        parcel.writeString(logradouro);
         parcel.writeString(nome);
         parcel.writeString(numero);
         parcel.writeString(bairro);
