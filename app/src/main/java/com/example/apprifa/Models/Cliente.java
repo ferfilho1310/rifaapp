@@ -7,7 +7,7 @@ public class Cliente implements Parcelable {
 
     private String id;
     private String local;
-    private String Nome;
+    private String nome;
     private String numero;
     private String bairro;
     private String cidade;
@@ -20,7 +20,7 @@ public class Cliente implements Parcelable {
     protected Cliente(Parcel in) {
         id = in.readString();
         local = in.readString();
-        Nome = in.readString();
+        nome = in.readString();
         numero = in.readString();
         bairro = in.readString();
         cidade = in.readString();
@@ -57,11 +57,11 @@ public class Cliente implements Parcelable {
     }
 
     public String getNome() {
-        return Nome;
+        return nome;
     }
 
     public void setNome(String nome) {
-        Nome = nome;
+        this.nome = nome;
     }
 
     public String getNumero() {
@@ -113,7 +113,7 @@ public class Cliente implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(id);
         parcel.writeString(local);
-        parcel.writeString(Nome);
+        parcel.writeString(nome);
         parcel.writeString(numero);
         parcel.writeString(bairro);
         parcel.writeString(cidade);

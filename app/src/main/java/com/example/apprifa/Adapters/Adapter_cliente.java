@@ -91,7 +91,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
             }
         });
 
-        viewholder_clientes.excluir.setOnClickListener(new View.OnClickListener() {
+        viewholder_clientes.atualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

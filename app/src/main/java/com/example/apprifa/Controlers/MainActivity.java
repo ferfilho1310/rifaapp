@@ -135,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
 
                                 Log.e("resposta",logradouro +"\n"+ bairro +"\n"+ cidade +"\n"+estado);
 
+                          //      cep.setLocal(logradouro);
+
                                 ed_endereco.setText(logradouro);
                                 ed_bairro.setText(bairro);
                                 ed_cidade.setText(cidade);
