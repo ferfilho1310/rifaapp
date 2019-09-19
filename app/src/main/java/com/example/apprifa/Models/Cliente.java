@@ -14,16 +14,18 @@ public class Cliente implements Parcelable {
     private String estado;
     private String cep;
 
-
     public Cliente() {
     }
 
     protected Cliente(Parcel in) {
+        id = in.readString();
+        local = in.readString();
         Nome = in.readString();
         numero = in.readString();
         bairro = in.readString();
         cidade = in.readString();
-        local = in.readString();
+        estado = in.readString();
+        cep = in.readString();
     }
 
     public static final Creator<Cliente> CREATOR = new Creator<Cliente>() {
@@ -37,6 +39,22 @@ public class Cliente implements Parcelable {
             return new Cliente[size];
         }
     };
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getLocal() {
+        return local;
+    }
+
+    public void setLocal(String local) {
+        this.local = local;
+    }
 
     public String getNome() {
         return Nome;
@@ -70,12 +88,12 @@ public class Cliente implements Parcelable {
         this.cidade = cidade;
     }
 
-    public String getLocal() {
-        return local;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setLocal(String local) {
-        this.local = local;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public String getCep() {
@@ -86,22 +104,6 @@ public class Cliente implements Parcelable {
         this.cep = cep;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -109,11 +111,13 @@ public class Cliente implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(Nome);
+        parcel.writeString(id);
         parcel.writeString(local);
+        parcel.writeString(Nome);
         parcel.writeString(numero);
         parcel.writeString(bairro);
         parcel.writeString(cidade);
+        parcel.writeString(estado);
+        parcel.writeString(cep);
     }
-
 }

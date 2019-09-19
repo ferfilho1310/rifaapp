@@ -1,6 +1,9 @@
 package com.example.apprifa.Adapters;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +24,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_cliente.Viewholder_clientes> implements Filterable {
 
     private OnItemClickListener listener;
     List<Cliente> list_client;
     List<Cliente> list_client_filter;
+    Context context;
 
     public Adapter_cliente(@NonNull FirestoreRecyclerOptions<Cliente> options, List<Cliente> list_client) {
         super(options);
@@ -41,8 +47,9 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
      *
      * @param options
      */
-    public Adapter_cliente(@NonNull FirestoreRecyclerOptions<Cliente> options) {
+    public Adapter_cliente(@NonNull FirestoreRecyclerOptions<Cliente> options, Context context) {
         super(options);
+        this.context = context;
     }
 
     @NonNull
@@ -68,17 +75,40 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
             @Override
             public void onClick(View view) {
 
-                delete_categoria(viewholder_clientes.getAdapterPosition());
+                AlertDialog.Builder alert_excluir = new AlertDialog.Builder(context);
+                alert_excluir.setMessage("Deseja realmente excluir o cliente ?");
 
+                alert_excluir.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        delete_categoria(viewholder_clientes.getAdapterPosition());
+
+                    }
+                }).setNegativeButton("Cancelar", null);
+
+                alert_excluir.show();
             }
         });
 
+        viewholder_clientes.excluir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String id = getSnapshots().getSnapshot(viewholder_clientes.getAdapterPosition()).getId();
+
+            }
+        });
     }
 
     public void delete_categoria(int i) {
 
         getSnapshots().getSnapshot(i).getReference().delete();
     }
+
+
+
+
 
     @Override
     public Filter getFilter() {
@@ -123,7 +153,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
 
     public class Viewholder_clientes extends RecyclerView.ViewHolder {
 
-        public TextView nome, endereco_cli, numero, bairro, cidade,estado;
+        public TextView nome, endereco_cli, numero, bairro, cidade, estado;
         Button excluir, atualizar;
 
         public Viewholder_clientes(@NonNull View itemView) {
@@ -147,7 +177,6 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
 
                         listener.onItemClick(getSnapshots().getSnapshot(position), position);
                     }
-
                 }
             });
 

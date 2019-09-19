@@ -1,5 +1,6 @@
 package com.example.apprifa.Controlers;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import com.example.apprifa.Helpers.AccessFirebase;
@@ -27,6 +28,8 @@ public class CadastroUser extends AppCompatActivity {
 
     String masculino,feminino;
 
+    ProgressDialog pgd_cadastro_user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,8 @@ public class CadastroUser extends AppCompatActivity {
         rd_masculino = findViewById(R.id.masc);
 
         setTitle("Cadastro de usuário");
+
+        pgd_cadastro_user = new ProgressDialog(CadastroUser.this);
 
         rd_sexo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -65,9 +70,13 @@ public class CadastroUser extends AppCompatActivity {
             }
         });
 
+
         cadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                pgd_cadastro_user.setMessage("Cadastrando");
+                pgd_cadastro_user.show();
 
                 new AccessFirebase().cadastrar_user(ed_user_nome.getText().toString(),ed_user_email.getText().toString()
                 ,ed_user_senha.getText().toString(),ed_user_confirmasenha.getText().toString(),new Usuario().getSexo(),CadastroUser.this);
@@ -75,6 +84,7 @@ public class CadastroUser extends AppCompatActivity {
             }
         });
 
+        pgd_cadastro_user.dismiss();
     }
 
 }

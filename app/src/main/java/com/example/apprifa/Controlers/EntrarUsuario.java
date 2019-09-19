@@ -1,5 +1,6 @@
 package com.example.apprifa.Controlers;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -18,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class EntrarUsuario extends AppCompatActivity {
 
-    Button btn_entrar,btn_user_cadastrar;
+    Button btn_entrar, btn_user_cadastrar;
     EditText ed_email, ed_senha;
 
     FirebaseAuth db_users;
@@ -35,6 +36,8 @@ public class EntrarUsuario extends AppCompatActivity {
         ed_email = findViewById(R.id.ed_entrar_email);
         ed_senha = findViewById(R.id.ed_entrar_senha);
 
+        final ProgressDialog progressDialog;
+
         getSupportActionBar().hide();
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -44,20 +47,27 @@ public class EntrarUsuario extends AppCompatActivity {
 
         new AccessFirebase().persistir_usuer(EntrarUsuario.this);
 
+        progressDialog = new ProgressDialog(EntrarUsuario.this);
+
         btn_entrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-               new AccessFirebase().entrar_firebase(ed_email.getText().toString(),ed_senha.getText().toString(),EntrarUsuario.this);
+                progressDialog.setMessage("Entrando...");
+                progressDialog.show();
+
+                new AccessFirebase().entrar_firebase(ed_email.getText().toString(), ed_senha.getText().toString(), EntrarUsuario.this);
 
             }
         });
+
+        progressDialog.dismiss();
 
         btn_user_cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent i_cadastrar = new Intent(getApplicationContext(),CadastroUser.class);
+                Intent i_cadastrar = new Intent(getApplicationContext(), CadastroUser.class);
                 startActivity(i_cadastrar);
 
             }

@@ -70,7 +70,7 @@ public class ProdutosCliente extends AppCompatActivity {
 
         nome = cliente.getNome();
 
-        getSupportActionBar().setTitle(nome);
+        getSupportActionBar().setTitle("Produtos da(o) "+nome);
         ler_dados_clientes();
 
         fb_prod_cliente.setOnClickListener(new View.OnClickListener() {

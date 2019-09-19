@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.LabeledIntent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,8 +30,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.apprifa.Adapters.Adapter_cliente;
 import com.example.apprifa.Helpers.AccessFirebase;
 import com.example.apprifa.Models.Cliente;
+import com.example.apprifa.Models.Cliente_cep;
 import com.example.apprifa.R;
 import com.example.apprifa.Retrofit.PostmonService;
+import com.example.apprifa.Retrofit.RetrofitInit;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -52,16 +55,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @SuppressLint("Registered")
 public class MainActivity extends AppCompatActivity {
 
-    EditText ed_nome;
-    EditText ed_endereco;
-    EditText ed_numero;
-    EditText ed_bairro;
-    EditText ed_cidade;
-    EditText ed_estado;
-    EditText ed_cep;
+    EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep;
 
     FloatingActionButton fab_cad_cliente;
     RecyclerView rc_produto;
+    LinearLayoutManager llm_cliente;
 
     FirestoreRecyclerOptions firt_cad_clientes;
 
@@ -89,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
         rc_produto = findViewById(R.id.rc_cad_clientes);
         fab_cad_cliente = findViewById(R.id.fab_cad_clientes);
 
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+
         setTitle("Clientes Cadastrados");
 
         ler_dados_clientes();
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 cliente_dialog.setView(custom_layout);
 
                 ed_nome = custom_layout.findViewById(R.id.ed_nome);
-                ed_endereco = custom_layout.findViewById(R.id.ed_end);
+                ed_endereco = custom_layout.findViewById(R.id.edend);
                 ed_numero = custom_layout.findViewById(R.id.ed_numero);
                 ed_bairro = custom_layout.findViewById(R.id.ed_bairro);
                 ed_cidade = custom_layout.findViewById(R.id.ed_cidade);
@@ -120,47 +120,34 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
 
+                     Call<Cliente> call = new RetrofitInit().getcep().cep(ed_cep.getText().toString());
 
-                        Retrofit cep_busca = new Retrofit.Builder()
-                                .baseUrl("http://ws.matheuscastiglioni.com.br/ws/")
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
-
-                        PostmonService service = cep_busca.create(PostmonService.class);
-
-                        Call<Cliente> call_cep = service.cep(ed_cep.getText().toString());
-
-                        call_cep.enqueue(new Callback<Cliente>() {
+                        call.enqueue(new Callback<Cliente>() {
                             @Override
                             public void onResponse(Call<Cliente> call, Response<Cliente> response) {
 
-                                    if (response.isSuccessful()) {
+                                Cliente cep = response.body();
 
-                                        Cliente cliente_cep = response.body();
+                                String logradouro = cep.getLocal();
+                                String bairro = cep.getBairro();
+                                String cidade = cep.getCidade();
+                                String estado = cep.getEstado();
 
-                                        String cl_numero = cliente_cep.getNumero();
-                                        String cl_endereco = cliente_cep.getLocal();
-                                        String cl_bairro = cliente_cep.getBairro();
-                                        String cl_cidade = cliente_cep.getCidade();
-                                        String cl_estado = cliente_cep.getEstado();
+                                Log.e("resposta",logradouro +"\n"+ bairro +"\n"+ cidade +"\n"+estado);
 
-                                        Log.d("Endereco", cl_bairro + "\n" + cl_endereco + "\n" + cl_cidade + "\n" + cl_estado);
+                                ed_endereco.setText(logradouro);
+                                ed_bairro.setText(bairro);
+                                ed_cidade.setText(cidade);
+                                ed_estado.setText(estado);
 
-                                        ed_endereco.setText(cl_endereco);
-                                        ed_bairro.setText(cl_bairro);
-                                        ed_cidade.setText(cl_cidade);
-                                        ed_estado.setText(cl_estado);
-                                        ed_numero.setText(cl_numero);
-
-                                    }
                             }
-
 
                             @Override
                             public void onFailure(Call<Cliente> call, Throwable t) {
 
-                                Toast.makeText(getApplicationContext(),"Erro ao consultar o CEP. \nVerifique o CEP digitado.",Toast.LENGTH_LONG).show();
-                                Log.e("Error",t.getMessage());
+                                Toast.makeText(getApplicationContext(),"Erro ao buscar CEP",Toast.LENGTH_LONG).show();
+                                Log.d("Error",t.getMessage());
+
                             }
                         });
                     }
@@ -198,8 +185,10 @@ public class MainActivity extends AppCompatActivity {
                 .setQuery(query, Cliente.class)
                 .build();
 
-        adapter_cliente = new Adapter_cliente(firt_cad_clientes);
-        rc_produto.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false));
+        adapter_cliente = new Adapter_cliente(firt_cad_clientes,MainActivity.this);
+        llm_cliente = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
+        rc_produto.setLayoutManager(llm_cliente);
+
         rc_produto.setHasFixedSize(true);
         rc_produto.setAdapter(adapter_cliente);
 
@@ -212,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent i_cliente = new Intent(getApplicationContext(), ProdutosCliente.class);
                 i_cliente.putExtra("info_cliente", cliente_snap);
-                i_cliente.putExtra("id_cliente",id_cliente);
+                i_cliente.putExtra("id_cliente", id_cliente);
                 startActivity(i_cliente);
 
             }
@@ -228,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
                 .setQuery(query, Cliente.class)
                 .build();
 
-        adapter_cliente = new Adapter_cliente(firt_cad_clientes);
+        adapter_cliente = new Adapter_cliente(firt_cad_clientes,MainActivity.this);
 
         rc_produto.setAdapter(adapter_cliente);
         adapter_cliente.notifyDataSetChanged();
@@ -295,3 +284,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
+
+
