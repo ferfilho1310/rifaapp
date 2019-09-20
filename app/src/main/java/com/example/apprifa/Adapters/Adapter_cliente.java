@@ -32,14 +32,8 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
 
     private OnItemClickListener listener;
     List<Cliente> list_client;
-    List<Cliente> list_client_filter;
+    List<Cliente> list_client_full;
     Context context;
-
-    public Adapter_cliente(@NonNull FirestoreRecyclerOptions<Cliente> options, List<Cliente> list_client) {
-        super(options);
-        this.list_client = list_client;
-        list_client_filter = new ArrayList<>();
-    }
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -50,6 +44,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
     public Adapter_cliente(@NonNull FirestoreRecyclerOptions<Cliente> options, Context context) {
         super(options);
         this.context = context;
+
     }
 
     @NonNull
@@ -76,7 +71,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
             public void onClick(View view) {
 
                 AlertDialog.Builder alert_excluir = new AlertDialog.Builder(context);
-                alert_excluir.setMessage("Deseja realmente excluir o cliente ?");
+                alert_excluir.setMessage("Deseja realmente excluir os dados cliente ?");
 
                 alert_excluir.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
@@ -106,50 +101,49 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
         getSnapshots().getSnapshot(i).getReference().delete();
     }
 
-
-
-
-
     @Override
     public Filter getFilter() {
-        return new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-
-                List<Cliente> ls_client = new ArrayList<>();
-
-                if (charSequence == null || charSequence.length() == 0) {
-
-                    ls_client.addAll(list_client);
-                } else {
-                    String filter = charSequence.toString().toLowerCase().trim();
-
-                    for (Cliente cliente : list_client) {
-
-                        if (cliente.getNome().toLowerCase().contains(filter)) {
-
-                            ls_client.add(cliente);
-                        }
-                    }
-
-                }
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = ls_client;
-
-                return filterResults;
-            }
-
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-
-                list_client.clear();
-                list_client.addAll((List) filterResults.values);
-                notifyDataSetChanged();
-
-            }
-        };
-
+        return exampleFilter;
     }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+
+            List<Cliente> filterlist = new ArrayList<>();
+
+            if (charSequence == null || charSequence.length() == 0) {
+
+                filterlist.addAll(list_client_full);
+
+            } else {
+
+                String filter = charSequence.toString().toLowerCase().trim();
+
+                for (Cliente cliente : list_client_full) {
+
+                    if (cliente.getNome().toLowerCase().contains(filter)) {
+
+                        filterlist.add(cliente);
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filterlist;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+
+            list_client.clear();
+            list_client.addAll((List) filterResults.values);
+            notifyDataSetChanged();
+
+        }
+    };
 
     public class Viewholder_clientes extends RecyclerView.ViewHolder {
 

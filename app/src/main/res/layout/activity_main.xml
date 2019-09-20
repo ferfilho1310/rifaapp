@@ -38,14 +38,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_cad_clientes"
-        android:layout_width="328dp"
-        android:layout_height="570dp"
+        android:layout_width="333dp"
+        android:layout_height="538dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.674"
+        app:layout_constraintHorizontal_bias="0.794"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="0.542">
+        app:layout_constraintVertical_bias="0.401">
 
     </androidx.recyclerview.widget.RecyclerView>
 

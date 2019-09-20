@@ -43,6 +43,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -152,10 +155,11 @@ public class MainActivity extends AppCompatActivity {
 
                                 }
                             }
+
                             @Override
                             public void onFailure(Call<Cliente> call, Throwable t) {
 
-                                Toast.makeText(getApplicationContext(), "Erro ao consultar o CEP. \nVerifique o CEP digitado.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Erro ao consultar o CEP \nVerifique o CEP digitado", Toast.LENGTH_LONG).show();
                                 Log.e("Error", t.getMessage());
                             }
                         });
@@ -188,13 +192,13 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("WrongConstant")
     public void ler_dados_clientes() {
 
-        query = cl_clientes;
+        query = cl_clientes.orderBy("nome", Query.Direction.DESCENDING);
 
         firt_cad_clientes = new FirestoreRecyclerOptions.Builder<Cliente>()
                 .setQuery(query, Cliente.class)
                 .build();
 
-        adapter_cliente = new Adapter_cliente(firt_cad_clientes,MainActivity.this);
+        adapter_cliente = new Adapter_cliente(firt_cad_clientes, MainActivity.this);
         rc_produto.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false));
         rc_produto.setHasFixedSize(true);
         rc_produto.setAdapter(adapter_cliente);
@@ -218,13 +222,13 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("WrongConstant")
     public void seachview(String search) {
 
-        query = cl_clientes.orderBy("nome", Query.Direction.ASCENDING);
+        query = cl_clientes.orderBy("nome", Query.Direction.DESCENDING).startAt(search).endAt(search + "\uf8ff");
 
         firt_cad_clientes = new FirestoreRecyclerOptions.Builder<Cliente>()
                 .setQuery(query, Cliente.class)
                 .build();
 
-        adapter_cliente = new Adapter_cliente(firt_cad_clientes,MainActivity.this);
+        adapter_cliente = new Adapter_cliente(firt_cad_clientes, MainActivity.this);
 
         rc_produto.setAdapter(adapter_cliente);
         adapter_cliente.notifyDataSetChanged();
@@ -263,8 +267,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
 
-                seachview(s.toLowerCase());
-                adapter_cliente.startListening();
+                seachview(s);
+                adapter_cliente.notifyDataSetChanged();
 
                 return false;
             }
