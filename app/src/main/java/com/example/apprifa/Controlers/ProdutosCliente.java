@@ -124,7 +124,7 @@ public class ProdutosCliente extends AppCompatActivity {
                 .setQuery(query, Produto.class)
                 .build();
 
-        adapter_produtos_cliente = new Adapter_produtos_cliente(firt_cad_clientes);
+        adapter_produtos_cliente = new Adapter_produtos_cliente(firt_cad_clientes,ProdutosCliente.this);
         rc_prod_cliente.setLayoutManager(new LinearLayoutManager(ProdutosCliente.this, LinearLayoutManager.VERTICAL, false));
         rc_prod_cliente.setHasFixedSize(true);
         rc_prod_cliente.setAdapter(adapter_produtos_cliente);

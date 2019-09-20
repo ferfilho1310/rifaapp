@@ -23,6 +23,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +34,7 @@ import com.example.apprifa.R;
 import com.example.apprifa.Retrofit.PostmonService;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.SnapshotParser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -55,17 +57,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @SuppressLint("Registered")
 public class MainActivity extends AppCompatActivity {
 
-    EditText ed_nome;
-    EditText ed_endereco;
-    EditText ed_numero;
-    EditText ed_bairro;
-    EditText ed_cidade;
-    EditText ed_estado;
-    EditText ed_cep;
+    private static final int TIME_INTERVAL = 3000;//# milliseconds, desired time passed between two back presses.
+    private long mBackPressed;
+
+    EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep;
 
     FloatingActionButton fab_cad_cliente;
     RecyclerView rc_produto;
-
+    GridLayoutManager layout_manager_cliente;
     FirestoreRecyclerOptions firt_cad_clientes;
 
     Query query;
@@ -199,7 +198,8 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         adapter_cliente = new Adapter_cliente(firt_cad_clientes, MainActivity.this);
-        rc_produto.setLayoutManager(new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false));
+        layout_manager_cliente = new GridLayoutManager(MainActivity.this, 1);
+        rc_produto.setLayoutManager(layout_manager_cliente);
         rc_produto.setHasFixedSize(true);
         rc_produto.setAdapter(adapter_cliente);
 
@@ -222,10 +222,25 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("WrongConstant")
     public void seachview(String search) {
 
-        query = cl_clientes.orderBy("nome", Query.Direction.DESCENDING).startAt(search).endAt(search + "\uf8ff");
+        query = cl_clientes.whereEqualTo("nome", search.toLowerCase().trim());
 
         firt_cad_clientes = new FirestoreRecyclerOptions.Builder<Cliente>()
-                .setQuery(query, Cliente.class)
+                .setQuery(query,/* new SnapshotParser<Cliente>() {
+                    @NonNull
+                    @Override
+                    public Cliente parseSnapshot(@NonNull DocumentSnapshot snapshot) {
+
+                        String nome = snapshot.get("nome").toString();
+                        String logradouro = snapshot.get("logradouro").toString();
+                        String numero = snapshot.get("numero").toString();
+                        String bairro = snapshot.get("bairro").toString();
+                        String cidade = snapshot.get("cidade").toString();
+                        String cep = snapshot.get("cep").toString();
+                        String estado = snapshot.get("estado").toString();
+
+                        return new Cliente(logradouro, nome, numero, bairro, cidade, estado, cep);
+                    }
+                }*/Cliente.class)
                 .build();
 
         adapter_cliente = new Adapter_cliente(firt_cad_clientes, MainActivity.this);
@@ -247,6 +262,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+
+        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis())
+        {
+            super.onBackPressed();
+            return;
+        }
+        else {
+
+            Toast.makeText(MainActivity.this,"Toque novamente para sair",Toast.LENGTH_LONG).show();
+
+        mBackPressed = System.currentTimeMillis();
+    }
+
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -260,6 +293,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
 
+                seachview(s);
+                adapter_cliente.notifyDataSetChanged();
 
                 return false;
             }

@@ -1,8 +1,12 @@
 package com.example.apprifa.Adapters;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,6 +23,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
 
     private OnItemClickListener listener;
+    Context context;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -26,8 +31,9 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
      *
      * @param options
      */
-    public Adapter_produtos_cliente(@NonNull FirestoreRecyclerOptions<Produto> options) {
+    public Adapter_produtos_cliente(@NonNull FirestoreRecyclerOptions<Produto> options, Context context) {
         super(options);
+        this.context = context;
     }
 
     @NonNull
@@ -40,11 +46,29 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull Viewholder_prod_cliente viewholder_prod_cliente, int i, @NonNull Produto produto) {
+    protected void onBindViewHolder(@NonNull final Viewholder_prod_cliente viewholder_prod_cliente, int i, @NonNull Produto produto) {
 
         viewholder_prod_cliente.nome_produto.setText(produto.getNomedoproduto());
         viewholder_prod_cliente.quantidade_produto.setText(produto.getQuantidade());
         viewholder_prod_cliente.valor_produto.setText(produto.getValor());
+        viewholder_prod_cliente.btn_excluir_prod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                AlertDialog.Builder alert_excluir = new AlertDialog.Builder(context);
+                alert_excluir.setMessage("Deseja realmente excluir o produto ?");
+
+                alert_excluir.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        delete_categoria(viewholder_prod_cliente.getAdapterPosition());
+
+                    }
+                }).setNegativeButton("Cancelar",null);
+                alert_excluir.show();
+            }
+        });
 
     }
 
@@ -57,6 +81,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
     class Viewholder_prod_cliente extends RecyclerView.ViewHolder {
 
         TextView nome_produto, quantidade_produto, valor_produto;
+        Button btn_excluir_prod;
 
         public Viewholder_prod_cliente(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +89,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
             nome_produto = itemView.findViewById(R.id.txt_nm_produto);
             quantidade_produto = itemView.findViewById(R.id.txt_qtd_produto);
             valor_produto = itemView.findViewById(R.id.vlr_produto);
+            btn_excluir_prod = itemView.findViewById(R.id.btn_excluir_produto);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
