@@ -49,14 +49,15 @@ public class AccessFirebase extends AppCompatActivity {
         firebaseFirestore.document(firebaseAuth.getUid()).collection("cliente").add(map);
     }
 
-    public void salva_produtos(String nomedoproduto, String quantidade, String valor, String id) {
+    public void salva_produtos(String nomedoproduto, String quantidade, String valor,String total, String id) {
 
         Map<String, String> map = new HashMap<>();
 
         map.put("id", id);
-        map.put("nomedoproduto", nomedoproduto);
+        map.put("nomedoproduto",nomedoproduto);
         map.put("quantidade", quantidade);
         map.put("valor", valor);
+        map.put("total",total);
 
         db_prod_cliente.document(firebaseAuth.getUid()).collection("produtos").add(map);
 

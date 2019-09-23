@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("WrongConstant")
     public void ler_dados_clientes() {
 
-        query = cl_clientes.orderBy("nome", Query.Direction.DESCENDING);
+        query = cl_clientes.orderBy("nome", Query.Direction.ASCENDING);
 
         firt_cad_clientes = new FirestoreRecyclerOptions.Builder<Cliente>()
                 .setQuery(query, Cliente.class)

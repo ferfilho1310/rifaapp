@@ -5,11 +5,13 @@ public class Produto {
     private String nomedoproduto;
     private String quantidade;
     private String valor;
+    private String total;
 
-    public Produto(String nomedoproduto, String quantidade, String valor) {
+    public Produto(String nomedoproduto, String quantidade, String valor,String total) {
         this.nomedoproduto = nomedoproduto;
         this.quantidade = quantidade;
         this.valor = valor;
+        this.total = total;
     }
 
     public Produto() {
@@ -37,5 +39,13 @@ public class Produto {
 
     public void setValor(String valor) {
         this.valor = valor;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
     }
 }

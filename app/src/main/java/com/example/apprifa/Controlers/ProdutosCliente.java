@@ -108,8 +108,9 @@ public class ProdutosCliente extends AppCompatActivity {
         produto.setNomedoproduto(nm_produto.getText().toString());
         produto.setQuantidade(qtd_produto.getText().toString());
         produto.setValor(vl_produto.getText().toString());
+        produto.setTotal(String.valueOf(Float.parseFloat(qtd_produto.getText().toString()) * Float.parseFloat(vl_produto.getText().toString())));
 
-        accessFirebase.salva_produtos(produto.getNomedoproduto(), produto.getQuantidade(), produto.getValor(), id_cliente_2);
+        accessFirebase.salva_produtos(produto.getNomedoproduto(), produto.getQuantidade(), produto.getValor(), produto.getTotal(), id_cliente_2);
 
     }
 
@@ -124,7 +125,7 @@ public class ProdutosCliente extends AppCompatActivity {
                 .setQuery(query, Produto.class)
                 .build();
 
-        adapter_produtos_cliente = new Adapter_produtos_cliente(firt_cad_clientes,ProdutosCliente.this);
+        adapter_produtos_cliente = new Adapter_produtos_cliente(firt_cad_clientes, ProdutosCliente.this);
         rc_prod_cliente.setLayoutManager(new LinearLayoutManager(ProdutosCliente.this, LinearLayoutManager.VERTICAL, false));
         rc_prod_cliente.setHasFixedSize(true);
         rc_prod_cliente.setAdapter(adapter_produtos_cliente);
