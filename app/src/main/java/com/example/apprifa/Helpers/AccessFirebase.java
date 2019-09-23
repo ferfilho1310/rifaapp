@@ -1,6 +1,7 @@
 package com.example.apprifa.Helpers;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,32 +33,33 @@ public class AccessFirebase extends AppCompatActivity {
 
     }
 
-    public void salva_clientes(String nome, String enderecocliente, String numero, String bairro, String cidade, String cep,String estado) {
+    public void salva_clientes(String nome, String enderecocliente, String numero, String bairro, String cidade, String cep, String estado) {
 
         Map<String, String> map = new HashMap<>();
 
         map.put("nome", nome);
-        map.put("logradouro",enderecocliente);
+        map.put("logradouro", enderecocliente);
         map.put("numero", numero);
         map.put("bairro", bairro);
         map.put("cidade", cidade);
-        map.put("cep",cep);
-        map.put("estado",estado);
+        map.put("cep", cep);
+        map.put("estado", estado);
 
         /*databaseReference.child(firebaseAuth.getUid()).child("Serviços").push().setValue(map_categ_serv);*/
 
         firebaseFirestore.document(firebaseAuth.getUid()).collection("cliente").add(map);
     }
 
-    public void salva_produtos(String nomedoproduto, String quantidade, String valor,String total, String id) {
+    public void salva_produtos(String dia, String nomedoproduto, String quantidade, String valor, String total, String id) {
 
         Map<String, String> map = new HashMap<>();
 
         map.put("id", id);
-        map.put("nomedoproduto",nomedoproduto);
+        map.put("nomedoproduto", nomedoproduto);
         map.put("quantidade", quantidade);
         map.put("valor", valor);
-        map.put("total",total);
+        map.put("total", total);
+        map.put("data", dia);
 
         db_prod_cliente.document(firebaseAuth.getUid()).collection("produtos").add(map);
 
@@ -185,7 +187,35 @@ public class AccessFirebase extends AppCompatActivity {
 
                     Toast.makeText(activity, "Ops! Ocorreu um erro inesperado.", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+    }
 
+    public void reset_senha(final String email, final Activity context) {
+
+        if (TextUtils.isEmpty(email)) {
+
+            Toast.makeText(context, "Informe um e-mail.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                if (task.isSuccessful()) {
+
+                    Toast.makeText(context, "Enviado e-mail para reset de senha para " + email, Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent(context, EntrarUsuario.class);
+                    context.startActivity(intent);
+                    context.finish();
+
+                } else {
+
+                    Toast.makeText(context, "E-mail inválido", Toast.LENGTH_LONG).show();
+                    return;
+                }
             }
         });
     }

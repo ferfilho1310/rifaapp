@@ -29,6 +29,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ProdutosCliente extends AppCompatActivity {
 
     RecyclerView rc_prod_cliente;
@@ -101,6 +104,10 @@ public class ProdutosCliente extends AppCompatActivity {
 
     private void salva_produto_cliente(View custom_layout) {
 
+        SimpleDateFormat format_date = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        String data = format_date.format(date);
+
         EditText nm_produto = custom_layout.findViewById(R.id.ed_nome_produto);
         EditText vl_produto = custom_layout.findViewById(R.id.ed_preco_produto);
         EditText qtd_produto = custom_layout.findViewById(R.id.ed_quantidade);
@@ -109,8 +116,9 @@ public class ProdutosCliente extends AppCompatActivity {
         produto.setQuantidade(qtd_produto.getText().toString());
         produto.setValor(vl_produto.getText().toString());
         produto.setTotal(String.valueOf(Float.parseFloat(qtd_produto.getText().toString()) * Float.parseFloat(vl_produto.getText().toString())));
+        produto.setData(data);
 
-        accessFirebase.salva_produtos(produto.getNomedoproduto(), produto.getQuantidade(), produto.getValor(), produto.getTotal(), id_cliente_2);
+        accessFirebase.salva_produtos(produto.getData(),produto.getNomedoproduto(), produto.getQuantidade(), produto.getValor(), produto.getTotal(), id_cliente_2);
 
     }
 

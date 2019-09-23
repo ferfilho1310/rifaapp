@@ -18,10 +18,10 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_produto_cliente"
-            android:layout_width="330dp"
+            android:layout_width="350dp"
             android:layout_height="548dp"
             android:layout_gravity="center_horizontal"
-            android:paddingLeft="16dp"
+            android:paddingLeft="20dp"
             android:paddingRight="16dp" />
 
     </LinearLayout>

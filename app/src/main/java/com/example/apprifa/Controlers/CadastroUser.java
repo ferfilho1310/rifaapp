@@ -1,6 +1,7 @@
 package com.example.apprifa.Controlers;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.apprifa.Helpers.AccessFirebase;
@@ -9,26 +10,30 @@ import com.example.apprifa.Models.Usuario;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.apprifa.R;
 
 public class CadastroUser extends AppCompatActivity {
 
-    EditText ed_user_nome,ed_user_email,ed_user_senha,ed_user_confirmasenha;
+    EditText ed_user_nome, ed_user_email, ed_user_senha, ed_user_confirmasenha;
 
     Button cadastro;
 
     RadioGroup rd_sexo;
-    RadioButton rd_feminino,rd_masculino;
+    RadioButton rd_feminino, rd_masculino;
 
-    String masculino,feminino;
+    String masculino, feminino;
 
     ProgressDialog pgd_cadastro_user;
+
+    Usuario usuario = new Usuario();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,25 +53,39 @@ public class CadastroUser extends AppCompatActivity {
 
         setTitle("Cadastro de usuário");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         pgd_cadastro_user = new ProgressDialog(CadastroUser.this);
 
         rd_sexo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
 
-                if(rd_feminino.isChecked()){
+                if (rd_feminino == null) {
 
-                    masculino = "Masculino";
-                    new Usuario().setSexo(masculino);
+                    Toast.makeText(getApplicationContext(), "Informe o sexo", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
-                if(rd_masculino.isChecked()){
+                if (rd_masculino == null) {
+
+                    Toast.makeText(getApplicationContext(), "Informe o sexo", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (rd_feminino.isChecked()) {
 
                     feminino = "Feminino";
-                    new Usuario().setSexo(feminino);
-
+                    usuario.setSexo(masculino);
                 }
 
+                if (rd_masculino.isChecked()) {
+
+                    masculino = "Masculino";
+                    usuario.setSexo(feminino);
+
+                }
             }
         });
 
@@ -78,13 +97,25 @@ public class CadastroUser extends AppCompatActivity {
                 pgd_cadastro_user.setMessage("Cadastrando");
                 pgd_cadastro_user.show();
 
-                new AccessFirebase().cadastrar_user(ed_user_nome.getText().toString(),ed_user_email.getText().toString()
-                ,ed_user_senha.getText().toString(),ed_user_confirmasenha.getText().toString(),new Usuario().getSexo(),CadastroUser.this);
+                new AccessFirebase().cadastrar_user(ed_user_nome.getText().toString(), ed_user_email.getText().toString()
+                        , ed_user_senha.getText().toString(), ed_user_confirmasenha.getText().toString(), usuario.getSexo(), CadastroUser.this);
 
+                pgd_cadastro_user.dismiss();
             }
         });
 
-        pgd_cadastro_user.dismiss();
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
+        switch (item.getItemId()) {
+            case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
+                startActivity(new Intent(getApplicationContext(), EntrarUsuario.class));  //O efeito ao ser pressionado do botão (no caso abre a activity)
+                finish();  //Método para matar a activity e não deixa-lá indexada na pilhagem
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 
 }

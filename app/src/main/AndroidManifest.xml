@@ -9,10 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Controlers.SplashScreen"
-            android:screenOrientation="portrait">
-
-        </activity>
+        <activity
+            android:name=".Controlers.Reset_senha"
+            android:label="@string/title_activity_reset_senha"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Controlers.SplashScreen"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Controlers.ProdutosCliente"
             android:label="@string/title_activity_produtos_cliente"
@@ -28,7 +31,6 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,8 +43,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

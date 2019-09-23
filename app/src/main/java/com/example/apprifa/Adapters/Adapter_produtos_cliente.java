@@ -52,6 +52,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
         viewholder_prod_cliente.quantidade_produto.setText(produto.getQuantidade());
         viewholder_prod_cliente.valor_produto.setText(produto.getValor());
         viewholder_prod_cliente.total.setText(produto.getTotal());
+        viewholder_prod_cliente.data.setText(produto.getData());
 
         viewholder_prod_cliente.btn_excluir_prod.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +83,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
     class Viewholder_prod_cliente extends RecyclerView.ViewHolder {
 
-        TextView nome_produto, quantidade_produto, valor_produto,total;
+        TextView nome_produto, quantidade_produto, valor_produto,total,data;
         Button btn_excluir_prod;
 
         public Viewholder_prod_cliente(@NonNull View itemView) {
@@ -93,6 +94,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
             valor_produto = itemView.findViewById(R.id.vlr_produto);
             total = itemView.findViewById(R.id.txt_total);
             btn_excluir_prod = itemView.findViewById(R.id.btn_excluir_produto);
+            data = itemView.findViewById(R.id.txt_data);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
