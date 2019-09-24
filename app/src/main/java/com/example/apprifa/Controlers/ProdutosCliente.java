@@ -10,17 +10,22 @@ import com.example.apprifa.Helpers.AccessFirebase;
 import com.example.apprifa.Models.Cliente;
 import com.example.apprifa.Models.Produto;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.apprifa.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,9 +33,12 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ProdutosCliente extends AppCompatActivity {
 
@@ -49,6 +57,8 @@ public class ProdutosCliente extends AppCompatActivity {
 
     Adapter_produtos_cliente adapter_produtos_cliente;
 
+    TextView teste_soma;
+
     private Cliente cliente;
     Produto produto = new Produto();
     AccessFirebase accessFirebase = new AccessFirebase();
@@ -64,6 +74,7 @@ public class ProdutosCliente extends AppCompatActivity {
 
         rc_prod_cliente = findViewById(R.id.rc_produto_cliente);
         fb_prod_cliente = findViewById(R.id.fab_produto_cliente);
+        teste_soma = findViewById(R.id.teste_soma);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -71,11 +82,11 @@ public class ProdutosCliente extends AppCompatActivity {
         cliente = getIntent().getExtras().getParcelable("info_cliente");
         id_cliente_2 = getIntent().getExtras().getString("id_cliente");
 
-
         nome = cliente.getNome();
 
         getSupportActionBar().setTitle("Produtos da(o) " + nome);
         ler_dados_clientes();
+        soma_total();
 
         fb_prod_cliente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +129,7 @@ public class ProdutosCliente extends AppCompatActivity {
         produto.setTotal(String.valueOf(Float.parseFloat(qtd_produto.getText().toString()) * Float.parseFloat(vl_produto.getText().toString())));
         produto.setData(data);
 
-        accessFirebase.salva_produtos(produto.getData(),produto.getNomedoproduto(), produto.getQuantidade(), produto.getValor(), produto.getTotal(), id_cliente_2);
+        accessFirebase.salva_produtos(produto.getData(), produto.getNomedoproduto(), produto.getQuantidade(), produto.getValor(), produto.getTotal(), id_cliente_2);
 
     }
 
@@ -150,6 +161,38 @@ public class ProdutosCliente extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         adapter_produtos_cliente.stopListening();
+    }
+
+    public void soma_total() {
+
+        cl_clientes.whereEqualTo("id", id_cliente_2)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        float soma = 0;
+
+                        List<Float> ls_resultado = new ArrayList<>();
+
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+                        for (Produto produto : queryDocumentSnapshots.toObjects(Produto.class)) {
+
+                            float i = Float.parseFloat(produto.getTotal());
+
+                            ls_resultado.add(i);
+
+                        }
+
+                        for (int i = 0; i < ls_resultado.size(); i++) {
+
+                            soma = (soma + ls_resultado.get(i));
+                            teste_soma.setText(String.valueOf(soma));
+
+                        }
+                    }
+                });
     }
 
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar

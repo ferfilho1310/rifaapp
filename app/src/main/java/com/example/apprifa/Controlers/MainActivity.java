@@ -244,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         adapter_cliente = new Adapter_cliente(firt_cad_clientes, MainActivity.this);
+        layout_manager_cliente = new GridLayoutManager(MainActivity.this,1);
 
         rc_produto.setAdapter(adapter_cliente);
         adapter_cliente.notifyDataSetChanged();
