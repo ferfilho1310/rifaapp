@@ -14,9 +14,6 @@
             android:label="@string/title_activity_reset_senha"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".Controlers.SplashScreen"
-            android:screenOrientation="portrait"></activity>
-        <activity
             android:name=".Controlers.ProdutosCliente"
             android:label="@string/title_activity_produtos_cliente"
             android:screenOrientation="portrait"

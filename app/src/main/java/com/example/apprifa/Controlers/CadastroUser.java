@@ -106,10 +106,12 @@ public class CadastroUser extends AppCompatActivity {
 
     }
 
+
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
-            case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
-                startActivity(new Intent(getApplicationContext(), EntrarUsuario.class));  //O efeito ao ser pressionado do botão (no caso abre a activity)
+            case android.R.id.home:
+                Intent i_cad_user = new Intent(getApplicationContext(), EntrarUsuario.class);//ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
+                startActivity(i_cad_user);//O efeito ao ser pressionado do botão (no caso abre a activity)
                 finish();  //Método para matar a activity e não deixa-lá indexada na pilhagem
                 break;
             default:

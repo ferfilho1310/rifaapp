@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         adapter_cliente = new Adapter_cliente(firt_cad_clientes, MainActivity.this);
-        layout_manager_cliente = new GridLayoutManager(MainActivity.this,1);
+        layout_manager_cliente = new GridLayoutManager(MainActivity.this, 1);
 
         rc_produto.setAdapter(adapter_cliente);
         adapter_cliente.notifyDataSetChanged();
@@ -265,19 +265,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis())
-        {
+        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
             super.onBackPressed();
             return;
+        } else {
+
+            Toast.makeText(MainActivity.this, "Toque novamente para sair", Toast.LENGTH_LONG).show();
+
+            mBackPressed = System.currentTimeMillis();
         }
-        else {
-
-            Toast.makeText(MainActivity.this,"Toque novamente para sair",Toast.LENGTH_LONG).show();
-
-        mBackPressed = System.currentTimeMillis();
-    }
-
-
     }
 
     @Override

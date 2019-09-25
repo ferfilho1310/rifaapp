@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -74,7 +75,7 @@ public class ProdutosCliente extends AppCompatActivity {
 
         rc_prod_cliente = findViewById(R.id.rc_produto_cliente);
         fb_prod_cliente = findViewById(R.id.fab_produto_cliente);
-        teste_soma = findViewById(R.id.teste_soma);
+        teste_soma = findViewById(R.id.txt_soma);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -84,9 +85,10 @@ public class ProdutosCliente extends AppCompatActivity {
 
         nome = cliente.getNome();
 
-        getSupportActionBar().setTitle("Produtos da(o) " + nome);
+        getSupportActionBar().setTitle(nome);
         ler_dados_clientes();
         soma_total();
+
 
         fb_prod_cliente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +103,7 @@ public class ProdutosCliente extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         salva_produto_cliente(custom_layout);
+                        soma_total();
 
                     }
                 }).setNegativeButton("Cancelar", null);
@@ -195,16 +198,31 @@ public class ProdutosCliente extends AppCompatActivity {
                 });
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
-        switch (item.getItemId()) {
-            case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));  //O efeito ao ser pressionado do botão (no caso abre a activity)
-                finish();  //Método para matar a activity e não deixa-lá indexada na pilhagem
-                break;
-            default:
-                break;
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_produtos, menu);
+
         return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int i = item.getItemId();
+
+        if (i == android.R.id.home) {
+
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
+            return true;
+
+        } else if (i == R.id.somar) {
+
+            soma_total();
+            return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

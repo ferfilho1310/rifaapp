@@ -29,7 +29,7 @@
     <string name="pesquisar">Pesquisar</string>
     <string name="buscar">Buscar</string>
     <string name="estado">Estado</string>
-    <string name="data">Data</string>
+    <string name="data_compra">Data da compra</string>
     <string name="title_activity_reset_senha">Reset_senha</string>
     <string name="voc_receber_um_e_mail_de_altera_o_de_senha_no_e_mail_cadastrado_como_login">Você receberá um e-mail de alteração de senha no e-mail cadastrado</string>
     <string name="enviar_e_mail">Enviar E-mail</string>
