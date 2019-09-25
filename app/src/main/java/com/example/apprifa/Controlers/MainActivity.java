@@ -3,56 +3,43 @@ package com.example.apprifa.Controlers;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.LabeledIntent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apprifa.Adapters.Adapter_cliente;
 import com.example.apprifa.Helpers.AccessFirebase;
 import com.example.apprifa.Models.Cliente;
 import com.example.apprifa.R;
-import com.example.apprifa.Retrofit.PostmonService;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.example.apprifa.Retrofit.RetrofitInit;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.firebase.ui.firestore.SnapshotParser;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 @SuppressLint("Registered")
 public class MainActivity extends AppCompatActivity {
@@ -80,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     Cliente cliente = new Cliente();
     AccessFirebase accessFirebase = new AccessFirebase();
+    List<Cliente> ls_search_cliente;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -123,14 +111,7 @@ public class MainActivity extends AppCompatActivity {
                             return;
                         }
 
-                        Retrofit cep_busca = new Retrofit.Builder()
-                                .baseUrl("http://ws.matheuscastiglioni.com.br/ws/")
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
-
-                        PostmonService service = cep_busca.create(PostmonService.class);
-
-                        Call<Cliente> call_cep = service.cep(ed_cep.getText().toString());
+                        Call<Cliente> call_cep = new RetrofitInit().getcep().cep(ed_cep.getText().toString());
 
                         call_cep.enqueue(new Callback<Cliente>() {
                             @Override
@@ -145,8 +126,6 @@ public class MainActivity extends AppCompatActivity {
                                     String cl_cidade = cliente_cep.getCidade();
                                     String cl_estado = cliente_cep.getEstado();
 
-                                    Log.d("Endereco", cl_bairro + "\n" + cl_endereco + "\n" + cl_cidade + "\n" + cl_estado);
-
                                     ed_endereco.setText(cl_endereco);
                                     ed_bairro.setText(cl_bairro);
                                     ed_cidade.setText(cl_cidade);
@@ -158,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(Call<Cliente> call, Throwable t) {
 
-                                Toast.makeText(getApplicationContext(), "Erro ao consultar o CEP \nVerifique o CEP digitado", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Erro ao consultar o CEP", Toast.LENGTH_LONG).show();
                                 Log.e("Error", t.getMessage());
                             }
                         });
@@ -199,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
 
         adapter_cliente = new Adapter_cliente(firt_cad_clientes, MainActivity.this);
         layout_manager_cliente = new GridLayoutManager(MainActivity.this, 1);
+
         rc_produto.setLayoutManager(layout_manager_cliente);
         rc_produto.setHasFixedSize(true);
         rc_produto.setAdapter(adapter_cliente);
@@ -222,31 +202,33 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("WrongConstant")
     public void seachview(String search) {
 
-        query = cl_clientes.whereEqualTo("nome", search.toLowerCase().trim());
+        query = cl_clientes.orderBy("nome").startAt(search).endAt(search + "\uf8ff");
 
         firt_cad_clientes = new FirestoreRecyclerOptions.Builder<Cliente>()
-                .setQuery(query,/* new SnapshotParser<Cliente>() {
-                    @NonNull
-                    @Override
-                    public Cliente parseSnapshot(@NonNull DocumentSnapshot snapshot) {
-
-                        String nome = snapshot.get("nome").toString();
-                        String logradouro = snapshot.get("logradouro").toString();
-                        String numero = snapshot.get("numero").toString();
-                        String bairro = snapshot.get("bairro").toString();
-                        String cidade = snapshot.get("cidade").toString();
-                        String cep = snapshot.get("cep").toString();
-                        String estado = snapshot.get("estado").toString();
-
-                        return new Cliente(logradouro, nome, numero, bairro, cidade, estado, cep);
-                    }
-                }*/Cliente.class)
+                .setQuery(query, Cliente.class)
                 .build();
 
         adapter_cliente = new Adapter_cliente(firt_cad_clientes, MainActivity.this);
         layout_manager_cliente = new GridLayoutManager(MainActivity.this, 1);
 
+        rc_produto.setHasFixedSize(true);
         rc_produto.setAdapter(adapter_cliente);
+
+        adapter_cliente.setOnItemClicklistener(new Adapter_cliente.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+
+                Cliente cliente_snap = documentSnapshot.toObject(Cliente.class);
+                String id_cliente = documentSnapshot.getId();
+
+                Intent i_cliente = new Intent(getApplicationContext(), ProdutosCliente.class);
+                i_cliente.putExtra("info_cliente", cliente_snap);
+                i_cliente.putExtra("id_cliente", id_cliente);
+                startActivity(i_cliente);
+
+            }
+        });
+
         adapter_cliente.notifyDataSetChanged();
     }
 
@@ -278,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         MenuItem searchitem = menu.findItem(R.id.search);
@@ -290,18 +272,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
 
-                seachview(s);
-                adapter_cliente.notifyDataSetChanged();
-
+                if (!s.trim().isEmpty()) {
+                    seachview(s);
+                    adapter_cliente.startListening();
+                }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
 
-                seachview(s);
-                adapter_cliente.notifyDataSetChanged();
-
+                if (s.trim().isEmpty()) {
+                    seachview(s);
+                    adapter_cliente.startListening();
+                }
                 return false;
             }
         });
@@ -310,12 +294,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
             new AccessFirebase().sign_out_firebase(MainActivity.this);

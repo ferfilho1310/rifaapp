@@ -8,7 +8,7 @@ import retrofit2.http.Path;
 
 
 public interface PostmonService {
-        @GET("cep/find/{id}/json")
-        Call<Cliente> cep(@Path("id") String cep);
-    }
+    @GET("cep/find/{id}/json")
+    Call<Cliente> cep(@Path("id") String cep);
+}
 
