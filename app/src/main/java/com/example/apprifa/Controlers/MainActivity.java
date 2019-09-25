@@ -193,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i_cliente = new Intent(getApplicationContext(), ProdutosCliente.class);
                 i_cliente.putExtra("info_cliente", cliente_snap);
                 i_cliente.putExtra("id_cliente", id_cliente);
+                i_cliente.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i_cliente);
 
             }
@@ -224,12 +225,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent i_cliente = new Intent(getApplicationContext(), ProdutosCliente.class);
                 i_cliente.putExtra("info_cliente", cliente_snap);
                 i_cliente.putExtra("id_cliente", id_cliente);
+                i_cliente.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i_cliente);
 
             }
         });
 
-        adapter_cliente.notifyDataSetChanged();
+        // adapter_cliente.notifyDataSetChanged();
     }
 
     @Override
@@ -252,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         } else {
 
-            Toast.makeText(MainActivity.this, "Toque novamente para sair", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Toque novamente para sair", Toast.LENGTH_SHORT).show();
 
             mBackPressed = System.currentTimeMillis();
         }
