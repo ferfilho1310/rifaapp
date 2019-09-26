@@ -26,6 +26,8 @@ public class EntrarUsuario extends AppCompatActivity {
 
     FirebaseAuth db_users;
 
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,7 @@ public class EntrarUsuario extends AppCompatActivity {
         ed_senha = findViewById(R.id.ed_entrar_senha);
         reset_senha = findViewById(R.id.txt_reset_senha);
 
-        final ProgressDialog progressDialog;
+
 
         getSupportActionBar().hide();
         getSupportActionBar().setDisplayShowHomeEnabled(true);

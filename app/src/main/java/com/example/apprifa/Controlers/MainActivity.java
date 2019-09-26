@@ -1,6 +1,8 @@
 package com.example.apprifa.Controlers;
 
 import android.annotation.SuppressLint;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -67,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
     Cliente cliente = new Cliente();
     AccessFirebase accessFirebase = new AccessFirebase();
-    List<Cliente> ls_search_cliente;
+
+    SearchView searchView;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -193,7 +196,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent i_cliente = new Intent(getApplicationContext(), ProdutosCliente.class);
                 i_cliente.putExtra("info_cliente", cliente_snap);
                 i_cliente.putExtra("id_cliente", id_cliente);
-                i_cliente.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i_cliente);
 
             }
@@ -225,7 +227,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent i_cliente = new Intent(getApplicationContext(), ProdutosCliente.class);
                 i_cliente.putExtra("info_cliente", cliente_snap);
                 i_cliente.putExtra("id_cliente", id_cliente);
-                i_cliente.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i_cliente);
 
             }
@@ -246,19 +247,6 @@ public class MainActivity extends AppCompatActivity {
         adapter_cliente.stopListening();
     }
 
-    @Override
-    public void onBackPressed() {
-
-        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
-            super.onBackPressed();
-            return;
-        } else {
-
-            Toast.makeText(MainActivity.this, "Toque novamente para sair", Toast.LENGTH_SHORT).show();
-
-            mBackPressed = System.currentTimeMillis();
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -266,9 +254,16 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         MenuItem searchitem = menu.findItem(R.id.search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
+
+        searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
 
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setQueryHint("Pesquisar");
+        searchView.setQuery("", false);
+        searchView.clearFocus();
+        searchView.setIconified(false);
+
+        searchView.onActionViewExpanded();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -292,6 +287,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+            super.onBackPressed();
+
+            return;
+        } else {
+
+            Toast.makeText(MainActivity.this, "Toque novamente para sair", Toast.LENGTH_SHORT).show();
+
+            mBackPressed = System.currentTimeMillis();
+        }
     }
 
     @Override
