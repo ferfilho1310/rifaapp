@@ -41,8 +41,6 @@ public class EntrarUsuario extends AppCompatActivity {
         ed_senha = findViewById(R.id.ed_entrar_senha);
         reset_senha = findViewById(R.id.txt_reset_senha);
 
-
-
         getSupportActionBar().hide();
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 

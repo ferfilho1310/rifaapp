@@ -259,11 +259,10 @@ public class MainActivity extends AppCompatActivity {
 
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setQueryHint("Pesquisar");
-        searchView.setQuery("", false);
-        searchView.clearFocus();
         searchView.setIconified(false);
+        searchView.setFocusable(false);
 
-        searchView.onActionViewExpanded();
+        //searchView.onActionViewExpanded();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -288,7 +287,6 @@ public class MainActivity extends AppCompatActivity {
         });
         return true;
     }
-
 
     @Override
     public void onBackPressed() {
@@ -319,5 +317,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }
