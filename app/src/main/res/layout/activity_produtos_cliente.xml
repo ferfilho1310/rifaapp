@@ -18,10 +18,10 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_produto_cliente"
-            android:layout_width="340dp"
+            android:layout_width="400dp"
             android:layout_height="520dp"
             android:layout_gravity="center_horizontal"
-            android:paddingLeft="16dp"
+            android:paddingLeft="25dp"
             android:paddingRight="16dp" />
 
         <TextView
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="Total:"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/holo_red_dark"
             android:textSize="20sp"
             android:layout_marginStart="17dp" />
 
@@ -42,7 +42,7 @@
             android:layout_marginStart="80dp"
             android:textSize="20sp"
             android:layout_marginTop="-28dp"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/holo_red_dark"/>
 
     </LinearLayout>
 
