@@ -2,9 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.apprifa">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Controlers.DatasVendasCobranca"
+            android:label="@string/title_activity_datas_vendas_cobranca"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".Controlers.Reset_senha"
             android:label="@string/title_activity_reset_senha"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Controlers.ProdutosCliente"
             android:label="@string/title_activity_produtos_cliente"
@@ -41,9 +42,11 @@
             android:name=".Controlers.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
     </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

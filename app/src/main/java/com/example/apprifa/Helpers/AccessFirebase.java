@@ -25,8 +25,10 @@ import java.util.Map;
 public class AccessFirebase extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+
     CollectionReference firebaseFirestore = FirebaseFirestore.getInstance().collection("cadastro_clientes");
     CollectionReference db_prod_cliente = FirebaseFirestore.getInstance().collection("produtos_cliente");
+    CollectionReference db_datas_cobranca = FirebaseFirestore.getInstance().collection("datas_cobranca");
     CollectionReference db_users = FirebaseFirestore.getInstance().collection("Users");
 
     public AccessFirebase() {
@@ -62,6 +64,18 @@ public class AccessFirebase extends AppCompatActivity {
         map.put("data", dia);
 
         db_prod_cliente.document(firebaseAuth.getUid()).collection("produtos").add(map);
+
+    }
+
+    public void data_cobranca(String id,String data_venda,String data_cobranca){
+
+        Map<String,String> map = new HashMap<>();
+
+        map.put("id",id);
+        map.put("data_venda",data_venda);
+        map.put("data_cobranca",data_cobranca);
+
+        db_datas_cobranca.document(firebaseAuth.getUid()).collection("data_de_cobraca").add(map);
 
     }
 

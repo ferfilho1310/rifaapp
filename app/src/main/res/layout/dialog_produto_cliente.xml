@@ -5,7 +5,6 @@
     android:layout_width="350dp"
     android:layout_height="300dp">
 
-
     <TextView
         android:id="@+id/textView12"
         android:layout_width="62dp"
@@ -39,7 +38,6 @@
             tools:layout_editor_absoluteY="33dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout4"
@@ -112,6 +110,5 @@
             tools:layout_editor_absoluteX="151dp"
             tools:layout_editor_absoluteY="194dp" />
     </com.google.android.material.textfield.TextInputLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
