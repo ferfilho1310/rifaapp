@@ -212,7 +212,7 @@ public class ProdutosCliente extends AppCompatActivity {
 
         if (i == android.R.id.home) {
 
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), DatasVendasCobranca.class));
             finish();
             return true;
 
@@ -224,5 +224,7 @@ public class ProdutosCliente extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }
