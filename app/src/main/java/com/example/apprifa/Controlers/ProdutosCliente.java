@@ -224,7 +224,4 @@ public class ProdutosCliente extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
 }
