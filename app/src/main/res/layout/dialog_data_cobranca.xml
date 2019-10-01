@@ -20,7 +20,7 @@
         android:id="@+id/textInputLayout12"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="128dp"
-        android:layout_height="67dp"
+        android:layout_height="69dp"
         android:layout_marginStart="24dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView23"
         app:layout_constraintStart_toEndOf="@+id/textView23"
@@ -29,7 +29,8 @@
         <EditText
             android:id="@+id/ed_data_venda"
             android:layout_width="125dp"
-            android:layout_height="64dp" />
+            android:layout_height="64dp"
+            android:focusable="false" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,7 +74,8 @@
         <EditText
             android:id="@+id/ed_data_cobranca"
             android:layout_width="125dp"
-            android:layout_height="64dp" />
+            android:layout_height="64dp"
+            android:focusable="false"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

@@ -60,11 +60,10 @@ public class ProdutosCliente extends AppCompatActivity {
 
     TextView teste_soma;
 
-    private Cliente cliente;
     Produto produto = new Produto();
     AccessFirebase accessFirebase = new AccessFirebase();
 
-    String nome, id_cliente_2;
+    String id_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,15 +79,19 @@ public class ProdutosCliente extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        cliente = getIntent().getExtras().getParcelable("info_cliente");
-        id_cliente_2 = getIntent().getExtras().getString("id_cliente");
+        Intent receber = getIntent();
+        Bundle data = receber.getExtras();
 
-        nome = cliente.getNome();
+        id_data = data.getString("id_data_compra");
 
-        getSupportActionBar().setTitle(nome);
+        setTitle("Produtos do Cliente");
+
+       /* nome = cliente.getNome();
+
+        getSupportActionBar().setTitle(nome);*/
+
         ler_dados_clientes();
         soma_total();
-
 
         fb_prod_cliente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,8 +113,6 @@ public class ProdutosCliente extends AppCompatActivity {
 
                 cliente.show();
             }
-
-
         });
 
     }
@@ -132,7 +133,7 @@ public class ProdutosCliente extends AppCompatActivity {
         produto.setTotal(String.valueOf(Float.parseFloat(qtd_produto.getText().toString()) * Float.parseFloat(vl_produto.getText().toString())));
         produto.setData(data);
 
-        accessFirebase.salva_produtos(produto.getData(), produto.getNomedoproduto(), produto.getQuantidade(), produto.getValor(), produto.getTotal(), id_cliente_2);
+        accessFirebase.salva_produtos(produto.getData(), produto.getNomedoproduto(), produto.getQuantidade(), produto.getValor(), produto.getTotal(), id_data);
 
     }
 
@@ -140,7 +141,7 @@ public class ProdutosCliente extends AppCompatActivity {
     public void ler_dados_clientes() {
 
         query = cl_clientes
-                .whereEqualTo("id", id_cliente_2)
+                .whereEqualTo("id", id_data)
                 .orderBy("nomedoproduto", Query.Direction.DESCENDING);
 
         firt_cad_clientes = new FirestoreRecyclerOptions.Builder<Produto>()
@@ -168,7 +169,7 @@ public class ProdutosCliente extends AppCompatActivity {
 
     public void soma_total() {
 
-        cl_clientes.whereEqualTo("id", id_cliente_2)
+        cl_clientes.whereEqualTo("id", id_data)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -207,20 +208,20 @@ public class ProdutosCliente extends AppCompatActivity {
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+               /* Intent i_home = new Intent(ProdutosCliente.this, DatasVendasCobranca.class);
+                startActivity(i_home);
+                finish();*/
 
-        int i = item.getItemId();
+                onBackPressed();
 
-        if (i == android.R.id.home) {
-
-            startActivity(new Intent(getApplicationContext(), DatasVendasCobranca.class));
-            finish();
-            return true;
-
-        } else if (i == R.id.somar) {
-
-            soma_total();
-            return true;
-
+               break;
+            case R.id.somar:
+                soma_total();
+                break;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

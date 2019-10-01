@@ -71,7 +71,7 @@ public class AccessFirebase extends AppCompatActivity {
 
         Map<String,String> map = new HashMap<>();
 
-        map.put("id",id);
+        map.put("id_data",id);
         map.put("data_venda",data_venda);
         map.put("data_cobranca",data_cobranca);
 

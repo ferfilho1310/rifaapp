@@ -1,5 +1,6 @@
 package com.example.apprifa.Controlers;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -44,7 +45,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
     Query query;
     FirestoreRecyclerOptions<DataCobrancaVenda> rc_options_datas;
 
-    String id_cliente_2;
+    private String id_cliente_2;
 
     DataCobrancaVenda datasVendasCobranca = new DataCobrancaVenda();
 
@@ -66,7 +67,6 @@ public class DatasVendasCobranca extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = findViewById(R.id.fab_data_venda);
-        id_cliente_2 = getIntent().getExtras().getString("id_cliente");
         rc_datas = findViewById(R.id.rc_data_cobranca);
 
         setTitle("Datas de venda e cobrança");
@@ -74,7 +74,10 @@ public class DatasVendasCobranca extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        FirebaseApp.initializeApp(DatasVendasCobranca.this);
+        id_cliente_2 = getIntent().getExtras().getString("id_cliente");
+
+        Log.d("Id", id_cliente_2);
+
 
         ler_dados_firestore_datas();
 
@@ -165,21 +168,22 @@ public class DatasVendasCobranca extends AppCompatActivity {
         datasVendasCobranca.setData_cobranca(ed_data_cobranca.getText().toString());
         datasVendasCobranca.setData_venda(ed_data_venda.getText().toString());
 
-        new AccessFirebase().data_cobranca(id_cliente_2, datasVendasCobranca.getData_venda(), datasVendasCobranca.getData_venda());
+        new AccessFirebase().data_cobranca(id_cliente_2, datasVendasCobranca.getData_venda(), datasVendasCobranca.getData_cobranca());
 
     }
 
+    @SuppressLint("WrongConstant")
     public void ler_dados_firestore_datas() {
 
-        query = cl_datas.whereEqualTo("id",id_cliente_2);
+        query = cl_datas.whereEqualTo("id_data", id_cliente_2);
 
         rc_options_datas = new FirestoreRecyclerOptions.Builder<DataCobrancaVenda>()
-                .setQuery(query,DataCobrancaVenda.class)
+                .setQuery(query, DataCobrancaVenda.class)
                 .build();
 
         adapter_datas = new Adapter_Data_Cobranca(rc_options_datas);
         rc_datas.setAdapter(adapter_datas);
-        rc_datas.setLayoutManager(new LinearLayoutManager(DatasVendasCobranca.this,LinearLayoutManager.VERTICAL,false));
+        rc_datas.setLayoutManager(new LinearLayoutManager(DatasVendasCobranca.this, LinearLayoutManager.VERTICAL, false));
         rc_datas.setHasFixedSize(true);
 
         adapter_datas.setOnItemClicklistener(new Adapter_Data_Cobranca.OnItemClickListener() {
@@ -187,8 +191,11 @@ public class DatasVendasCobranca extends AppCompatActivity {
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 
                 String id_data = documentSnapshot.getId();
-                Intent i_data = new Intent(getApplicationContext(),ProdutosCliente.class);
-                i_data.putExtra("id_data_compra",id_data);
+
+                Intent i_data = new Intent(getApplicationContext(), ProdutosCliente.class);
+                Bundle data = new Bundle();
+                data.putString("id_data_compra", id_data);
+                i_data.putExtras(data);
                 startActivity(i_data);
 
             }
@@ -207,12 +214,23 @@ public class DatasVendasCobranca extends AppCompatActivity {
         adapter_datas.stopListening();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i_back = new Intent(DatasVendasCobranca.this, MainActivity.class);
+        startActivity(i_back);
+        finish();
+    }
+
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent i_cad_user = new Intent(getApplicationContext(), MainActivity.class);//ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
-                startActivity(i_cad_user);//O efeito ao ser pressionado do botão (no caso abre a activity)
-                finish();  //Método para matar a activity e não deixa-lá indexada na pilhagem
+
+                Intent i_cad_user = new Intent(DatasVendasCobranca.this, MainActivity.class);
+                startActivity(i_cad_user);
+                finish();
+
                 break;
             default:
                 break;

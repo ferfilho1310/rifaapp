@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
                 Cliente cliente_snap = documentSnapshot.toObject(Cliente.class);
                 String id_cliente = documentSnapshot.getId();
 
-                Intent i_cliente = new Intent(getApplicationContext(), ProdutosCliente.class);
+                Intent i_cliente = new Intent(getApplicationContext(), DatasVendasCobranca.class);
                 i_cliente.putExtra("info_cliente", cliente_snap);
                 i_cliente.putExtra("id_cliente", id_cliente);
                 startActivity(i_cliente);
@@ -259,8 +259,7 @@ public class MainActivity extends AppCompatActivity {
 
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setQueryHint("Pesquisar");
-        searchView.setIconified(false);
-        searchView.setFocusable(false);
+        //searchView.setIconified(false);
 
         //searchView.onActionViewExpanded();
 
