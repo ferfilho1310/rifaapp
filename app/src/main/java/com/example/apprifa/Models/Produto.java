@@ -7,13 +7,15 @@ public class Produto {
     private String valor;
     private String total;
     private String data;
+    private Boolean recebido;
 
-    public Produto(String nomedoproduto, String quantidade, String valor,String total, String data) {
+    public Produto(String nomedoproduto, String quantidade, String valor,String total, String data, Boolean recebido) {
         this.nomedoproduto = nomedoproduto;
         this.quantidade = quantidade;
         this.valor = valor;
         this.total = total;
         this.data = data;
+        this.recebido = recebido;
     }
 
     public Produto() {
@@ -57,5 +59,13 @@ public class Produto {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public Boolean getRecebido() {
+        return recebido;
+    }
+
+    public void setRecebido(Boolean recebido) {
+        this.recebido = recebido;
     }
 }

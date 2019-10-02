@@ -218,9 +218,9 @@ public class DatasVendasCobranca extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent i_back = new Intent(DatasVendasCobranca.this, MainActivity.class);
-        startActivity(i_back);
-        finish();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
@@ -228,6 +228,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
             case android.R.id.home:
 
                 Intent i_cad_user = new Intent(DatasVendasCobranca.this, MainActivity.class);
+                i_cad_user.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i_cad_user);
                 finish();
 

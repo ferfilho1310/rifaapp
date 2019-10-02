@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.example.apprifa.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
 
 public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, Adapter_produtos_cliente.Viewholder_prod_cliente> {
 
@@ -53,6 +55,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
         viewholder_prod_cliente.valor_produto.setText(produto.getValor());
         viewholder_prod_cliente.total.setText(produto.getTotal());
         viewholder_prod_cliente.data.setText(produto.getData());
+        //viewholder_prod_cliente.recebido.setChecked(produto.getRecebido());
 
         viewholder_prod_cliente.btn_excluir_prod.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +71,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
                         delete_categoria(viewholder_prod_cliente.getAdapterPosition());
 
                     }
-                }).setNegativeButton("Cancelar",null);
+                }).setNegativeButton("Cancelar", null);
                 alert_excluir.show();
             }
         });
@@ -80,11 +83,11 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
         getSnapshots().getSnapshot(i).getReference().delete();
     }
 
-
     class Viewholder_prod_cliente extends RecyclerView.ViewHolder {
 
-        TextView nome_produto, quantidade_produto, valor_produto,total,data;
+        TextView nome_produto, quantidade_produto, valor_produto, total, data;
         Button btn_excluir_prod;
+        CheckBox recebido;
 
         public Viewholder_prod_cliente(@NonNull View itemView) {
             super(itemView);
@@ -95,6 +98,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
             total = itemView.findViewById(R.id.txt_total);
             btn_excluir_prod = itemView.findViewById(R.id.btn_excluir_produto);
             data = itemView.findViewById(R.id.txt_data);
+            recebido = itemView.findViewById(R.id.ch_recebido);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -109,7 +113,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
             });
 
         }
-
     }
 
     public interface OnItemClickListener {
@@ -119,6 +122,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
     public void setOnItemClicklistener(OnItemClickListener listener) {
         this.listener = listener;
     }
+
 }
 
 
