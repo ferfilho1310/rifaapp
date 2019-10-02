@@ -14,18 +14,34 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.apprifa.Controlers.ProdutosCliente;
 import com.example.apprifa.Models.Produto;
 import com.example.apprifa.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.gson.internal.bind.ReflectiveTypeAdapterFactory;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, Adapter_produtos_cliente.Viewholder_prod_cliente> {
 
 
     private OnItemClickListener listener;
     Context context;
+
+    FirebaseAuth db_users = FirebaseAuth.getInstance();
+
+    FirebaseFirestore db_clientes = FirebaseFirestore.getInstance();
+    CollectionReference cl_clientes = db_clientes.collection("produtos_cliente")
+            .document(db_users.getUid())
+            .collection("produtos");
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -55,7 +71,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
         viewholder_prod_cliente.valor_produto.setText(produto.getValor());
         viewholder_prod_cliente.total.setText(produto.getTotal());
         viewholder_prod_cliente.data.setText(produto.getData());
-        //viewholder_prod_cliente.recebido.setChecked(produto.getRecebido());
 
         viewholder_prod_cliente.btn_excluir_prod.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +85,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
                         delete_categoria(viewholder_prod_cliente.getAdapterPosition());
 
+
                     }
                 }).setNegativeButton("Cancelar", null);
                 alert_excluir.show();
@@ -83,7 +99,21 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
         getSnapshots().getSnapshot(i).getReference().delete();
     }
 
-    class Viewholder_prod_cliente extends RecyclerView.ViewHolder {
+    public void delete_valor(int i) {
+
+        getSnapshots().getSnapshot(i).getReference().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                /*DocumentSnapshot queryDocumentSnapshots = task.getResult();
+                queryDocumentSnapshots.get("total");*/
+
+
+            }
+        });
+    }
+
+    public class Viewholder_prod_cliente extends RecyclerView.ViewHolder {
 
         TextView nome_produto, quantidade_produto, valor_produto, total, data;
         Button btn_excluir_prod;
@@ -111,7 +141,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
                     }
                 }
             });
-
         }
     }
 
@@ -122,7 +151,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
     public void setOnItemClicklistener(OnItemClickListener listener) {
         this.listener = listener;
     }
-
 }
 
 

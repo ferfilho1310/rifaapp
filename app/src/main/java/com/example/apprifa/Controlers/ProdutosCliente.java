@@ -78,6 +78,7 @@ public class ProdutosCliente extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
 
         Intent receber = getIntent();
         Bundle data = receber.getExtras();
@@ -133,7 +134,8 @@ public class ProdutosCliente extends AppCompatActivity {
         produto.setTotal(String.valueOf(Float.parseFloat(qtd_produto.getText().toString()) * Float.parseFloat(vl_produto.getText().toString())));
         produto.setData(data);
 
-        accessFirebase.salva_produtos(produto.getData(), produto.getNomedoproduto(), produto.getQuantidade(), produto.getValor(), produto.getTotal(), id_data);
+        accessFirebase.salva_produtos(produto.getData(), produto.getNomedoproduto(), produto.getQuantidade(),
+                produto.getValor(), produto.getTotal(), id_data);
 
     }
 

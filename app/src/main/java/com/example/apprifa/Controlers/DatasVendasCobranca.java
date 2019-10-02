@@ -73,12 +73,12 @@ public class DatasVendasCobranca extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
 
         id_cliente_2 = getIntent().getExtras().getString("id_cliente");
 
         Log.d("Id", id_cliente_2);
-
-
+        
         ler_dados_firestore_datas();
 
         fab.setOnClickListener(new View.OnClickListener() {

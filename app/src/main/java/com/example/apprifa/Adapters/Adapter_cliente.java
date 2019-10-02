@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,22 +12,32 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apprifa.Models.Cliente;
+import com.example.apprifa.Models.DataCobrancaVenda;
+import com.example.apprifa.Models.Produto;
 import com.example.apprifa.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_cliente.Viewholder_clientes> implements Filterable {
 
@@ -34,6 +45,13 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
     List<Cliente> list_client;
     List<Cliente> list_client_full;
     Context context;
+
+    FirebaseAuth db_users = FirebaseAuth.getInstance();
+
+    FirebaseFirestore db_datas = FirebaseFirestore.getInstance();
+    CollectionReference cl_datas = db_datas.collection("datas_cobranca")
+            .document(db_users.getUid())
+            .collection("data_de_cobraca");
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -57,7 +75,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull final Adapter_cliente.Viewholder_clientes viewholder_clientes, int i, @NonNull Cliente cliente) {
+    protected void onBindViewHolder(@NonNull final Adapter_cliente.Viewholder_clientes viewholder_clientes, int i, @NonNull final Cliente cliente) {
 
         viewholder_clientes.nome.setText(cliente.getNome());
         viewholder_clientes.endereco_cli.setText(cliente.getLogradouro());
@@ -77,8 +95,26 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        delete_categoria(viewholder_clientes.getAdapterPosition());
+                        cl_datas
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
+                                        QuerySnapshot querySnapshot = task.getResult();
+
+                                        for (DataCobrancaVenda data : querySnapshot.toObjects(DataCobrancaVenda.class)) {
+
+                                            if (data != null) {
+
+                                                Toast.makeText(context, "Produto nao pode ser excluido", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        }
+                                    }
+                                });
+
+                        delete_categoria(viewholder_clientes.getAdapterPosition());
                     }
                 }).setNegativeButton("Cancelar", null);
 
