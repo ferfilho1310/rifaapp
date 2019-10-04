@@ -51,6 +51,8 @@ public class ProdutosCliente extends AppCompatActivity {
 
     FirebaseAuth db_users = FirebaseAuth.getInstance();
 
+    //Criando instacia do banco de dados para salvar os produtos na coleção "produtos"
+
     FirebaseFirestore db_clientes = FirebaseFirestore.getInstance();
     CollectionReference cl_clientes = db_clientes.collection("produtos_cliente")
             .document(db_users.getUid())
@@ -76,9 +78,12 @@ public class ProdutosCliente extends AppCompatActivity {
         fb_prod_cliente = findViewById(R.id.fab_produto_cliente);
         teste_soma = findViewById(R.id.txt_soma);
 
+        //Métodos para aparecer o botão "back" na action bar customizavel
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+
+        //Recuperando o ID do item vindo da classe "DataVendasCobranca"
 
         Intent receber = getIntent();
         Bundle data = receber.getExtras();
@@ -90,6 +95,9 @@ public class ProdutosCliente extends AppCompatActivity {
        /* nome = cliente.getNome();
 
         getSupportActionBar().setTitle(nome);*/
+
+        //Instacia das classes para ler dados salvos
+        // no banco e somar o valor devido de cada cliente
 
         ler_dados_clientes();
         soma_total();
@@ -115,8 +123,9 @@ public class ProdutosCliente extends AppCompatActivity {
                 cliente.show();
             }
         });
-
     }
+
+    //classe para salvar os produtos do cliente no banco de dados
 
     private void salva_produto_cliente(View custom_layout) {
 
@@ -134,13 +143,19 @@ public class ProdutosCliente extends AppCompatActivity {
         produto.setTotal(String.valueOf(Float.parseFloat(qtd_produto.getText().toString()) * Float.parseFloat(vl_produto.getText().toString())));
         produto.setData(data);
 
+        //Metodo para salvar os dados do produto do cliente no banco de dados
+
         accessFirebase.salva_produtos(produto.getData(), produto.getNomedoproduto(), produto.getQuantidade(),
                 produto.getValor(), produto.getTotal(), id_data);
 
     }
-
+    //Classe para ler dados do banco
     @SuppressLint("WrongConstant")
     public void ler_dados_clientes() {
+
+        //Query será executada para filtrar os dados de acordo
+        //com o ID da data seleciona vindo da classe "DatasVendasCobranca"
+        //e ordenando pelo nome do produto adquirido pelo cliente
 
         query = cl_clientes
                 .whereEqualTo("id", id_data)
@@ -149,6 +164,9 @@ public class ProdutosCliente extends AppCompatActivity {
         firt_cad_clientes = new FirestoreRecyclerOptions.Builder<Produto>()
                 .setQuery(query, Produto.class)
                 .build();
+
+        //Instacia do adapter do produtos para carregar
+        // os itens vindo do banco do banco no formado de linhas na vertical
 
         adapter_produtos_cliente = new Adapter_produtos_cliente(firt_cad_clientes, ProdutosCliente.this);
         rc_prod_cliente.setLayoutManager(new LinearLayoutManager(ProdutosCliente.this, LinearLayoutManager.VERTICAL, false));
@@ -168,6 +186,9 @@ public class ProdutosCliente extends AppCompatActivity {
         super.onStop();
         adapter_produtos_cliente.stopListening();
     }
+
+    //Classe para percorrer todos os produtos salvos no banco
+    //e somar o valor devido de cada cliente.
 
     public void soma_total() {
 
@@ -201,6 +222,8 @@ public class ProdutosCliente extends AppCompatActivity {
                 });
     }
 
+    //Classe para inflar o menu customizado
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -218,7 +241,7 @@ public class ProdutosCliente extends AppCompatActivity {
 
                 onBackPressed();
 
-               break;
+                break;
             case R.id.somar:
                 soma_total();
                 break;
