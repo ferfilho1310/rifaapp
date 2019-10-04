@@ -56,14 +56,14 @@
         android:layout_width="114dp"
         android:layout_height="21dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="56dp"
+        android:layout_marginEnd="92dp"
         android:text="Textview"
         android:textColor="@android:color/black"
         android:textSize="17dp"
         app:layout_constraintBottom_toBottomOf="@+id/txt_data"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView17"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/txt_total"
@@ -82,12 +82,12 @@
 
     <TextView
         android:id="@+id/textView16"
-        android:layout_width="193dp"
-        android:layout_height="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/quantidade_de_produtos"
+        android:text="@string/valor_do_produto"
         android:textColor="@android:color/black"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +101,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/valor_do_produto"
+        android:text="@string/quantidade_de_produtos"
         android:textColor="@android:color/black"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView22"
@@ -123,7 +123,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView16"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.392"
         app:layout_constraintStart_toEndOf="@+id/textView16"
         app:layout_constraintTop_toTopOf="@+id/textView16"
         app:layout_constraintVertical_bias="0.0" />

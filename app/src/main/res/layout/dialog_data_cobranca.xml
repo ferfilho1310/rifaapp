@@ -30,16 +30,17 @@
             android:id="@+id/ed_data_venda"
             android:layout_width="125dp"
             android:layout_height="64dp"
-            android:focusable="false" />
+            android:focusable="false"
+            android:inputType="date"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_data_venda"
         android:layout_width="75dp"
         android:layout_height="55dp"
         android:background="@drawable/corner_color"
-        android:text="Inserir"
+        android:src="@drawable/ic_date"
         app:layout_constraintBottom_toBottomOf="@+id/textInputLayout12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.32"
@@ -75,15 +76,16 @@
             android:id="@+id/ed_data_cobranca"
             android:layout_width="125dp"
             android:layout_height="64dp"
-            android:focusable="false"/>
+            android:focusable="false"
+            android:inputType="date"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_data_cobranca"
         android:layout_width="75dp"
         android:layout_height="55dp"
-        android:text="Inserir"
+        android:src="@drawable/ic_date"
         android:background="@drawable/corner_color"
         app:layout_constraintBottom_toBottomOf="@+id/textInputLayout13"
         app:layout_constraintEnd_toEndOf="parent"

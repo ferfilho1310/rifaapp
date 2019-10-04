@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.example.apprifa.R;
 import com.google.firebase.FirebaseApp;
@@ -78,7 +79,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
         id_cliente_2 = getIntent().getExtras().getString("id_cliente");
 
         Log.d("Id", id_cliente_2);
-        
+
         ler_dados_firestore_datas();
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -89,8 +90,8 @@ public class DatasVendasCobranca extends AppCompatActivity {
                 final View custom_layout = getLayoutInflater().inflate(R.layout.dialog_data_cobranca, null);
                 cliente.setView(custom_layout);
 
-                Button inseri_data_venda = custom_layout.findViewById(R.id.btn_data_venda);
-                Button inseri_data_cobranca = custom_layout.findViewById(R.id.btn_data_cobranca);
+                ImageButton inseri_data_venda = custom_layout.findViewById(R.id.btn_data_venda);
+                ImageButton inseri_data_cobranca = custom_layout.findViewById(R.id.btn_data_cobranca);
 
                 ed_data_cobranca = custom_layout.findViewById(R.id.ed_data_cobranca);
                 ed_data_venda = custom_layout.findViewById(R.id.ed_data_venda);
@@ -175,7 +176,8 @@ public class DatasVendasCobranca extends AppCompatActivity {
     @SuppressLint("WrongConstant")
     public void ler_dados_firestore_datas() {
 
-        query = cl_datas.whereEqualTo("id_data", id_cliente_2);
+        query = cl_datas.whereEqualTo("id_data", id_cliente_2)
+                .orderBy("data_venda", Query.Direction.ASCENDING);
 
         rc_options_datas = new FirestoreRecyclerOptions.Builder<DataCobrancaVenda>()
                 .setQuery(query, DataCobrancaVenda.class)
