@@ -120,9 +120,11 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<Cliente> call, Response<Cliente> response) {
 
-                                if (response.isSuccessful()) {
+                                if (response.isSuccessful() && response != null) {
 
                                     Cliente cliente_cep = response.body();
+
+                                    Log.d("Retrono WBC",response.toString());
 
                                     String cl_endereco = cliente_cep.getLogradouro();
                                     String cl_bairro = cliente_cep.getBairro();
