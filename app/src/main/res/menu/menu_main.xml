@@ -6,7 +6,8 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:icon="@drawable/ic_exit"/>
 
     <item
         android:id="@+id/search"
@@ -16,6 +17,7 @@
         app:showAsAction="collapseActionView|ifRoom"
         app:actionViewClass="android.widget.SearchView"
         android:focusable="true"
-        android:focusableInTouchMode="true"/>
+        android:focusableInTouchMode="true"
+        />
 
 </menu>

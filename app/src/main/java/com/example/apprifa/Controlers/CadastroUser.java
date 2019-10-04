@@ -100,7 +100,6 @@ public class CadastroUser extends AppCompatActivity {
                 new AccessFirebase().cadastrar_user(ed_user_nome.getText().toString(), ed_user_email.getText().toString()
                         , ed_user_senha.getText().toString(), ed_user_confirmasenha.getText().toString(), usuario.getSexo(), CadastroUser.this);
 
-                pgd_cadastro_user.dismiss();
             }
         });
 

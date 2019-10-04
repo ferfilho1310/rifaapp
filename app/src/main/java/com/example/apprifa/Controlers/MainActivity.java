@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
 
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setQueryHint("Pesquisar");
-        //searchView.setIconified(false);
+        searchView.setIconified(false);
 
         //searchView.onActionViewExpanded();
 

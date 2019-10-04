@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="340dp"
+    android:layout_width="match_parent"
     android:layout_height="280dp"
     android:layout_gravity="center"
     android:background="@drawable/shadow_dialog"
@@ -143,7 +143,7 @@
         android:id="@+id/txt_cidade"
         android:layout_width="94dp"
         android:layout_height="48dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="60dp"
         android:gravity="left"
         android:text="Textview"
         android:textColor="@android:color/black"
@@ -181,15 +181,14 @@
         android:id="@+id/btn_atualizar_cliente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
+        android:layout_marginStart="68dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/corner_color"
         android:text="@string/atualizar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_cidade"
-        app:layout_constraintVertical_bias="0.451" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_cidade" />
 
     <Button
         android:id="@+id/btn_excluir_cliente"
@@ -203,9 +202,8 @@
         android:text="@string/excluir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintHorizontal_bias="0.581"
         app:layout_constraintStart_toEndOf="@+id/btn_atualizar_cliente"
-        app:layout_constraintTop_toBottomOf="@+id/txt_cidade"
-        app:layout_constraintVertical_bias="0.451" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_cidade" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

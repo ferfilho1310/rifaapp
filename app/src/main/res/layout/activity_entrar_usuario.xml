@@ -103,7 +103,8 @@
         <EditText
             android:id="@+id/ed_entrar_email"
             android:layout_width="293dp"
-            android:layout_height="64dp" />
+            android:layout_height="64dp"
+            android:inputType="textEmailAddress"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

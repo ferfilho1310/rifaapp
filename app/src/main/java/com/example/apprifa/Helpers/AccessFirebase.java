@@ -128,7 +128,7 @@ public class AccessFirebase extends AppCompatActivity {
 
                             Intent intent = new Intent(activity, MainActivity.class);
                             activity.startActivity(intent);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             activity.finish();
 
                             db_users.add(map);
