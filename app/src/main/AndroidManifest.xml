@@ -15,7 +15,7 @@
             android:label="@string/title_activity_datas_vendas_cobranca"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".Controlers.Reset_senha"
+            android:name=".Controlers.ResetSenha"
             android:label="@string/title_activity_reset_senha"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Controlers.MainActivity"
+            android:name=".Controlers.CadastroCliente"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"

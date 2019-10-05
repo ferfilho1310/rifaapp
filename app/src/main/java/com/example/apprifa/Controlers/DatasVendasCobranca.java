@@ -8,11 +8,9 @@ import android.os.Bundle;
 
 import com.example.apprifa.Adapters.Adapter_Data_Cobranca;
 import com.example.apprifa.Helpers.AccessFirebase;
-import com.example.apprifa.Models.Cliente;
 import com.example.apprifa.Models.DataCobrancaVenda;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,19 +21,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.apprifa.R;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.type.Date;
 
 import java.util.Calendar;
 
@@ -176,14 +171,13 @@ public class DatasVendasCobranca extends AppCompatActivity {
     @SuppressLint("WrongConstant")
     public void ler_dados_firestore_datas() {
 
-        query = cl_datas.whereEqualTo("id_data", id_cliente_2)
-                .orderBy("data_venda", Query.Direction.ASCENDING);
+        query = cl_datas.whereEqualTo("id_data", id_cliente_2);
 
         rc_options_datas = new FirestoreRecyclerOptions.Builder<DataCobrancaVenda>()
                 .setQuery(query, DataCobrancaVenda.class)
                 .build();
 
-        adapter_datas = new Adapter_Data_Cobranca(rc_options_datas);
+        adapter_datas = new Adapter_Data_Cobranca(rc_options_datas,DatasVendasCobranca.this);
         rc_datas.setAdapter(adapter_datas);
         rc_datas.setLayoutManager(new LinearLayoutManager(DatasVendasCobranca.this, LinearLayoutManager.VERTICAL, false));
         rc_datas.setHasFixedSize(true);
@@ -220,7 +214,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), CadastroCliente.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
@@ -229,7 +223,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
 
-                Intent i_cad_user = new Intent(DatasVendasCobranca.this, MainActivity.class);
+                Intent i_cad_user = new Intent(DatasVendasCobranca.this, CadastroCliente.class);
                 i_cad_user.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i_cad_user);
                 finish();

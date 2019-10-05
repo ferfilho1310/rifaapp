@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,45 +90,18 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
             public void onClick(View view) {
 
                 AlertDialog.Builder alert_excluir = new AlertDialog.Builder(context);
-                alert_excluir.setMessage("Deseja realmente excluir os dados cliente ?");
+                alert_excluir.setMessage("Deseja realmente excluir os dados do cliente ?");
 
                 alert_excluir.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        cl_datas
-                                .get()
-                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                                        QuerySnapshot querySnapshot = task.getResult();
-
-                                        for (DataCobrancaVenda data : querySnapshot.toObjects(DataCobrancaVenda.class)) {
-
-                                            if (data != null) {
-
-                                                Toast.makeText(context, "Produto nao pode ser excluido", Toast.LENGTH_SHORT).show();
-                                            }
-
-                                        }
-                                    }
-                                });
-
                         delete_categoria(viewholder_clientes.getAdapterPosition());
+
                     }
                 }).setNegativeButton("Cancelar", null);
 
                 alert_excluir.show();
-            }
-        });
-
-        viewholder_clientes.atualizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String id = getSnapshots().getSnapshot(viewholder_clientes.getAdapterPosition()).getId();
-
             }
         });
     }
@@ -184,7 +158,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
     public class Viewholder_clientes extends RecyclerView.ViewHolder {
 
         public TextView nome, endereco_cli, numero, bairro, cidade, estado;
-        Button excluir, atualizar;
+        ImageButton excluir;
 
         public Viewholder_clientes(@NonNull View itemView) {
             super(itemView);
@@ -195,7 +169,6 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
             bairro = itemView.findViewById(R.id.txt_bairro);
             cidade = itemView.findViewById(R.id.txt_cidade);
             excluir = itemView.findViewById(R.id.btn_excluir_cliente);
-            atualizar = itemView.findViewById(R.id.btn_atualizar_cliente);
             estado = itemView.findViewById(R.id.txt_estado);
 
             itemView.setOnClickListener(new View.OnClickListener() {

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -116,7 +117,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
     public class Viewholder_prod_cliente extends RecyclerView.ViewHolder {
 
         TextView nome_produto, quantidade_produto, valor_produto, total, data;
-        Button btn_excluir_prod;
+        ImageButton btn_excluir_prod;
         CheckBox recebido;
 
         public Viewholder_prod_cliente(@NonNull View itemView) {

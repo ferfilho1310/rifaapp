@@ -1,8 +1,6 @@
 package com.example.apprifa.Controlers;
 
 import android.annotation.SuppressLint;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,15 +34,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import java.util.List;
-
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 @SuppressLint("Registered")
-public class MainActivity extends AppCompatActivity {
+public class CadastroCliente extends AppCompatActivity {
 
     private static final int TIME_INTERVAL = 3000;//# milliseconds, desired time passed between two back presses.
     private long mBackPressed;
@@ -91,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                final AlertDialog.Builder cliente_dialog = new AlertDialog.Builder(MainActivity.this);
+                final AlertDialog.Builder cliente_dialog = new AlertDialog.Builder(CadastroCliente.this);
                 final View custom_layout = getLayoutInflater().inflate(R.layout.dialog_cad_clientes, null);
                 cliente_dialog.setView(custom_layout);
 
@@ -124,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     Cliente cliente_cep = response.body();
 
-                                    Log.d("Retrono WBC",response.toString());
+                                    Log.d("Retrono WBC", response.toString());
 
                                     String cl_endereco = cliente_cep.getLogradouro();
                                     String cl_bairro = cliente_cep.getBairro();
@@ -181,8 +177,8 @@ public class MainActivity extends AppCompatActivity {
                 .setQuery(query, Cliente.class)
                 .build();
 
-        adapter_cliente = new Adapter_cliente(firt_cad_clientes, MainActivity.this);
-        layout_manager_cliente = new GridLayoutManager(MainActivity.this, 1);
+        adapter_cliente = new Adapter_cliente(firt_cad_clientes, CadastroCliente.this);
+        layout_manager_cliente = new GridLayoutManager(CadastroCliente.this, 1);
 
         rc_produto.setLayoutManager(layout_manager_cliente);
         rc_produto.setHasFixedSize(true);
@@ -213,8 +209,8 @@ public class MainActivity extends AppCompatActivity {
                 .setQuery(query, Cliente.class)
                 .build();
 
-        adapter_cliente = new Adapter_cliente(firt_cad_clientes, MainActivity.this);
-        layout_manager_cliente = new GridLayoutManager(MainActivity.this, 1);
+        adapter_cliente = new Adapter_cliente(firt_cad_clientes, CadastroCliente.this);
+        layout_manager_cliente = new GridLayoutManager(CadastroCliente.this, 1);
 
         rc_produto.setHasFixedSize(true);
         rc_produto.setAdapter(adapter_cliente);
@@ -226,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                 Cliente cliente_snap = documentSnapshot.toObject(Cliente.class);
                 String id_cliente = documentSnapshot.getId();
 
-                Intent i_cliente = new Intent(getApplicationContext(), DatasVendasCobranca.class);
+                Intent i_cliente = new Intent(CadastroCliente.this, DatasVendasCobranca.class);
                 i_cliente.putExtra("info_cliente", cliente_snap);
                 i_cliente.putExtra("id_cliente", id_cliente);
                 startActivity(i_cliente);
@@ -299,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         } else {
 
-            Toast.makeText(MainActivity.this, "Toque novamente para sair", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CadastroCliente.this, "Toque novamente para sair", Toast.LENGTH_SHORT).show();
 
             mBackPressed = System.currentTimeMillis();
         }
@@ -312,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.action_settings) {
 
-            new AccessFirebase().sign_out_firebase(MainActivity.this);
+            new AccessFirebase().sign_out_firebase(CadastroCliente.this);
             return true;
 
         }

@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.apprifa.Helpers.AccessFirebase;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,7 +16,7 @@ import android.widget.EditText;
 
 import com.example.apprifa.R;
 
-public class Reset_senha extends AppCompatActivity {
+public class ResetSenha extends AppCompatActivity {
 
     EditText email_reset;
     Button reset_senha;
@@ -38,7 +36,7 @@ public class Reset_senha extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        prg_reset_senha = new ProgressDialog(Reset_senha.this);
+        prg_reset_senha = new ProgressDialog(ResetSenha.this);
 
         setTitle("Trocar senha");
 
@@ -49,7 +47,7 @@ public class Reset_senha extends AppCompatActivity {
                 prg_reset_senha.setMessage("Enviando...");
                 prg_reset_senha.show();
 
-                new AccessFirebase().reset_senha(email_reset.getText().toString(),Reset_senha.this);
+                new AccessFirebase().reset_senha(email_reset.getText().toString(), ResetSenha.this);
 
                 prg_reset_senha.dismiss();
 

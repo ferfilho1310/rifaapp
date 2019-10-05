@@ -1,7 +1,6 @@
 package com.example.apprifa.Helpers;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.apprifa.Controlers.EntrarUsuario;
-import com.example.apprifa.Controlers.MainActivity;
+import com.example.apprifa.Controlers.CadastroCliente;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -126,7 +125,7 @@ public class AccessFirebase extends AppCompatActivity {
                             map.put("Confirmar Senha:", senhaconfir);
                             map.put("Sexo:", sexo);
 
-                            Intent intent = new Intent(activity, MainActivity.class);
+                            Intent intent = new Intent(activity, CadastroCliente.class);
                             activity.startActivity(intent);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             activity.finish();
@@ -155,7 +154,7 @@ public class AccessFirebase extends AppCompatActivity {
 
         if (firebaseAuth.getCurrentUser() != null) {
 
-            Intent intent = new Intent(activity, MainActivity.class);
+            Intent intent = new Intent(activity, CadastroCliente.class);
             activity.startActivity(intent);
             activity.finish();
         }
@@ -189,7 +188,7 @@ public class AccessFirebase extends AppCompatActivity {
                 try {
                     if (task.isSuccessful()) {
 
-                        Intent i_entrar_prof = new Intent(activity, MainActivity.class);
+                        Intent i_entrar_prof = new Intent(activity, CadastroCliente.class);
                         activity.startActivity(i_entrar_prof);
                         i_entrar_prof.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         activity.finish();

@@ -79,7 +79,7 @@ public class EntrarUsuario extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent i_reset = new Intent(getApplicationContext(),Reset_senha.class);
+                Intent i_reset = new Intent(getApplicationContext(), ResetSenha.class);
                 startActivity(i_reset);
 
             }
