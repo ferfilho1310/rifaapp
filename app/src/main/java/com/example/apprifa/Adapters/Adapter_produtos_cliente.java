@@ -24,12 +24,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.core.Query;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import static java.util.Objects.*;
 
 public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, Adapter_produtos_cliente.Viewholder_prod_cliente> {
 
@@ -39,10 +45,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
     FirebaseAuth db_users = FirebaseAuth.getInstance();
 
-    FirebaseFirestore db_clientes = FirebaseFirestore.getInstance();
-    CollectionReference cl_clientes = db_clientes.collection("produtos_cliente")
-            .document(db_users.getUid())
-            .collection("produtos");
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -86,9 +88,9 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
                         delete_categoria(viewholder_prod_cliente.getAdapterPosition());
 
-
                     }
                 }).setNegativeButton("Cancelar", null);
+
                 alert_excluir.show();
             }
         });
@@ -98,6 +100,8 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
     public void delete_categoria(int i) {
 
         getSnapshots().getSnapshot(i).getReference().delete();
+
+
     }
 
     public void delete_valor(int i) {

@@ -3,12 +3,10 @@ package com.example.apprifa.Adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
@@ -19,26 +17,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apprifa.Models.Cliente;
-import com.example.apprifa.Models.DataCobrancaVenda;
-import com.example.apprifa.Models.Produto;
 import com.example.apprifa.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ScheduledExecutorService;
+
+import javax.annotation.Nullable;
 
 public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_cliente.Viewholder_clientes> implements Filterable {
 
@@ -50,9 +47,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
     FirebaseAuth db_users = FirebaseAuth.getInstance();
 
     FirebaseFirestore db_datas = FirebaseFirestore.getInstance();
-    CollectionReference cl_datas = db_datas.collection("datas_cobranca")
-            .document(db_users.getUid())
-            .collection("data_de_cobraca");
+
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -98,6 +93,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
 
                         delete_categoria(viewholder_clientes.getAdapterPosition());
 
+
                     }
                 }).setNegativeButton("Cancelar", null);
 
@@ -108,7 +104,9 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
 
     public void delete_categoria(int i) {
 
-        getSnapshots().getSnapshot(i).getReference().delete();
+        final DocumentReference documentReference = getSnapshots().getSnapshot(i).getReference();
+
+        documentReference.delete();
     }
 
     @Override
