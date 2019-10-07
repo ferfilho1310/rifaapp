@@ -110,36 +110,11 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
     }
 
-    public void recebido_valor(int i, boolean valor_recebido){
-
-        Map<String,String> map = new HashMap<>();
-
-        map.put("recebido",String.valueOf(valor_recebido));
-
-        getSnapshots().getSnapshot(i).getReference().set(map);
-
-    }
-
-    public void delete_valor(int i) {
-
-        getSnapshots().getSnapshot(i).getReference().get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-
-                /*DocumentSnapshot queryDocumentSnapshots = task.getResult();
-                queryDocumentSnapshots.get("total");*/
-
-
-            }
-        });
-    }
 
     public class Viewholder_prod_cliente extends RecyclerView.ViewHolder {
 
         TextView nome_produto, quantidade_produto, valor_produto, total, data;
         ImageButton btn_excluir_prod;
-        RadioGroup rg_situacao;
-        RadioButton pago,aberto;
 
         public Viewholder_prod_cliente(@NonNull View itemView) {
             super(itemView);
@@ -150,10 +125,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
             total = itemView.findViewById(R.id.txt_total);
             btn_excluir_prod = itemView.findViewById(R.id.btn_excluir_produto);
             data = itemView.findViewById(R.id.txt_data);
-            rg_situacao = itemView.findViewById(R.id.rd_situacao);
-            pago = itemView.findViewById(R.id.pago);
-            aberto = itemView.findViewById(R.id.aberto);
-
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

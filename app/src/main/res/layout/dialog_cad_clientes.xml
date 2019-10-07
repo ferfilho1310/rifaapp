@@ -29,7 +29,6 @@
         app:layout_constraintTop_toTopOf="@+id/textView"
         app:layout_constraintVertical_bias="0.464">
 
-
         <EditText
             android:id="@+id/ed_nome"
             android:layout_width="191dp"
@@ -51,8 +50,8 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="63dp"
-        android:layout_height="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="44dp"
         android:text="@string/endereco"
@@ -84,7 +83,7 @@
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_height="21dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="48dp"
         android:text="@string/numero"
@@ -115,8 +114,8 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="43dp"
-        android:layout_height="21dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="48dp"
         android:text="@string/bairro"
@@ -167,8 +166,8 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="52dp"
-        android:layout_height="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:text="@string/cidade"
@@ -199,7 +198,7 @@
     <TextView
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
-        android:layout_height="17dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="52dp"
         android:text="@string/estado"
