@@ -36,28 +36,16 @@ public class ResetSenha extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        prg_reset_senha = new ProgressDialog(ResetSenha.this);
-
         setTitle("Trocar senha");
 
         reset_senha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                prg_reset_senha.setMessage("Enviando...");
-                prg_reset_senha.show();
-
                 new AccessFirebase().reset_senha(email_reset.getText().toString(), ResetSenha.this);
 
-                prg_reset_senha.dismiss();
-
-                Intent i_reset = new Intent(getApplicationContext(),EntrarUsuario.class);
-                startActivity(i_reset);
-                finish();
             }
         });
-
-
     }
 
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar

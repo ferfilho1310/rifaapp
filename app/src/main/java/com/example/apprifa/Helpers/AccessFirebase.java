@@ -1,6 +1,7 @@
 package com.example.apprifa.Helpers;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
@@ -66,13 +67,13 @@ public class AccessFirebase extends AppCompatActivity {
 
     }
 
-    public void data_cobranca(String id,String data_venda,String data_cobranca){
+    public void data_cobranca(String id, String data_venda, String data_cobranca) {
 
-        Map<String,String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
 
-        map.put("id_data",id);
-        map.put("data_venda",data_venda);
-        map.put("data_cobranca",data_cobranca);
+        map.put("id_data", id);
+        map.put("data_venda", data_venda);
+        map.put("data_cobranca", data_cobranca);
 
         db_datas_cobranca.document(firebaseAuth.getUid()).collection("data_de_cobraca").add(map);
 
@@ -218,18 +219,23 @@ public class AccessFirebase extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
-                if (task.isSuccessful()) {
+                try {
+                    if (task.isSuccessful()) {
 
-                    Toast.makeText(context, "Enviado e-mail para reset de senha para " + email, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Enviado e-mail para reset de senha para " + email, Toast.LENGTH_LONG).show();
 
-                    Intent intent = new Intent(context, EntrarUsuario.class);
-                    context.startActivity(intent);
-                    context.finish();
+                        Intent intent = new Intent(context, EntrarUsuario.class);
+                        context.startActivity(intent);
+                        context.finish();
 
-                } else {
+                    } else {
 
-                    Toast.makeText(context, "E-mail inválido", Toast.LENGTH_LONG).show();
-                    return;
+                        Toast.makeText(context, "E-mail inválido", Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+
+                    Toast.makeText(context, "Erro ao enviar e-mail de recuperação:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
                 }
             }
         });

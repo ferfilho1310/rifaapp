@@ -308,7 +308,20 @@ public class CadastroCliente extends AppCompatActivity {
 
         if (id == R.id.action_settings) {
 
-            new AccessFirebase().sign_out_firebase(CadastroCliente.this);
+            AlertDialog.Builder alert_exit = new AlertDialog.Builder(CadastroCliente.this);
+            alert_exit.setMessage("Você deseja realmente sair ?");
+
+            alert_exit.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                    new AccessFirebase().sign_out_firebase(CadastroCliente.this);
+
+                }
+            }).setNegativeButton("Cancelar", null);
+
+            alert_exit.show();
+
             return true;
 
         }
