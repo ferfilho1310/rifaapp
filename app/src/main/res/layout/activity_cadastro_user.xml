@@ -22,7 +22,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
@@ -184,8 +183,8 @@
 
     <Button
         android:id="@+id/btn_cadastrar"
-        android:layout_width="309dp"
-        android:layout_height="67dp"
+        android:layout_width="286dp"
+        android:layout_height="73dp"
         android:background="@drawable/corner_color"
         android:text="@string/cadastrar"
         app:layout_constraintBottom_toBottomOf="parent"
