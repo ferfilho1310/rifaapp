@@ -8,8 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,17 +25,21 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.core.Query;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import static java.util.Objects.*;
@@ -67,7 +74,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull final Viewholder_prod_cliente viewholder_prod_cliente, int i, @NonNull Produto produto) {
+    protected void onBindViewHolder(@NonNull final Viewholder_prod_cliente viewholder_prod_cliente, int i, @NonNull final Produto produto) {
 
         viewholder_prod_cliente.nome_produto.setText(produto.getNomedoproduto());
         viewholder_prod_cliente.quantidade_produto.setText(produto.getQuantidade());
@@ -101,6 +108,15 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
         getSnapshots().getSnapshot(i).getReference().delete();
 
+    }
+
+    public void recebido_valor(int i, boolean valor_recebido){
+
+        Map<String,String> map = new HashMap<>();
+
+        map.put("recebido",String.valueOf(valor_recebido));
+
+        getSnapshots().getSnapshot(i).getReference().set(map);
 
     }
 
@@ -122,7 +138,8 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
         TextView nome_produto, quantidade_produto, valor_produto, total, data;
         ImageButton btn_excluir_prod;
-        CheckBox recebido;
+        RadioGroup rg_situacao;
+        RadioButton pago,aberto;
 
         public Viewholder_prod_cliente(@NonNull View itemView) {
             super(itemView);
@@ -133,7 +150,10 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
             total = itemView.findViewById(R.id.txt_total);
             btn_excluir_prod = itemView.findViewById(R.id.btn_excluir_produto);
             data = itemView.findViewById(R.id.txt_data);
-            recebido = itemView.findViewById(R.id.ch_recebido);
+            rg_situacao = itemView.findViewById(R.id.rd_situacao);
+            pago = itemView.findViewById(R.id.pago);
+            aberto = itemView.findViewById(R.id.aberto);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -61,6 +61,7 @@ public class AccessFirebase extends AppCompatActivity {
         map.put("valor", valor);
         map.put("total", total);
         map.put("data", dia);
+        map.put("recebido","");
 
         db_prod_cliente.document(firebaseAuth.getUid()).collection("produtos").add(map);
 
