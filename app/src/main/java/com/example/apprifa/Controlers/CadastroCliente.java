@@ -157,6 +157,7 @@ public class CadastroCliente extends AppCompatActivity {
                         cliente.setEstado(ed_estado.getText().toString());
                         cliente.setCep(ed_cep.getText().toString());
 
+
                         accessFirebase.salva_clientes(cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
                                 , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado());
 

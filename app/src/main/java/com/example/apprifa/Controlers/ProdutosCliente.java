@@ -142,11 +142,12 @@ public class ProdutosCliente extends AppCompatActivity {
         produto.setValor(vl_produto.getText().toString());
         produto.setTotal(String.valueOf(Float.parseFloat(qtd_produto.getText().toString()) * Float.parseFloat(vl_produto.getText().toString())));
         produto.setData(data);
+        produto.setRecebido(false);
 
         //Metodo para salvar os dados do produto do cliente no banco de dados
 
         accessFirebase.salva_produtos(produto.getData(), produto.getNomedoproduto(), produto.getQuantidade(),
-                produto.getValor(), produto.getTotal(), id_data);
+                produto.getValor(), produto.getTotal(), id_data,produto.getRecebido());
 
     }
     //Classe para ler dados do banco

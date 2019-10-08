@@ -37,7 +37,7 @@ public class AccessFirebase extends AppCompatActivity {
 
     public void salva_clientes(String nome, String enderecocliente, String numero, String bairro, String cidade, String cep, String estado) {
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
         map.put("nome", nome);
         map.put("logradouro", enderecocliente);
@@ -47,14 +47,15 @@ public class AccessFirebase extends AppCompatActivity {
         map.put("cep", cep);
         map.put("estado", estado);
 
+
         /*databaseReference.child(firebaseAuth.getUid()).child("Serviços").push().setValue(map_categ_serv);*/
 
         firebaseFirestore.document(firebaseAuth.getUid()).collection("cliente").add(map);
     }
 
-    public void salva_produtos(String dia, String nomedoproduto, String quantidade, String valor, String total, String id) {
+    public void salva_produtos(String dia, String nomedoproduto, String quantidade, String valor, String total, String id,boolean recebido) {
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
         map.put("id", id);
         map.put("nomedoproduto", nomedoproduto);
@@ -62,6 +63,7 @@ public class AccessFirebase extends AppCompatActivity {
         map.put("valor", valor);
         map.put("total", total);
         map.put("data", dia);
+        map.put("recebido",recebido);
 
         db_prod_cliente.document(firebaseAuth.getUid()).collection("produtos").add(map);
 

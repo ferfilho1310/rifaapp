@@ -50,8 +50,8 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
     private OnItemClickListener listener;
     Context context;
 
+    List<Produto> ls_produto = new ArrayList<>();
     FirebaseAuth db_users = FirebaseAuth.getInstance();
-
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -76,11 +76,23 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
     @Override
     protected void onBindViewHolder(@NonNull final Viewholder_prod_cliente viewholder_prod_cliente, int i, @NonNull final Produto produto) {
 
+        viewholder_prod_cliente.ch_recebido.setOnCheckedChangeListener(null);
+
         viewholder_prod_cliente.nome_produto.setText(produto.getNomedoproduto());
         viewholder_prod_cliente.quantidade_produto.setText(produto.getQuantidade());
         viewholder_prod_cliente.valor_produto.setText(produto.getValor());
         viewholder_prod_cliente.total.setText(produto.getTotal());
         viewholder_prod_cliente.data.setText(produto.getData());
+        viewholder_prod_cliente.ch_recebido.setChecked(produto.getRecebido());
+
+        viewholder_prod_cliente.ch_recebido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                estado_check_box(viewholder_prod_cliente.getAdapterPosition(), b);
+
+            }
+        });
 
         viewholder_prod_cliente.btn_excluir_prod.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,11 +122,20 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
     }
 
+    public void estado_check_box(int i, boolean b) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("recebido", b);
+
+        getSnapshots().getSnapshot(i).getReference().update(map);
+    }
 
     public class Viewholder_prod_cliente extends RecyclerView.ViewHolder {
 
         TextView nome_produto, quantidade_produto, valor_produto, total, data;
         ImageButton btn_excluir_prod;
+        CheckBox ch_recebido;
 
         public Viewholder_prod_cliente(@NonNull View itemView) {
             super(itemView);
@@ -125,6 +146,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
             total = itemView.findViewById(R.id.txt_total);
             btn_excluir_prod = itemView.findViewById(R.id.btn_excluir_produto);
             data = itemView.findViewById(R.id.txt_data);
+            ch_recebido = itemView.findViewById(R.id.ch_recebido);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -137,6 +159,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
                     }
                 }
             });
+
         }
     }
 
