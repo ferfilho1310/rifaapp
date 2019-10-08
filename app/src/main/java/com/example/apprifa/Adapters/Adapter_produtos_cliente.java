@@ -113,7 +113,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
                 alert_excluir.show();
             }
         });
-
     }
 
     public void delete_categoria(int i) {
