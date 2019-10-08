@@ -50,9 +50,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
     private OnItemClickListener listener;
     Context context;
 
-    List<Produto> ls_produto = new ArrayList<>();
-    FirebaseAuth db_users = FirebaseAuth.getInstance();
-
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
