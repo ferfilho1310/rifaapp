@@ -112,17 +112,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_local" />
 
+
     <TextView
         android:id="@+id/txt_bairro"
         android:layout_width="78dp"
         android:layout_height="54dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
         android:text="Textview"
         android:textColor="@android:color/black"
+        app:layout_constraintEnd_toStartOf="@+id/txt_cidade"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
 
     <TextView
         android:id="@+id/textView9"
@@ -134,21 +135,22 @@
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="@+id/textView10"
         app:layout_constraintEnd_toStartOf="@+id/textView20"
-        app:layout_constraintHorizontal_bias="0.524"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toTopOf="@+id/textView10"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/txt_cidade"
         android:layout_width="94dp"
         android:layout_height="48dp"
-        android:layout_marginStart="60dp"
         android:gravity="left"
         android:text="Textview"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="@+id/txt_bairro"
-        app:layout_constraintStart_toEndOf="@+id/txt_bairro"
+        app:layout_constraintEnd_toEndOf="@+id/textView9"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView9"
         app:layout_constraintTop_toTopOf="@+id/txt_bairro"
         app:layout_constraintVertical_bias="0.0" />
 

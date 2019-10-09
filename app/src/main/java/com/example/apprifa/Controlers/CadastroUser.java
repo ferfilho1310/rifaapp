@@ -31,7 +31,7 @@ public class CadastroUser extends AppCompatActivity {
 
     String masculino, feminino;
 
-    ProgressDialog pgd_cadastro_user;
+   ProgressDialog pgd_cadastro_user;
 
     Usuario usuario = new Usuario();
 
@@ -77,18 +77,17 @@ public class CadastroUser extends AppCompatActivity {
                 if (rd_feminino.isChecked()) {
 
                     feminino = "Feminino";
-                    usuario.setSexo(masculino);
+                    usuario.setSexo(feminino);
                 }
 
                 if (rd_masculino.isChecked()) {
 
                     masculino = "Masculino";
-                    usuario.setSexo(feminino);
+                    usuario.setSexo(masculino);
 
                 }
             }
         });
-
 
         cadastro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,9 +101,7 @@ public class CadastroUser extends AppCompatActivity {
 
             }
         });
-
     }
-
 
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {

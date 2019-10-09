@@ -49,11 +49,11 @@ public class EntrarUsuario extends AppCompatActivity {
 
         new AccessFirebase().persistir_usuer(EntrarUsuario.this);
 
+        progressDialog = new ProgressDialog(EntrarUsuario.this);
+
         btn_entrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                progressDialog = new ProgressDialog(EntrarUsuario.this);
 
                 progressDialog.setMessage("Entrando...");
                 progressDialog.show();
@@ -69,6 +69,8 @@ public class EntrarUsuario extends AppCompatActivity {
 
                 Intent i_cadastrar = new Intent(getApplicationContext(), CadastroUser.class);
                 startActivity(i_cadastrar);
+                i_cadastrar.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
 
             }
         });
