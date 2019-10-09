@@ -192,4 +192,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.137" />
 
+    <ImageButton
+        android:id="@+id/img_edit_cliente"
+        android:layout_width="53dp"
+        android:layout_height="43dp"
+        android:background="@android:color/white"
+        android:src="@drawable/ic_edit"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_excluir_cliente"
+        app:layout_constraintEnd_toStartOf="@+id/btn_excluir_cliente"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView6"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.571" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

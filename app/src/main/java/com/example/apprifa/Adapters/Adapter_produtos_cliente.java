@@ -56,6 +56,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
      *
      * @param options
      */
+
     public Adapter_produtos_cliente(@NonNull FirestoreRecyclerOptions<Produto> options, Context context) {
         super(options);
         this.context = context;
