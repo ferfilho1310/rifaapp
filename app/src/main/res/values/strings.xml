@@ -38,6 +38,5 @@
     <string name="cadastrar_produtos">Cadastrar Produtos</string>
     <string name="total">Total:</string>
     <string name="cadastrar_datas">Cadastrar datas</string>
-    <string name="recebido">Recebido</string>
     <string name="cadastrar_cliente">Cadastrar Cliente</string>
 </resources>

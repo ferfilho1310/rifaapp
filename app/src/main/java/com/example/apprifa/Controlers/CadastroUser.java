@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.apprifa.Helpers.AccessFirebase;
-import com.example.apprifa.Models.Usuario;
+import com.example.apprifa.Models.Cliente;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -33,7 +33,7 @@ public class CadastroUser extends AppCompatActivity {
 
    ProgressDialog pgd_cadastro_user;
 
-    Usuario usuario = new Usuario();
+    Cliente usuario = new Cliente();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

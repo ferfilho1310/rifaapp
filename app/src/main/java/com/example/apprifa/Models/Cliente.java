@@ -12,8 +12,9 @@ public class Cliente implements Parcelable {
     private String cidade;
     private String estado;
     private String cep;
+    private String sexo;
 
-    public Cliente( String logradouro, String nome, String numero, String bairro, String cidade, String estado, String cep) {
+    public Cliente( String logradouro, String nome, String numero, String bairro, String cidade, String estado, String cep, String sexo) {
         this.logradouro = logradouro;
         this.nome = nome;
         this.numero = numero;
@@ -21,6 +22,7 @@ public class Cliente implements Parcelable {
         this.cidade = cidade;
         this.estado = estado;
         this.cep = cep;
+        this.sexo = sexo;
     }
 
     public Cliente() {
@@ -34,6 +36,7 @@ public class Cliente implements Parcelable {
         cidade = in.readString();
         estado = in.readString();
         cep = in.readString();
+        sexo = in.readString();
     }
 
     public static final Creator<Cliente> CREATOR = new Creator<Cliente>() {
@@ -105,6 +108,14 @@ public class Cliente implements Parcelable {
         this.cep = cep;
     }
 
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -119,5 +130,6 @@ public class Cliente implements Parcelable {
         parcel.writeString(cidade);
         parcel.writeString(estado);
         parcel.writeString(cep);
+        parcel.writeString(sexo);
     }
 }
