@@ -46,13 +46,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_cliente.Viewholder_clientes> implements Filterable {
+public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_cliente.Viewholder_clientes> {
 
     private OnItemClickListener listener;
-    List<Cliente> list_client;
-    List<Cliente> list_client_full;
-    Context context;
-    EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep;
+    private Context context;
+    private EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -209,71 +207,13 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
         map.put("cep", cep);
         map.put("estado", estado);
 
-        getSnapshots().getSnapshot(i).getReference().update(map);
-    }
-
-    public void mostra_dados(int i, String nome, String enderecocliente, String numero, String bairro, String cidade, String cep, String estado) {
-
-        Map<String, Object> map = new HashMap<>();
-
-        map.get("nome");
-        map.get("logradouro");
-        map.get("numero");
-        map.get("bairro");
-        map.get("cidade");
-        map.get("cep");
-        map.get("estado");
 
         getSnapshots().getSnapshot(i).getReference().update(map);
     }
 
-    @Override
-    public Filter getFilter() {
-        return exampleFilter;
-    }
+    class Viewholder_clientes extends RecyclerView.ViewHolder {
 
-    private Filter exampleFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence charSequence) {
-
-            List<Cliente> filterlist = new ArrayList<>();
-
-            if (charSequence == null || charSequence.length() == 0) {
-
-                filterlist.addAll(list_client_full);
-
-            } else {
-
-                String filter = charSequence.toString().toLowerCase().trim();
-
-                for (Cliente cliente : list_client_full) {
-
-                    if (cliente.getNome().toLowerCase().contains(filter)) {
-
-                        filterlist.add(cliente);
-                    }
-                }
-            }
-
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = filterlist;
-
-            return filterResults;
-        }
-
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-
-            list_client.clear();
-            list_client.addAll((List) filterResults.values);
-            notifyDataSetChanged();
-
-        }
-    };
-
-    public class Viewholder_clientes extends RecyclerView.ViewHolder {
-
-        public TextView nome, endereco_cli, numero, bairro, cidade, estado;
+        TextView nome, endereco_cli, numero, bairro, cidade, estado;
         ImageButton excluir, editar;
 
         public Viewholder_clientes(@NonNull View itemView) {
