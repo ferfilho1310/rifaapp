@@ -27,6 +27,8 @@ import com.example.apprifa.Models.Cliente;
 import com.example.apprifa.R;
 import com.example.apprifa.Retrofit.RetrofitInit;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.github.rtoshiro.util.format.SimpleMaskFormatter;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -98,6 +100,10 @@ public class CadastroCliente extends AppCompatActivity {
                 ed_cidade = custom_layout.findViewById(R.id.ed_cidade);
                 ed_estado = custom_layout.findViewById(R.id.ed_estado);
                 ed_cep = custom_layout.findViewById(R.id.ed_cep);
+
+               /* SimpleMaskFormatter maskcep = new SimpleMaskFormatter("NN.NNN-NNN");
+                MaskTextWatcher cep_mask = new MaskTextWatcher(ed_cep,maskcep);
+                ed_cep.addTextChangedListener(cep_mask);*/
 
                 Button btn_cep = custom_layout.findViewById(R.id.btn_busca_cep);
 

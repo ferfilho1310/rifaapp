@@ -130,6 +130,8 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
         ed_estado = custom_layout.findViewById(R.id.ed_estado);
         ed_cep = custom_layout.findViewById(R.id.ed_cep);
 
+
+
         Button btn_cep = custom_layout.findViewById(R.id.btn_busca_cep);
 
         btn_cep.setOnClickListener(new View.OnClickListener() {

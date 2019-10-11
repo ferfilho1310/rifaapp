@@ -132,8 +132,6 @@ public class DatasVendasCobranca extends AppCompatActivity {
 
                                 String data = i2 + "/" + (i1 + 1) + "/" + i;
 
-                                Log.d("Data", data);
-
                                 ed_data_cobranca.setText(data);
 
                             }
