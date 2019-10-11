@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apprifa.Models.Cliente;
+import com.example.apprifa.Models.Produto;
 import com.example.apprifa.R;
 import com.example.apprifa.Retrofit.RetrofitInit;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -103,89 +104,98 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
                 alert_excluir.show();
             }
         });
+
         viewholder_clientes.editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
 
-                AlertDialog.Builder alrt_update_client = new AlertDialog.Builder(context);
-                final View custom_layout = LayoutInflater.from(view.getContext()).inflate(R.layout.dialog_cad_clientes, null);
-                alrt_update_client.setView(custom_layout);
+                cadastro_cliente_update_adaptar(viewholder_clientes, view, cliente);
 
-                ed_nome = custom_layout.findViewById(R.id.ed_nome);
-                ed_endereco = custom_layout.findViewById(R.id.edend);
-                ed_numero = custom_layout.findViewById(R.id.ed_numero);
-                ed_bairro = custom_layout.findViewById(R.id.ed_bairro);
-                ed_cidade = custom_layout.findViewById(R.id.ed_cidade);
-                ed_estado = custom_layout.findViewById(R.id.ed_estado);
-                ed_cep = custom_layout.findViewById(R.id.ed_cep);
-
-                Button btn_cep = custom_layout.findViewById(R.id.btn_busca_cep);
-
-                btn_cep.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        if (ed_cep.length() < 8 || ed_cep.length() > 8) {
-                            Toast.makeText(context, "CEP inválido", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-
-                        Call<Cliente> call_cep = new RetrofitInit().getcep().cep(ed_cep.getText().toString());
-
-                        call_cep.enqueue(new Callback<Cliente>() {
-                            @Override
-                            public void onResponse(Call<Cliente> call, Response<Cliente> response) {
-
-                                if (response.isSuccessful() && response != null) {
-
-                                    Cliente cliente_cep = response.body();
-
-                                    Log.d("Retrono WBC", response.toString());
-
-                                    String cl_endereco = cliente_cep.getLogradouro();
-                                    String cl_bairro = cliente_cep.getBairro();
-                                    String cl_cidade = cliente_cep.getCidade();
-                                    String cl_estado = cliente_cep.getEstado();
-
-                                    ed_endereco.setText(cl_endereco);
-                                    ed_bairro.setText(cl_bairro);
-                                    ed_cidade.setText(cl_cidade);
-                                    ed_estado.setText(cl_estado);
-
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<Cliente> call, Throwable t) {
-
-                                Toast.makeText(context, "Erro ao consultar o CEP", Toast.LENGTH_LONG).show();
-                                Log.e("Error", t.getMessage());
-                            }
-                        });
-                    }
-                });
-
-                alrt_update_client.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        cliente.setNome(ed_nome.getText().toString());
-                        cliente.setLogradouro(ed_endereco.getText().toString());
-                        cliente.setNumero(ed_numero.getText().toString());
-                        cliente.setBairro(ed_bairro.getText().toString());
-                        cliente.setCidade(ed_cidade.getText().toString());
-                        cliente.setEstado(ed_estado.getText().toString());
-                        cliente.setCep(ed_cep.getText().toString());
-
-                        salva_clientes(viewholder_clientes.getAdapterPosition(), cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
-                                , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado());
-
-                    }
-                }).setNegativeButton("Cancelar", null);
-
-                alrt_update_client.show();
             }
         });
+    }
+
+    public void cadastro_cliente_update_adaptar(final Adapter_cliente.Viewholder_clientes viewholder_clientes, View view, final Cliente cliente) {
+
+        AlertDialog.Builder alrt_update_client = new AlertDialog.Builder(context);
+        final View custom_layout = LayoutInflater.from(view.getContext()).inflate(R.layout.dialog_cad_clientes, null);
+        alrt_update_client.setView(custom_layout);
+
+        ed_nome = custom_layout.findViewById(R.id.ed_nome);
+        ed_endereco = custom_layout.findViewById(R.id.edend);
+        ed_numero = custom_layout.findViewById(R.id.ed_numero);
+        ed_bairro = custom_layout.findViewById(R.id.ed_bairro);
+        ed_cidade = custom_layout.findViewById(R.id.ed_cidade);
+        ed_estado = custom_layout.findViewById(R.id.ed_estado);
+        ed_cep = custom_layout.findViewById(R.id.ed_cep);
+
+        Button btn_cep = custom_layout.findViewById(R.id.btn_busca_cep);
+
+        btn_cep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (ed_cep.length() < 8 || ed_cep.length() > 8) {
+                    Toast.makeText(context, "CEP inválido", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                Call<Cliente> call_cep = new RetrofitInit().getcep().cep(ed_cep.getText().toString());
+
+                call_cep.enqueue(new Callback<Cliente>() {
+                    @Override
+                    public void onResponse(Call<Cliente> call, Response<Cliente> response) {
+
+                        if (response.isSuccessful() && response != null) {
+
+                            Cliente cliente_cep = response.body();
+
+                            Log.d("Retrono WBC", response.toString());
+
+                            String cl_endereco = cliente_cep.getLogradouro();
+                            String cl_bairro = cliente_cep.getBairro();
+                            String cl_cidade = cliente_cep.getCidade();
+                            String cl_estado = cliente_cep.getEstado();
+
+                            ed_endereco.setText(cl_endereco);
+                            ed_bairro.setText(cl_bairro);
+                            ed_cidade.setText(cl_cidade);
+                            ed_estado.setText(cl_estado);
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Cliente> call, Throwable t) {
+
+                        Toast.makeText(context, "Erro ao consultar o CEP", Toast.LENGTH_LONG).show();
+                        Log.e("Error", t.getMessage());
+                    }
+                });
+            }
+        });
+
+        alrt_update_client.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                cliente.setNome(ed_nome.getText().toString());
+                cliente.setLogradouro(ed_endereco.getText().toString());
+                cliente.setNumero(ed_numero.getText().toString());
+                cliente.setBairro(ed_bairro.getText().toString());
+                cliente.setCidade(ed_cidade.getText().toString());
+                cliente.setEstado(ed_estado.getText().toString());
+                cliente.setCep(ed_cep.getText().toString());
+
+                salva_clientes(viewholder_clientes.getAdapterPosition(), cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
+                        , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado());
+
+            }
+        }).setNegativeButton("Cancelar", null);
+
+        alrt_update_client.show();
+
+
     }
 
     public void delete_categoria(int i) {

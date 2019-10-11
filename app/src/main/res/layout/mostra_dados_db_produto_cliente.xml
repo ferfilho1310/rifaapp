@@ -38,21 +38,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <TextView
-        android:id="@+id/txt_qtd_produto"
-        android:layout_width="114dp"
-        android:layout_height="21dp"
-        android:layout_marginEnd="16dp"
-        android:text="Textview"
-        android:textColor="@android:color/black"
-        android:textSize="17dp"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_data"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/txt_data"
-        app:layout_constraintTop_toTopOf="@+id/txt_data"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -95,10 +80,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/textView16"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.441"
+        app:layout_constraintHorizontal_bias="0.639"
         app:layout_constraintStart_toEndOf="@+id/textView16"
         app:layout_constraintTop_toTopOf="@+id/textView16"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/txt_total"
@@ -128,6 +113,21 @@
         app:layout_constraintStart_toEndOf="@+id/textView22"
         app:layout_constraintTop_toTopOf="@+id/textView22"
         app:layout_constraintVertical_bias="0.59" />
+
+    <TextView
+        android:id="@+id/txt_qtd_produto"
+        android:layout_width="114dp"
+        android:layout_height="21dp"
+        android:layout_marginEnd="16dp"
+        android:text="Textview"
+        android:textColor="@android:color/black"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.752"
+        app:layout_constraintStart_toEndOf="@+id/txt_data"
+        app:layout_constraintTop_toTopOf="@+id/txt_data"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView15"
@@ -170,35 +170,36 @@
         android:id="@+id/ch_recebido"
         android:layout_width="106dp"
         android:layout_height="39dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:text="@string/recebido"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vlr_produto"
-        app:layout_constraintVertical_bias="0.028" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <CheckBox
         android:id="@+id/ch_receb_parcial"
         android:layout_width="123dp"
         android:layout_height="40dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginEnd="24dp"
         android:text="Recebido parcialmente"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ch_recebido"
-        app:layout_constraintTop_toBottomOf="@+id/txt_total"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toStartOf="@+id/txt_total"
+        app:layout_constraintStart_toEndOf="@+id/vlr_produto"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <CheckBox
         android:id="@+id/ch_devolvido"
         android:layout_width="106dp"
         android:layout_height="39dp"
+        android:layout_marginStart="40dp"
         android:text="Devolvido"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/ch_receb_parcial"
         app:layout_constraintTop_toBottomOf="@+id/txt_total"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
