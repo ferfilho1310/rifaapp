@@ -190,7 +190,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
         TextView nome_produto, quantidade_produto, valor_produto, total, data;
         ImageButton btn_excluir_prod;
-        CheckBox ch_recebido, ch_receb_parcial, ch_devolvido;
+        RadioButton ch_recebido, ch_receb_parcial, ch_devolvido;
 
         public Viewholder_prod_cliente(@NonNull View itemView) {
             super(itemView);
