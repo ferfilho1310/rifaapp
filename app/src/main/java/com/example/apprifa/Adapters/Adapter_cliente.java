@@ -89,7 +89,8 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
             public void onClick(View view) {
 
                 AlertDialog.Builder alert_excluir = new AlertDialog.Builder(context);
-                alert_excluir.setMessage("Deseja realmente excluir os dados do cliente ?");
+                alert_excluir.setMessage("Deseja realmente excluir os dados do cliente ?" +
+                        " \n\n ATENÇÃO: Todos as datas e produtos relacionados ao cliente serão perdidos.");
 
                 alert_excluir.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override

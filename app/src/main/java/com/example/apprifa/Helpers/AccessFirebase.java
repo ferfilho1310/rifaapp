@@ -130,14 +130,12 @@ public class AccessFirebase extends AppCompatActivity {
                             map.put("Sexo:", sexo);
 
                             Intent intent = new Intent(activity, EntrarUsuario.class);
-                            //intent.addFlags();
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             activity.startActivity(intent);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            activity.finish();
 
                             db_users.add(map);
 
-                            Toast.makeText(activity, "Usuário cadastrado com sucesso. Informe o e-mail e a senha cadastrados.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(activity, "Usuário cadastrado com sucesso.", Toast.LENGTH_LONG).show();
 
                         }
                     }
@@ -194,8 +192,8 @@ public class AccessFirebase extends AppCompatActivity {
                     if (task.isSuccessful()) {
 
                         Intent i_entrar_prof = new Intent(activity, CadastroCliente.class);
+                        i_entrar_prof.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         activity.startActivity(i_entrar_prof);
-                        i_entrar_prof.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         activity.finish();
 
                         Toast.makeText(activity, "Login efetuado com sucesso", Toast.LENGTH_LONG).show();
