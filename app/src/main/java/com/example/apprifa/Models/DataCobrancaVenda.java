@@ -64,4 +64,11 @@ public class DataCobrancaVenda implements Parcelable {
         this.data_cobranca = data_cobranca;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

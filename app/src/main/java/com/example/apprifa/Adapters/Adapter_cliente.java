@@ -19,11 +19,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apprifa.Models.Cliente;
+import com.example.apprifa.Models.DataCobrancaVenda;
 import com.example.apprifa.Models.Produto;
 import com.example.apprifa.R;
 import com.example.apprifa.Retrofit.RetrofitInit;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +33,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -52,6 +55,13 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
     private OnItemClickListener listener;
     private Context context;
     private EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep;
+
+    FirebaseAuth db_users = FirebaseAuth.getInstance();
+
+    FirebaseFirestore db_datas = FirebaseFirestore.getInstance();
+    CollectionReference cl_datas = db_datas.collection("datas_cobranca")
+            .document(db_users.getUid())
+            .collection("data_de_cobraca");
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -199,11 +209,28 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
 
     }
 
-    public void delete_categoria(int i) {
+    public void delete_categoria(final int i) {
 
         final DocumentReference documentReference = getSnapshots().getSnapshot(i).getReference();
 
         documentReference.delete();
+
+        cl_datas
+                .whereEqualTo("id_data",documentReference.getId())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                       for( QueryDocumentSnapshot queryDocumentSnapshots : task.getResult()){
+
+                   
+
+                       }
+
+
+                    }
+                });
     }
 
     public void atualizada_dados_cliente_adapter(int i, String nome, String enderecocliente, String numero, String bairro, String cidade, String cep, String estado) {
