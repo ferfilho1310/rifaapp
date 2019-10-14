@@ -83,6 +83,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
 
                 AlertDialog.Builder cliente = new AlertDialog.Builder(DatasVendasCobranca.this);
                 final View custom_layout = getLayoutInflater().inflate(R.layout.dialog_data_cobranca, null);
+                cliente.setTitle("Informe das datas:");
                 cliente.setView(custom_layout);
 
                 ImageButton inseri_data_venda = custom_layout.findViewById(R.id.btn_data_venda);

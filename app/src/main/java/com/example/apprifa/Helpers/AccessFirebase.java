@@ -2,9 +2,14 @@ package com.example.apprifa.Helpers;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,6 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.apprifa.Controlers.EntrarUsuario;
 import com.example.apprifa.Controlers.CadastroCliente;
+import com.example.apprifa.Models.Cliente;
+import com.example.apprifa.R;
+import com.example.apprifa.Retrofit.RetrofitInit;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -22,6 +30,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class AccessFirebase extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -31,9 +43,98 @@ public class AccessFirebase extends AppCompatActivity {
     CollectionReference db_datas_cobranca = FirebaseFirestore.getInstance().collection("datas_cobranca");
     CollectionReference db_users = FirebaseFirestore.getInstance().collection("Users");
 
+    EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep;
+
     public AccessFirebase() {
 
     }
+
+    public void cadastro_cliente(View view, final Cliente cliente, final Activity context) {
+
+        android.app.AlertDialog.Builder alrt_update_client = new android.app.AlertDialog.Builder(context);
+        final View custom_layout = LayoutInflater.from(view.getContext()).inflate(R.layout.dialog_cad_clientes, null);
+        alrt_update_client.setTitle("Informe os dados do cliente:");
+        alrt_update_client.setView(custom_layout);
+
+        ed_nome = custom_layout.findViewById(R.id.ed_nome);
+        ed_endereco = custom_layout.findViewById(R.id.edend);
+        ed_numero = custom_layout.findViewById(R.id.ed_numero);
+        ed_bairro = custom_layout.findViewById(R.id.ed_bairro);
+        ed_cidade = custom_layout.findViewById(R.id.ed_cidade);
+        ed_estado = custom_layout.findViewById(R.id.ed_estado);
+        ed_cep = custom_layout.findViewById(R.id.ed_cep);
+
+
+        Button btn_cep = custom_layout.findViewById(R.id.btn_busca_cep);
+
+        btn_cep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (ed_cep.length() < 8 || ed_cep.length() > 8) {
+                    Toast.makeText(context, "CEP inválido", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                Call<Cliente> call_cep = new RetrofitInit().getcep().cep(ed_cep.getText().toString());
+
+                call_cep.enqueue(new Callback<Cliente>() {
+                    @Override
+                    public void onResponse(Call<Cliente> call, Response<Cliente> response) {
+
+                        if (response.isSuccessful() && response != null) {
+
+                            Cliente cliente_cep = response.body();
+
+                            Log.d("Retrono WBC", response.toString());
+
+                            String cl_endereco = cliente_cep.getLogradouro();
+                            String cl_bairro = cliente_cep.getBairro();
+                            String cl_cidade = cliente_cep.getCidade();
+                            String cl_estado = cliente_cep.getEstado();
+
+                            ed_endereco.setText(cl_endereco);
+                            ed_bairro.setText(cl_bairro);
+                            ed_cidade.setText(cl_cidade);
+                            ed_estado.setText(cl_estado);
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Cliente> call, Throwable t) {
+
+                        Toast.makeText(context, "Erro ao consultar o CEP", Toast.LENGTH_LONG).show();
+                        Log.e("Error", t.getMessage());
+                    }
+                });
+            }
+        });
+
+        alrt_update_client.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                cliente.setNome(ed_nome.getText().toString());
+                cliente.setLogradouro(ed_endereco.getText().toString());
+                cliente.setNumero(ed_numero.getText().toString());
+                cliente.setBairro(ed_bairro.getText().toString());
+                cliente.setCidade(ed_cidade.getText().toString());
+                cliente.setEstado(ed_estado.getText().toString());
+                cliente.setCep(ed_cep.getText().toString());
+
+                salva_clientes(cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
+                        , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado());
+
+
+            }
+        }).setNegativeButton("Cancelar", null);
+
+        alrt_update_client.show();
+
+
+    }
+
 
     public void salva_clientes(String nome, String enderecocliente, String numero, String bairro, String cidade, String cep, String estado) {
 

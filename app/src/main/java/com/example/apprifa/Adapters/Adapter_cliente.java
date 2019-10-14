@@ -110,16 +110,17 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
             @Override
             public void onClick(final View view) {
 
-                cadastro_cliente_update_adaptar(viewholder_clientes, view, cliente);
+                atualiza_dados_cliente(viewholder_clientes, view, cliente);
 
             }
         });
     }
 
-    public void cadastro_cliente_update_adaptar(final Adapter_cliente.Viewholder_clientes viewholder_clientes, View view, final Cliente cliente) {
+    public void atualiza_dados_cliente(final Adapter_cliente.Viewholder_clientes viewholder_clientes, View view, final Cliente cliente) {
 
         AlertDialog.Builder alrt_update_client = new AlertDialog.Builder(context);
         final View custom_layout = LayoutInflater.from(view.getContext()).inflate(R.layout.dialog_cad_clientes, null);
+        alrt_update_client.setTitle("Informe os dados do cliente:");
         alrt_update_client.setView(custom_layout);
 
         ed_nome = custom_layout.findViewById(R.id.ed_nome);
@@ -129,8 +130,6 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
         ed_cidade = custom_layout.findViewById(R.id.ed_cidade);
         ed_estado = custom_layout.findViewById(R.id.ed_estado);
         ed_cep = custom_layout.findViewById(R.id.ed_cep);
-
-
 
         Button btn_cep = custom_layout.findViewById(R.id.btn_busca_cep);
 
@@ -190,14 +189,13 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
                 cliente.setEstado(ed_estado.getText().toString());
                 cliente.setCep(ed_cep.getText().toString());
 
-                salva_clientes(viewholder_clientes.getAdapterPosition(), cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
+                atualizada_dados_cliente_adapter(viewholder_clientes.getAdapterPosition(), cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
                         , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado());
 
             }
         }).setNegativeButton("Cancelar", null);
 
         alrt_update_client.show();
-
 
     }
 
@@ -208,7 +206,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
         documentReference.delete();
     }
 
-    public void salva_clientes(int i, String nome, String enderecocliente, String numero, String bairro, String cidade, String cep, String estado) {
+    public void atualizada_dados_cliente_adapter(int i, String nome, String enderecocliente, String numero, String bairro, String cidade, String cep, String estado) {
 
         Map<String, Object> map = new HashMap<>();
 
@@ -220,11 +218,10 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
         map.put("cep", cep);
         map.put("estado", estado);
 
-
         getSnapshots().getSnapshot(i).getReference().update(map);
     }
 
-    class Viewholder_clientes extends RecyclerView.ViewHolder {
+    public class Viewholder_clientes extends RecyclerView.ViewHolder {
 
         TextView nome, endereco_cli, numero, bairro, cidade, estado;
         ImageButton excluir, editar;

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,10 +45,8 @@ import retrofit2.Response;
 @SuppressLint("Registered")
 public class CadastroCliente extends AppCompatActivity {
 
-    private static final int TIME_INTERVAL = 3000;//# milliseconds, desired time passed between two back presses.
+    private static final int TIME_INTERVAL = 3000; //Intervalo de tempo para click no botão de voltar para sair do aplicativo
     private long mBackPressed;
-
-    EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep;
 
     FloatingActionButton fab_cad_cliente;
     RecyclerView rc_produto;
@@ -89,88 +88,8 @@ public class CadastroCliente extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                final AlertDialog.Builder cliente_dialog = new AlertDialog.Builder(CadastroCliente.this);
-                final View custom_layout = getLayoutInflater().inflate(R.layout.dialog_cad_clientes, null);
-                cliente_dialog.setView(custom_layout);
+                accessFirebase.cadastro_cliente(view, cliente,CadastroCliente.this);
 
-                ed_nome = custom_layout.findViewById(R.id.ed_nome);
-                ed_endereco = custom_layout.findViewById(R.id.edend);
-                ed_numero = custom_layout.findViewById(R.id.ed_numero);
-                ed_bairro = custom_layout.findViewById(R.id.ed_bairro);
-                ed_cidade = custom_layout.findViewById(R.id.ed_cidade);
-                ed_estado = custom_layout.findViewById(R.id.ed_estado);
-                ed_cep = custom_layout.findViewById(R.id.ed_cep);
-
-               /* SimpleMaskFormatter maskcep = new SimpleMaskFormatter("NN.NNN-NNN");
-                MaskTextWatcher cep_mask = new MaskTextWatcher(ed_cep,maskcep);
-                ed_cep.addTextChangedListener(cep_mask);*/
-
-                Button btn_cep = custom_layout.findViewById(R.id.btn_busca_cep);
-
-                btn_cep.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        if (ed_cep.length() < 8 || ed_cep.length() > 8) {
-                            Toast.makeText(getApplicationContext(), "CEP inválido", Toast.LENGTH_LONG).show();
-                            return;
-                        }
-
-                        Call<Cliente> call_cep = new RetrofitInit().getcep().cep(ed_cep.getText().toString());
-
-                        call_cep.enqueue(new Callback<Cliente>() {
-                            @Override
-                            public void onResponse(Call<Cliente> call, Response<Cliente> response) {
-
-                                if (response.isSuccessful() && response != null) {
-
-                                    Cliente cliente_cep = response.body();
-
-                                    Log.d("Retrono WBC", response.toString());
-
-                                    String cl_endereco = cliente_cep.getLogradouro();
-                                    String cl_bairro = cliente_cep.getBairro();
-                                    String cl_cidade = cliente_cep.getCidade();
-                                    String cl_estado = cliente_cep.getEstado();
-
-                                    ed_endereco.setText(cl_endereco);
-                                    ed_bairro.setText(cl_bairro);
-                                    ed_cidade.setText(cl_cidade);
-                                    ed_estado.setText(cl_estado);
-
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<Cliente> call, Throwable t) {
-
-                                Toast.makeText(getApplicationContext(), "Erro ao consultar o CEP", Toast.LENGTH_LONG).show();
-                                Log.e("Error", t.getMessage());
-                            }
-                        });
-                    }
-                });
-
-                cliente_dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        cliente.setNome(ed_nome.getText().toString());
-                        cliente.setLogradouro(ed_endereco.getText().toString());
-                        cliente.setNumero(ed_numero.getText().toString());
-                        cliente.setBairro(ed_bairro.getText().toString());
-                        cliente.setCidade(ed_cidade.getText().toString());
-                        cliente.setEstado(ed_estado.getText().toString());
-                        cliente.setCep(ed_cep.getText().toString());
-
-
-                        accessFirebase.salva_clientes(cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
-                                , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado());
-
-                    }
-                }).setNegativeButton("Cancelar", null);
-
-                cliente_dialog.show();
             }
         });
     }
@@ -291,6 +210,7 @@ public class CadastroCliente extends AppCompatActivity {
         });
         return true;
     }
+
 
     @Override
     public void onBackPressed() {

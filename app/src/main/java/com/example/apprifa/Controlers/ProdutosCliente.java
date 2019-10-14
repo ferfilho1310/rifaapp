@@ -108,6 +108,7 @@ public class ProdutosCliente extends AppCompatActivity {
 
                 AlertDialog.Builder cliente = new AlertDialog.Builder(ProdutosCliente.this);
                 final View custom_layout = getLayoutInflater().inflate(R.layout.dialog_produto_cliente, null);
+                cliente.setTitle("Informe os dados do produto:");
                 cliente.setView(custom_layout);
 
                 cliente.setPositiveButton("OK", new DialogInterface.OnClickListener() {

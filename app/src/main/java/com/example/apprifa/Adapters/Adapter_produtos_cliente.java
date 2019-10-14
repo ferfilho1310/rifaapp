@@ -87,21 +87,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
         viewholder_prod_cliente.ch_receb_parcial.setChecked(produto.getRecebido_parcial());
         viewholder_prod_cliente.ch_devolvido.setChecked(produto.getDevolvido());
 
-       /* if (viewholder_prod_cliente.ch_recebido.isChecked()) {
-            viewholder_prod_cliente.ch_receb_parcial.setChecked(false);
-            viewholder_prod_cliente.ch_devolvido.setChecked(false);
-        }
-
-        if (viewholder_prod_cliente.ch_receb_parcial.isChecked()) {
-            viewholder_prod_cliente.ch_recebido.setChecked(false);
-            viewholder_prod_cliente.ch_devolvido.setChecked(false);
-        }
-
-        if (viewholder_prod_cliente.ch_devolvido.isChecked()) {
-            viewholder_prod_cliente.ch_recebido.setChecked(false);
-            viewholder_prod_cliente.ch_receb_parcial.setChecked(false);
-        }*/
-
         viewholder_prod_cliente.ch_recebido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
