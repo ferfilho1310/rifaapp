@@ -239,9 +239,6 @@ public class ProdutosCliente extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-               /* Intent i_home = new Intent(ProdutosCliente.this, DatasVendasCobranca.class);
-                startActivity(i_home);
-                finish();*/
 
                 onBackPressed();
 
