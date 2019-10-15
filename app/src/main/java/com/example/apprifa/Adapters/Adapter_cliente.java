@@ -25,9 +25,9 @@ import com.example.apprifa.R;
 import com.example.apprifa.Retrofit.RetrofitInit;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -63,6 +63,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
             .document(db_users.getUid())
             .collection("data_de_cobraca");
 
+
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
@@ -96,17 +97,16 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
 
         viewholder_clientes.excluir.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
 
                 AlertDialog.Builder alert_excluir = new AlertDialog.Builder(context);
-                alert_excluir.setMessage("Deseja realmente excluir os dados do cliente ?" +
-                        " \n\n ATENÇÃO: Todos as datas e produtos relacionados ao cliente serão perdidos.");
+                alert_excluir.setMessage("Deseja realmente excluir os dados do cliente ?");
 
                 alert_excluir.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        delete_categoria(viewholder_clientes.getAdapterPosition());
+                        delete_categoria(viewholder_clientes.getAdapterPosition(),view);
 
 
                     }
@@ -209,28 +209,73 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
 
     }
 
-    public void delete_categoria(final int i) {
+    public void delete_categoria(final int i, final View view) {
 
         final DocumentReference documentReference = getSnapshots().getSnapshot(i).getReference();
 
-        documentReference.delete();
-
         cl_datas
-                .whereEqualTo("id_data",documentReference.getId())
+                .whereEqualTo("id_data", documentReference.getId())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                       for( QueryDocumentSnapshot queryDocumentSnapshots : task.getResult()){
+                        QuerySnapshot queryDocumentSnapshot = task.getResult();
 
-                   
+                        if (!queryDocumentSnapshot.isEmpty()) {
 
-                       }
+                            Snackbar.make(view,"Há datas de vendas associadas a este cliente",Snackbar.LENGTH_LONG)
+                                    .show();
 
+                            //Toast.makeText(context, "Há datas de vendas associadas a este cliente", Toast.LENGTH_LONG).show();
 
+                        } else {
+
+                            documentReference.delete();
+                        }
                     }
+
                 });
+
+         /* for (QueryDocumentSnapshot queryDocumentSnapshots : task.getResult()) {
+
+                            Map<String, Object> map = new HashMap<>();
+
+                            map.put("id_data", FieldValue.delete());
+                            map.put("data_venda", FieldValue.delete());
+                            map.put("data_cobranca", FieldValue.delete());
+
+                            queryDocumentSnapshots.getReference().update(map);
+
+                        }*/
+
+        /*cl_clientes
+                .whereEqualTo("id", documentReference1.getId())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        for (QueryDocumentSnapshot queryDocumentSnapshots : task.getResult()) {
+
+                            Map<String, Object> map = new HashMap<>();
+
+                            map.put("id", FieldValue.delete());
+                            map.put("nomedoproduto", FieldValue.delete());
+                            map.put("quantidade", FieldValue.delete());
+                            map.put("valor", FieldValue.delete());
+                            map.put("total", FieldValue.delete());
+                            map.put("data", FieldValue.delete());
+                            map.put("recebido", FieldValue.delete());
+                            map.put("recebido_parcial", FieldValue.delete());
+                            map.put("devolvido", FieldValue.delete());
+
+                            queryDocumentSnapshots.getReference().update(map);
+
+                        }
+                    }
+                });*/
+
     }
 
     public void atualizada_dados_cliente_adapter(int i, String nome, String enderecocliente, String numero, String bairro, String cidade, String cep, String estado) {

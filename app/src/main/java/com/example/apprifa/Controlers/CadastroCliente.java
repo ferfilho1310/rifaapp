@@ -28,8 +28,6 @@ import com.example.apprifa.Models.Cliente;
 import com.example.apprifa.R;
 import com.example.apprifa.Retrofit.RetrofitInit;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.github.rtoshiro.util.format.SimpleMaskFormatter;
-import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;

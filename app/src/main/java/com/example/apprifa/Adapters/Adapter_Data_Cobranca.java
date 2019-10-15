@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,12 +20,30 @@ import com.example.apprifa.Models.DataCobrancaVenda;
 import com.example.apprifa.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class Adapter_Data_Cobranca extends FirestoreRecyclerAdapter<DataCobrancaVenda, Adapter_Data_Cobranca.ViewHolder_datas> {
 
     private OnItemClickListener listener;
     Context context;
+
+    FirebaseAuth db_users = FirebaseAuth.getInstance();
+
+    //Criando instancia do banco de dados para salvar os produtos na coleção "produtos"
+
+    FirebaseFirestore db_clientes = FirebaseFirestore.getInstance();
+    CollectionReference cl_clientes = db_clientes.collection("produtos_cliente")
+            .document(db_users.getUid())
+            .collection("produtos");
+
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -54,7 +73,7 @@ public class Adapter_Data_Cobranca extends FirestoreRecyclerAdapter<DataCobranca
 
         viewHolder_datas.excluir_data.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
 
                 AlertDialog.Builder alert_datas = new AlertDialog.Builder(context);
                 alert_datas.setMessage("Deseja realmente exlcuir a data ?");
@@ -63,7 +82,7 @@ public class Adapter_Data_Cobranca extends FirestoreRecyclerAdapter<DataCobranca
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        excluir_data(viewHolder_datas.getAdapterPosition());
+                        excluir_data(viewHolder_datas.getAdapterPosition(),view);
 
                     }
                 }).setNegativeButton("Cancelar", null);
@@ -73,10 +92,30 @@ public class Adapter_Data_Cobranca extends FirestoreRecyclerAdapter<DataCobranca
         });
     }
 
-    public void excluir_data(int i) {
+    public void excluir_data(int i, final View view) {
 
-        getSnapshots().getSnapshot(i).getReference().delete();
+        final DocumentReference documentReference = getSnapshots().getSnapshot(i).getReference();
 
+        cl_clientes
+                .whereEqualTo("id", documentReference.getId())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        QuerySnapshot queryDocumentSnapshot = task.getResult();
+
+                        if (!queryDocumentSnapshot.isEmpty()) {
+
+                            Snackbar.make(view,"Há vendas associadas a esta data.",Snackbar.LENGTH_LONG)
+                                    .show();
+
+                        } else {
+
+                            documentReference.delete();
+                        }
+                    }
+                });
     }
 
     public class ViewHolder_datas extends RecyclerView.ViewHolder {
