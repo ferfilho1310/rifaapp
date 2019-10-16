@@ -23,6 +23,12 @@ import com.example.apprifa.Helpers.AccessFirebase;
 import com.example.apprifa.Models.Cliente;
 import com.example.apprifa.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -40,6 +46,7 @@ public class CadastroCliente extends AppCompatActivity {
     RecyclerView rc_produto;
     GridLayoutManager layout_manager_cliente;
     FirestoreRecyclerOptions firt_cad_clientes;
+    AdView adView;
 
     Query query;
 
@@ -67,8 +74,17 @@ public class CadastroCliente extends AppCompatActivity {
 
         rc_produto = findViewById(R.id.rc_cad_clientes);
         fab_cad_cliente = findViewById(R.id.fab_cad_clientes);
+        adView = findViewById(R.id.adView);
 
         setTitle("Clientes Cadastrados");
+
+        MobileAds.initialize(CadastroCliente.this, "ca-app-pub-2528240545678093~1740905001");
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        adView.loadAd(adRequest);
 
         ler_dados_clientes();
 

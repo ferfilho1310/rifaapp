@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:fitsSystemWindows="true"
     android:background="@color/backgroundrecycler"
+    android:fitsSystemWindows="true"
     tools:context=".Controlers.CadastroCliente">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -28,27 +28,40 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
-        android:id="@+id/linearLayout"
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-2528240545678093/7895249818"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <RelativeLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="55dp"
+        app:layout_constraintBottom_toBottomOf="@+id/adView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/appBarLayout">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_cad_clientes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="58dp"
             android:layout_marginEnd="0dp"
-            android:layout_marginBottom="55dp"
             android:fitsSystemWindows="true"
             android:paddingStart="8dp"
             android:paddingEnd="8dp" />
@@ -59,23 +72,25 @@
         android:id="@+id/fab_cad_clientes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="52dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="96dp"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"  />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="72dp"
         android:layout_height="39dp"
+        android:gravity="center_horizontal"
         android:text="@string/cadastrar_cliente"
         android:textColor="@android:color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/fab_cad_clientes"
-        app:layout_constraintHorizontal_bias="0.268"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="@+id/fab_cad_clientes"
         app:layout_constraintTop_toBottomOf="@+id/fab_cad_clientes"
-        android:gravity="center_horizontal"/>
+        app:layout_constraintVertical_bias="0.037" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

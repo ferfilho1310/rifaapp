@@ -10,6 +10,9 @@ import com.example.apprifa.Helpers.AccessFirebase;
 import com.example.apprifa.Models.Cliente;
 import com.example.apprifa.Models.Produto;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -48,6 +51,7 @@ public class ProdutosCliente extends AppCompatActivity {
 
     FirestoreRecyclerOptions firt_cad_clientes;
     Query query;
+    AdView adView_produtos;
 
     FirebaseAuth db_users = FirebaseAuth.getInstance();
 
@@ -77,6 +81,7 @@ public class ProdutosCliente extends AppCompatActivity {
         rc_prod_cliente = findViewById(R.id.rc_produto_cliente);
         fb_prod_cliente = findViewById(R.id.fab_produto_cliente);
         teste_soma = findViewById(R.id.txt_soma);
+        adView_produtos = findViewById(R.id.adView_produtos);
 
         //Métodos para aparecer o botão "back" na action bar customizavel
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -92,9 +97,13 @@ public class ProdutosCliente extends AppCompatActivity {
 
         setTitle("Produtos do Cliente");
 
-       /* nome = cliente.getNome();
+        MobileAds.initialize(ProdutosCliente.this, "ca-app-pub-2528240545678093~1740905001");
 
-        getSupportActionBar().setTitle(nome);*/
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        adView_produtos.loadAd(adRequest);
 
         //Instacia das classes para ler dados salvos
         // no banco e somar o valor devido de cada cliente

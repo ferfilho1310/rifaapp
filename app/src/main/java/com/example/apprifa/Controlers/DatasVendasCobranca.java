@@ -10,6 +10,9 @@ import com.example.apprifa.Adapters.Adapter_Data_Cobranca;
 import com.example.apprifa.Helpers.AccessFirebase;
 import com.example.apprifa.Models.DataCobrancaVenda;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AlertDialog;
@@ -40,6 +43,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
 
     Query query;
     FirestoreRecyclerOptions<DataCobrancaVenda> rc_options_datas;
+    AdView adView_vendas;
 
     private String id_cliente_2;
 
@@ -64,6 +68,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab_data_venda);
         rc_datas = findViewById(R.id.rc_data_cobranca);
+        adView_vendas = findViewById(R.id.adView_datas);
 
         setTitle("Datas de venda e cobrança");
 
@@ -73,7 +78,13 @@ public class DatasVendasCobranca extends AppCompatActivity {
 
         id_cliente_2 = getIntent().getExtras().getString("id_cliente");
 
-        Log.d("Id", id_cliente_2);
+        MobileAds.initialize(DatasVendasCobranca.this, "ca-app-pub-2528240545678093~1740905001");
+
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        adView_vendas.loadAd(adRequest);
 
         ler_dados_firestore_datas();
 

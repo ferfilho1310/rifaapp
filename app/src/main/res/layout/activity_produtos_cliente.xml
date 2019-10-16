@@ -8,39 +8,44 @@
     tools:context=".Controlers.ProdutosCliente">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_produto_cliente"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="58dp"
             android:layout_marginEnd="0dp"
-            android:layout_marginBottom="55dp"
+            android:fitsSystemWindows="true"
+            android:layout_marginBottom="85dp"
             android:paddingStart="8dp"
-            android:paddingEnd="8dp"  />
+            android:paddingEnd="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/rc_produto_cliente"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="-28dp"
+            android:layout_marginBottom="-26dp"
             android:text="@string/total"
             android:textColor="@color/colorAccent"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_alignBottom="@+id/rc_produto_cliente"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="25dp"
-            android:layout_marginTop="-28dp"
-            android:layout_marginBottom="-50dp"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txt_soma"
@@ -48,9 +53,9 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/rc_produto_cliente"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="84dp"
+            android:layout_marginStart="67dp"
             android:layout_marginTop="-28dp"
-            android:layout_marginBottom="-50dp"
+            android:layout_marginBottom="-26dp"
             android:text="0.00"
             android:textColor="@color/colorAccent"
             android:textSize="20sp"
@@ -78,8 +83,8 @@
         android:id="@+id/fab_produto_cliente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="52dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="116dp"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -95,5 +100,15 @@
         app:layout_constraintEnd_toEndOf="@+id/fab_produto_cliente"
         app:layout_constraintStart_toStartOf="@+id/fab_produto_cliente"
         app:layout_constraintTop_toBottomOf="@+id/fab_produto_cliente" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView_produtos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-2528240545678093/7895249818"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
