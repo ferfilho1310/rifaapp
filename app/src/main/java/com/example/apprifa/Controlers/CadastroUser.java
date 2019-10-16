@@ -31,8 +31,6 @@ public class CadastroUser extends AppCompatActivity {
 
     String masculino, feminino;
 
-   ProgressDialog pgd_cadastro_user;
-
     Cliente usuario = new Cliente();
 
     @Override
@@ -55,8 +53,6 @@ public class CadastroUser extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-        pgd_cadastro_user = new ProgressDialog(CadastroUser.this);
 
         rd_sexo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -92,9 +88,6 @@ public class CadastroUser extends AppCompatActivity {
         cadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                pgd_cadastro_user.setMessage("Cadastrando");
-                pgd_cadastro_user.show();
 
                 new AccessFirebase().cadastrar_user(ed_user_nome.getText().toString(), ed_user_email.getText().toString()
                         , ed_user_senha.getText().toString(), ed_user_confirmasenha.getText().toString(), usuario.getSexo(), CadastroUser.this);

@@ -153,7 +153,7 @@ public class AccessFirebase extends AppCompatActivity {
         firebaseFirestore.document(firebaseAuth.getUid()).collection("cliente").add(map);
     }
 
-    public void salva_produtos(String dia, String nomedoproduto, String quantidade, String valor, String total, String id,boolean recebido, boolean recebido_parcial,boolean devolvido) {
+    public void salva_produtos(String dia, String nomedoproduto, String quantidade, String valor, String total, String id, boolean recebido, boolean recebido_parcial, boolean devolvido) {
 
         Map<String, Object> map = new HashMap<>();
 
@@ -163,9 +163,9 @@ public class AccessFirebase extends AppCompatActivity {
         map.put("valor", valor);
         map.put("total", total);
         map.put("data", dia);
-        map.put("recebido",recebido);
-        map.put("recebido_parcial",recebido_parcial);
-        map.put("devolvido",devolvido);
+        map.put("recebido", recebido);
+        map.put("recebido_parcial", recebido_parcial);
+        map.put("devolvido", devolvido);
 
         db_prod_cliente.document(firebaseAuth.getUid()).collection("produtos").add(map);
 
@@ -183,7 +183,8 @@ public class AccessFirebase extends AppCompatActivity {
 
     }
 
-    public void cadastrar_user(final String nome, final String email, final String senha, final String senhaconfir, final String sexo, final Activity activity) {
+    public void cadastrar_user(final String nome, final String email, final String senha,
+                               final String senhaconfir, final String sexo, final Activity activity) {
 
         if (TextUtils.isEmpty(nome)) {
             Toast.makeText(activity, "Digite seu nome", Toast.LENGTH_LONG).show();
@@ -211,10 +212,14 @@ public class AccessFirebase extends AppCompatActivity {
             Toast.makeText(activity, "Senha inferior a 6 caracteres.", Toast.LENGTH_LONG).show();
             return;
         }
+        ProgressDialog progressDialog = new ProgressDialog(activity);
 
         if (senha.equals(senhaconfir)) {
 
             try {
+
+                progressDialog.setMessage("Cadastrando...");
+                progressDialog.show();
 
                 firebaseAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -224,11 +229,11 @@ public class AccessFirebase extends AppCompatActivity {
 
                             Map<String, String> map = new HashMap<>();
 
-                            map.put("Nome:", nome);
-                            map.put("E-mail:", email);
-                            map.put("Senha:", senha);
-                            map.put("Confirmar Senha:", senhaconfir);
-                            map.put("Sexo:", sexo);
+                            map.put("Nome", nome);
+                            map.put("E-mail", email);
+                            map.put("Senha", senha);
+                            map.put("Confirmar Senha", senhaconfir);
+                            map.put("Sexo", sexo);
 
                             Intent intent = new Intent(activity, EntrarUsuario.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -244,8 +249,11 @@ public class AccessFirebase extends AppCompatActivity {
 
             } catch (Exception e) {
                 Toast.makeText(activity, "Ops! Ocorreu  um erro ao cadastrar o usuário", Toast.LENGTH_LONG).show();
-                Log.d("Erro", "Erro Cadastro de usuário: " + e);
+                Log.d("Erro", "Erro Cadastro de usuário: " + e.getMessage());
             }
+
+            progressDialog.dismiss();
+
         } else {
 
             Toast.makeText(activity, "As senhas estão diferentes.", Toast.LENGTH_LONG).show();
@@ -285,6 +293,10 @@ public class AccessFirebase extends AppCompatActivity {
             return;
         }
 
+        final ProgressDialog progressDialog = new ProgressDialog(activity);
+
+        progressDialog.setMessage("Entrando...");
+        progressDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(email, senha).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
             @Override
@@ -306,6 +318,8 @@ public class AccessFirebase extends AppCompatActivity {
 
                     Toast.makeText(activity, "Ops! Ocorreu um erro inesperado.", Toast.LENGTH_LONG).show();
                 }
+
+                progressDialog.dismiss();
             }
         });
     }

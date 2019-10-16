@@ -26,7 +26,6 @@ public class EntrarUsuario extends AppCompatActivity {
 
     FirebaseAuth db_users;
 
-    ProgressDialog  progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,14 +48,9 @@ public class EntrarUsuario extends AppCompatActivity {
 
         new AccessFirebase().persistir_usuer(EntrarUsuario.this);
 
-        progressDialog = new ProgressDialog(EntrarUsuario.this);
-
         btn_entrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                progressDialog.setMessage("Entrando...");
-                progressDialog.show();
 
                 new AccessFirebase().entrar_firebase(ed_email.getText().toString(), ed_senha.getText().toString(), EntrarUsuario.this);
 
@@ -70,7 +64,6 @@ public class EntrarUsuario extends AppCompatActivity {
                 Intent i_cadastrar = new Intent(getApplicationContext(), CadastroUser.class);
                 startActivity(i_cadastrar);
                 i_cadastrar.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
 
             }
         });
