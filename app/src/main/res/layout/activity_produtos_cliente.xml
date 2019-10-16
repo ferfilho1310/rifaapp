@@ -30,7 +30,7 @@
             android:layout_marginTop="58dp"
             android:layout_marginEnd="0dp"
             android:fitsSystemWindows="true"
-            android:layout_marginBottom="85dp"
+            android:layout_marginBottom="120dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp" />
 
@@ -83,16 +83,17 @@
         android:id="@+id/fab_produto_cliente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="116dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="144dp"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="76dp"
         android:layout_height="38dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:gravity="center_horizontal"
         android:text="@string/cadastrar_produtos"
         android:textColor="@android:color/black"
@@ -105,10 +106,11 @@
         android:id="@+id/adView_produtos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:adSize="BANNER"
+        app:adSize="SMART_BANNER"
         app:adUnitId="ca-app-pub-2528240545678093/7895249818"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

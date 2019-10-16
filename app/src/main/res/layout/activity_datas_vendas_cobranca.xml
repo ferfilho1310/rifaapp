@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="55dp">
+        android:layout_marginBottom="90dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rc_data_cobranca"
@@ -54,8 +54,8 @@
         android:id="@+id/fab_data_venda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="104dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="132dp"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -64,13 +64,13 @@
         android:id="@+id/textView3"
         android:layout_width="72dp"
         android:layout_height="39dp"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:text="@string/cadastrar_datas"
         android:textColor="@android:color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/fab_data_venda"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.437"
         app:layout_constraintStart_toStartOf="@+id/fab_data_venda"
         app:layout_constraintTop_toBottomOf="@+id/fab_data_venda"
         app:layout_constraintVertical_bias="0.0" />
@@ -79,7 +79,7 @@
         android:id="@+id/adView_datas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:adSize="BANNER"
+        app:adSize="SMART_BANNER"
         app:adUnitId="ca-app-pub-2528240545678093/7895249818"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
