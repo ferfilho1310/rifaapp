@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.example.apprifa.Adapters.Adapter_produtos_cliente;
 import com.example.apprifa.Helpers.AccessFirebase;
-import com.example.apprifa.Models.Cliente;
+
 import com.example.apprifa.Models.Produto;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.ads.AdRequest;
@@ -24,7 +24,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +33,6 @@ import android.widget.TextView;
 import com.example.apprifa.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;

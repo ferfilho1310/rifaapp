@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,8 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apprifa.Models.Cliente;
-import com.example.apprifa.Models.DataCobrancaVenda;
-import com.example.apprifa.Models.Produto;
 import com.example.apprifa.R;
 import com.example.apprifa.Retrofit.RetrofitInit;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -32,19 +28,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nullable;
 
 import retrofit2.Call;
 import retrofit2.Callback;

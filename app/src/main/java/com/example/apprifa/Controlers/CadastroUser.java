@@ -1,6 +1,5 @@
 package com.example.apprifa.Controlers;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 

@@ -7,7 +7,6 @@ public class RetrofitInit {
 
     private final Retrofit retrofit;
 
-
     public RetrofitInit() {
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://ws.matheuscastiglioni.com.br/ws/")

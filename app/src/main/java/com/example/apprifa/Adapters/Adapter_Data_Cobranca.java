@@ -6,16 +6,11 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.apprifa.Controlers.DatasVendasCobranca;
 import com.example.apprifa.Models.DataCobrancaVenda;
 import com.example.apprifa.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;

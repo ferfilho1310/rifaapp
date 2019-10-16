@@ -6,43 +6,26 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
+
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.apprifa.Controlers.ProdutosCliente;
 import com.example.apprifa.Models.Produto;
 import com.example.apprifa.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.chip.ChipGroup;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
+
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldPath;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.core.Query;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
-import static java.util.Objects.*;
+import java.util.Map;
+
 
 public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, Adapter_produtos_cliente.Viewholder_prod_cliente> {
 
@@ -210,9 +193,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
         void onItemClick(DocumentSnapshot documentSnapshot, int position);
     }
 
-    public void setOnItemClicklistener(OnItemClickListener listener) {
-        this.listener = listener;
-    }
 }
 
 

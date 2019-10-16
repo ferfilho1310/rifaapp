@@ -1,6 +1,5 @@
 package com.example.apprifa.Controlers;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -20,8 +19,6 @@ public class ResetSenha extends AppCompatActivity {
 
     EditText email_reset;
     Button reset_senha;
-
-    ProgressDialog prg_reset_senha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
