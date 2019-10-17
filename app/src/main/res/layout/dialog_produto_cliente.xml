@@ -23,7 +23,8 @@
             android:layout_width="191dp"
             android:layout_height="60dp"
             tools:layout_editor_absoluteX="129dp"
-            tools:layout_editor_absoluteY="33dp" />
+            tools:layout_editor_absoluteY="33dp"
+            android:inputType="text"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

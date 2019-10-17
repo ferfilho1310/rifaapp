@@ -34,7 +34,8 @@
                 <EditText
                     android:id="@+id/ed_nome"
                     android:layout_width="191dp"
-                    android:layout_height="60dp" />
+                    android:layout_height="60dp"
+                    android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,7 +86,8 @@
                 <EditText
                     android:id="@+id/ed_bairro"
                     android:layout_width="191dp"
-                    android:layout_height="60dp" />
+                    android:layout_height="60dp"
+                    android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -133,7 +135,8 @@
                 <EditText
                     android:id="@+id/ed_cidade"
                     android:layout_width="191dp"
-                    android:layout_height="60dp" />
+                    android:layout_height="60dp"
+                    android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -150,7 +153,8 @@
                 <EditText
                     android:id="@+id/edend"
                     android:layout_width="191dp"
-                    android:layout_height="60dp" />
+                    android:layout_height="60dp"
+                    android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

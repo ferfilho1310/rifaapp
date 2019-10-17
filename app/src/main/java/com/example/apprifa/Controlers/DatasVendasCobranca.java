@@ -154,19 +154,24 @@ public class DatasVendasCobranca extends AppCompatActivity {
                 });
 
 
-
-                cliente.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        datascobranca(custom_layout);
-
-                    }
-                });
-
+                cliente.setPositiveButton("Ok", null);
                 cliente.setNegativeButton("Cancelar", null);
 
-                cliente.show();
+                AlertDialog positive = cliente.create();
+
+                positive.setOnShowListener(new DialogInterface.OnShowListener() {
+                    @Override
+                    public void onShow(DialogInterface dialogInterface) {
+
+                        if (ed_data_venda.getText().length() == 0) {
+                            ed_data_venda.setError("Informe a data da venda");
+                        } else {
+                            datascobranca(custom_layout);
+                        }
+                    }
+                });
+                
+                positive.show();
             }
         });
     }
@@ -189,7 +194,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
                 .setQuery(query, DataCobrancaVenda.class)
                 .build();
 
-        adapter_datas = new Adapter_Data_Cobranca(rc_options_datas,DatasVendasCobranca.this);
+        adapter_datas = new Adapter_Data_Cobranca(rc_options_datas, DatasVendasCobranca.this);
         rc_datas.setAdapter(adapter_datas);
         rc_datas.setLayoutManager(new LinearLayoutManager(DatasVendasCobranca.this, LinearLayoutManager.VERTICAL, false));
         rc_datas.setHasFixedSize(true);
