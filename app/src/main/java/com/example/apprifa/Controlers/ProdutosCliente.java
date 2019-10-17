@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -98,7 +99,7 @@ public class ProdutosCliente extends AppCompatActivity {
         MobileAds.initialize(ProdutosCliente.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("435EC5F610664462653ADEB2D6B1026B")
+                .addTestDevice("78D8E3024BEEF0E839FE7C1F3611EB18")
                 .build();
 
         adView_produtos.loadAd(adRequest);
@@ -118,22 +119,46 @@ public class ProdutosCliente extends AppCompatActivity {
                 cliente.setTitle("Informe os dados do produto:");
                 cliente.setView(custom_layout);
 
-                cliente.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                final EditText nm_produto = custom_layout.findViewById(R.id.ed_nome_produto);
+                final EditText vl_produto = custom_layout.findViewById(R.id.ed_preco_produto);
+                final EditText qtd_produto = custom_layout.findViewById(R.id.ed_quantidade);
+
+                cliente.setPositiveButton("OK", null)
+                        .setNegativeButton("Cancelar", null);
+
+                final AlertDialog valida_campo = cliente.create();
+                valida_campo.setOnShowListener(new DialogInterface.OnShowListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onShow(final DialogInterface dialogInterface) {
 
-                        salva_produto_cliente(custom_layout);
-                        soma_total();
+                        Button btn_ok_dlg = valida_campo.getButton(AlertDialog.BUTTON_POSITIVE);
 
+                        btn_ok_dlg.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                if (nm_produto.getText().length() == 0) {
+                                    nm_produto.setError("Informe o nome do produto");
+                                } else if (qtd_produto.getText().length() == 0) {
+                                    qtd_produto.setError("Informe o valor do produto");
+                                } else if (vl_produto.getText().length() == 0) {
+                                    vl_produto.setError("Inforne a quantidade de produto");
+                                } else {
+                                    salva_produto_cliente(custom_layout);
+                                    soma_total();
+                                    dialogInterface.dismiss();
+                                }
+                            }
+                        });
                     }
-                }).setNegativeButton("Cancelar", null);
+                });
 
-                cliente.show();
+                valida_campo.show();
             }
         });
     }
 
-    //classe para salvar os produtos do cliente no banco de dados
+    //classe que pega o valor digitado pelo usuário e salva no banco de dados
 
     private void salva_produto_cliente(View custom_layout) {
 
@@ -157,9 +182,10 @@ public class ProdutosCliente extends AppCompatActivity {
         //Metodo para salvar os dados do produto do cliente no banco de dados
 
         accessFirebase.salva_produtos(produto.getData(), produto.getNomedoproduto(), produto.getQuantidade(),
-                produto.getValor(), produto.getTotal(), id_data,produto.getRecebido(),produto.getRecebido_parcial(),produto.getDevolvido());
+                produto.getValor(), produto.getTotal(), id_data, produto.getRecebido(), produto.getRecebido_parcial(), produto.getDevolvido());
 
     }
+
     //Classe para ler dados do banco
     @SuppressLint("WrongConstant")
     public void ler_dados_clientes() {
