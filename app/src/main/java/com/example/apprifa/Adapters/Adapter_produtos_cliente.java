@@ -30,7 +30,7 @@ import java.util.Map;
 public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, Adapter_produtos_cliente.Viewholder_prod_cliente> {
 
 
-    private OnItemClickListener listener;
+    OnItemClickListener listener;
     Context context;
 
     /**

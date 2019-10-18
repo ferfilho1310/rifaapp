@@ -27,7 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class Adapter_Data_Cobranca extends FirestoreRecyclerAdapter<DataCobrancaVenda, Adapter_Data_Cobranca.ViewHolder_datas> {
 
-    private OnItemClickListener listener;
+    OnItemClickListener listener;
     Context context;
 
     FirebaseAuth db_users = FirebaseAuth.getInstance();

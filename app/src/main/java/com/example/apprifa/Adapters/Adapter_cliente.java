@@ -41,7 +41,7 @@ import retrofit2.Response;
 
 public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_cliente.Viewholder_clientes> {
 
-    private OnItemClickListener listener;
+    OnItemClickListener listener;
     private Context context;
     private EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep;
 
