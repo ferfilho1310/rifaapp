@@ -15,7 +15,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.apprifa.Controlers.ProdutosCliente;
 import com.example.apprifa.Models.Produto;
 import com.example.apprifa.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -111,7 +110,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
                         delete_categoria(viewholder_prod_cliente.getAdapterPosition());
 
-
                     }
                 }).setNegativeButton("Cancelar", null);
 
@@ -123,6 +121,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
     public void delete_categoria(int i) {
 
         getSnapshots().getSnapshot(i).getReference().delete();
+
     }
 
     public void estado_check_box(int i, boolean b) {
