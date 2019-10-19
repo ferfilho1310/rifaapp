@@ -39,8 +39,6 @@ import java.util.Calendar;
 
 public class DatasVendasCobranca extends AppCompatActivity {
 
-    EditText ed_data_cobranca, ed_data_venda;
-
     Query query;
     FirestoreRecyclerOptions<DataCobrancaVenda> rc_options_datas;
     AdView adView_vendas;
@@ -81,7 +79,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
         MobileAds.initialize(DatasVendasCobranca.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("78D8E3024BEEF0E839FE7C1F3611EB18")
+                .addTestDevice("435EC5F610664462653ADEB2D6B1026B")
                 .build();
 
         adView_vendas.loadAd(adRequest);
@@ -94,14 +92,14 @@ public class DatasVendasCobranca extends AppCompatActivity {
 
                 AlertDialog.Builder cliente = new AlertDialog.Builder(DatasVendasCobranca.this);
                 final View custom_layout = getLayoutInflater().inflate(R.layout.dialog_data_cobranca, null);
-                cliente.setTitle("Informe das datas:");
+                cliente.setTitle("Informe as datas:");
                 cliente.setView(custom_layout);
 
                 ImageButton inseri_data_venda = custom_layout.findViewById(R.id.btn_data_venda);
                 ImageButton inseri_data_cobranca = custom_layout.findViewById(R.id.btn_data_cobranca);
 
-                ed_data_cobranca = custom_layout.findViewById(R.id.ed_data_cobranca);
-                ed_data_venda = custom_layout.findViewById(R.id.ed_data_venda);
+                final EditText  ed_data_cobranca = custom_layout.findViewById(R.id.ed_data_cobranca);
+                final EditText ed_data_venda = custom_layout.findViewById(R.id.ed_data_venda);
 
                 Calendar calendar = Calendar.getInstance();
                 final int dia = calendar.get(Calendar.DAY_OF_MONTH);
@@ -154,29 +152,25 @@ public class DatasVendasCobranca extends AppCompatActivity {
                 });
 
 
-                cliente.setPositiveButton("Ok", null);
-                cliente.setNegativeButton("Cancelar", null);
-
-                AlertDialog positive = cliente.create();
-
-                positive.setOnShowListener(new DialogInterface.OnShowListener() {
+                cliente.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onShow(DialogInterface dialogInterface) {
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-                        if (ed_data_venda.getText().length() == 0) {
-                            ed_data_venda.setError("Informe a data da venda");
-                        } else {
-                            datascobranca(custom_layout);
-                        }
+                        datascobranca(custom_layout);
+
                     }
                 });
-                
-                positive.show();
+                cliente.setNegativeButton("Cancelar", null);
+
+                cliente.show();
             }
         });
     }
 
     public void datascobranca(View view) {
+
+        EditText ed_data_cobranca = view.findViewById(R.id.ed_data_cobranca);
+        EditText ed_data_venda = view.findViewById(R.id.ed_data_venda);
 
         datasVendasCobranca.setData_cobranca(ed_data_cobranca.getText().toString());
         datasVendasCobranca.setData_venda(ed_data_venda.getText().toString());

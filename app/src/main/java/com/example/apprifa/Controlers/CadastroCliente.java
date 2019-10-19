@@ -80,7 +80,7 @@ public class CadastroCliente extends AppCompatActivity {
         MobileAds.initialize(CadastroCliente.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("78D8E3024BEEF0E839FE7C1F3611EB18")
+                .addTestDevice("435EC5F610664462653ADEB2D6B1026B")
                 .build();
 
         adView.loadAd(adRequest);
@@ -184,11 +184,10 @@ public class CadastroCliente extends AppCompatActivity {
 
         searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
 
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setQueryHint("Pesquisar");
         searchView.setIconified(false);
 
-        //searchView.onActionViewExpanded();
+        searchView.onActionViewExpanded();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -204,7 +203,7 @@ public class CadastroCliente extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
 
-                if (s.trim().isEmpty()) {
+               if (s.trim().isEmpty()) {
                     seachview(s);
                     adapter_cliente.startListening();
                 }

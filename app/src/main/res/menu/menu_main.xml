@@ -4,16 +4,17 @@
     tools:context="com.example.apprifa.Controlers.Controlers.MainActivity">
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:icon="@drawable/ic_exit"
+        android:orderInCategory="2"
         android:title="@string/action_settings"
-        app:showAsAction="always"
-        android:icon="@drawable/ic_exit"/>
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/search"
         android:icon="@drawable/ic_search"
-        android:orderInCategory="99"
+        android:orderInCategory="1"
         android:title="@string/pesquisar"
-        app:showAsAction="collapseActionView|ifRoom"
-        app:actionViewClass="android.widget.SearchView"/>
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom" />
+
 </menu>

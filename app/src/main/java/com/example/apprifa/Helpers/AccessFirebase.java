@@ -173,7 +173,7 @@ public class AccessFirebase extends AppCompatActivity {
 
     public void data_cobranca(String id, String data_venda, String data_cobranca) {
 
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
         map.put("id_data", id);
         map.put("data_venda", data_venda);
