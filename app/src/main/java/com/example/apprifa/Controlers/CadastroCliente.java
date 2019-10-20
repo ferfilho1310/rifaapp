@@ -29,11 +29,13 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 @SuppressLint("Registered")
 public class CadastroCliente extends AppCompatActivity {
@@ -74,6 +76,8 @@ public class CadastroCliente extends AppCompatActivity {
         rc_produto = findViewById(R.id.rc_cad_clientes);
         fab_cad_cliente = findViewById(R.id.fab_cad_clientes);
         adView = findViewById(R.id.adView);
+
+        FirebaseInstanceId.getInstance();
 
         setTitle("Clientes Cadastrados");
 
