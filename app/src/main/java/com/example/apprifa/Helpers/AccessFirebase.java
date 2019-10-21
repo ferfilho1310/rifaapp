@@ -1,6 +1,7 @@
 package com.example.apprifa.Helpers;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -51,7 +52,7 @@ public class AccessFirebase extends AppCompatActivity {
 
     public void cadastro_cliente(View view, final Cliente cliente, final Activity context) {
 
-        android.app.AlertDialog.Builder alrt_update_client = new android.app.AlertDialog.Builder(context);
+        AlertDialog.Builder alrt_update_client = new AlertDialog.Builder(context);
         final View custom_layout = LayoutInflater.from(view.getContext()).inflate(R.layout.dialog_cad_clientes, null);
         alrt_update_client.setTitle("Informe os dados do cliente:");
         alrt_update_client.setView(custom_layout);
@@ -82,7 +83,7 @@ public class AccessFirebase extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Cliente> call, Response<Cliente> response) {
 
-                        if (response.isSuccessful() && response != null) {
+                        if (response.isSuccessful()) {
 
                             Cliente cliente_cep = response.body();
 

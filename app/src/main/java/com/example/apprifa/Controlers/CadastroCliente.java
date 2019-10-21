@@ -29,6 +29,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -79,12 +80,14 @@ public class CadastroCliente extends AppCompatActivity {
 
         FirebaseInstanceId.getInstance();
 
+        FirebaseApp.initializeApp(CadastroCliente.this);
+
         setTitle("Clientes Cadastrados");
 
         MobileAds.initialize(CadastroCliente.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("435EC5F610664462653ADEB2D6B1026B")
+                .addTestDevice("78D8E3024BEEF0E839FE7C1F3611EB18")
                 .build();
 
         adView.loadAd(adRequest);

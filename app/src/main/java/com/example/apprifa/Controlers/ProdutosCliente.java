@@ -99,7 +99,7 @@ public class ProdutosCliente extends AppCompatActivity {
         MobileAds.initialize(ProdutosCliente.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("435EC5F610664462653ADEB2D6B1026B")
+                .addTestDevice("78D8E3024BEEF0E839FE7C1F3611EB18")
                 .build();
 
         adView_produtos.loadAd(adRequest);
