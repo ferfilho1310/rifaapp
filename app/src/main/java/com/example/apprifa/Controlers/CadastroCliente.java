@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -193,6 +194,7 @@ public class CadastroCliente extends AppCompatActivity {
 
         searchView.setQueryHint("Pesquisar");
         searchView.setIconified(false);
+        searchView.setFocusable(true);
 
         searchView.onActionViewExpanded();
 

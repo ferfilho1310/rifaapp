@@ -182,7 +182,8 @@ public class DatasVendasCobranca extends AppCompatActivity {
     @SuppressLint("WrongConstant")
     public void ler_dados_firestore_datas() {
 
-        query = cl_datas.whereEqualTo("id_data", id_cliente_2);
+        query = cl_datas.whereEqualTo("id_data", id_cliente_2)
+        .orderBy("data_venda", Query.Direction.DESCENDING);
 
         rc_options_datas = new FirestoreRecyclerOptions.Builder<DataCobrancaVenda>()
                 .setQuery(query, DataCobrancaVenda.class)
