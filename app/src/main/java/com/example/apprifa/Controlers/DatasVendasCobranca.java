@@ -18,15 +18,20 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.apprifa.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +47,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
     Query query;
     FirestoreRecyclerOptions<DataCobrancaVenda> rc_options_datas;
     AdView adView_vendas;
+    SearchView searchView;
 
     private String id_cliente_2;
 
@@ -79,7 +85,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
         MobileAds.initialize(DatasVendasCobranca.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("78D8E3024BEEF0E839FE7C1F3611EB18")
+                .addTestDevice("435EC5F610664462653ADEB2D6B1026B")
                 .build();
 
         adView_vendas.loadAd(adRequest);
@@ -98,7 +104,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
                 ImageButton inseri_data_venda = custom_layout.findViewById(R.id.btn_data_venda);
                 ImageButton inseri_data_cobranca = custom_layout.findViewById(R.id.btn_data_cobranca);
 
-                final EditText  ed_data_cobranca = custom_layout.findViewById(R.id.ed_data_cobranca);
+                final EditText ed_data_cobranca = custom_layout.findViewById(R.id.ed_data_cobranca);
                 final EditText ed_data_venda = custom_layout.findViewById(R.id.ed_data_venda);
 
                 Calendar calendar = Calendar.getInstance();
@@ -183,7 +189,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
     public void ler_dados_firestore_datas() {
 
         query = cl_datas.whereEqualTo("id_data", id_cliente_2)
-        .orderBy("data_venda", Query.Direction.DESCENDING);
+                .orderBy("data_venda", Query.Direction.DESCENDING);
 
         rc_options_datas = new FirestoreRecyclerOptions.Builder<DataCobrancaVenda>()
                 .setQuery(query, DataCobrancaVenda.class)
@@ -208,6 +214,77 @@ public class DatasVendasCobranca extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void search_datas_firestore(String search_datas) {
+
+        query = cl_datas
+                .orderBy("data_venda").startAt(search_datas).endAt(search_datas + "\uf8ff");
+
+        rc_options_datas = new FirestoreRecyclerOptions.Builder<DataCobrancaVenda>()
+                .setQuery(query, DataCobrancaVenda.class)
+                .build();
+
+        adapter_datas = new Adapter_Data_Cobranca(rc_options_datas, DatasVendasCobranca.this);
+        rc_datas.setAdapter(adapter_datas);
+        rc_datas.setLayoutManager(new LinearLayoutManager(DatasVendasCobranca.this, LinearLayoutManager.VERTICAL, false));
+        rc_datas.setHasFixedSize(true);
+
+        adapter_datas.setOnItemClicklistener(new Adapter_Data_Cobranca.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+
+                String id_data = documentSnapshot.getId();
+
+                Intent i_data = new Intent(getApplicationContext(), ProdutosCliente.class);
+                Bundle data = new Bundle();
+                data.putString("id_data_compra", id_data);
+                i_data.putExtras(data);
+                startActivity(i_data);
+
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_datas, menu);
+
+        MenuItem searchitem = menu.findItem(R.id.search);
+
+        searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
+
+        searchView.setQueryHint("Pesquisar");
+        searchView.setIconified(true);
+        searchView.setFocusable(true);
+        searchView.setInputType(InputType.TYPE_CLASS_DATETIME);
+
+        searchitem.expandActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                if (!s.trim().isEmpty()) {
+                    search_datas_firestore(s);
+                    adapter_datas.startListening();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                if (s.trim().isEmpty()) {
+                    search_datas_firestore(s);
+                    adapter_datas.startListening();
+                }
+
+                return false;
+            }
+        });
+        return true;
     }
 
     @Override

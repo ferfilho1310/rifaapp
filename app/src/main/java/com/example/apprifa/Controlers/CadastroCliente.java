@@ -4,11 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -31,7 +29,6 @@ import com.google.android.gms.ads.MobileAds;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -88,7 +85,7 @@ public class CadastroCliente extends AppCompatActivity {
         MobileAds.initialize(CadastroCliente.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("78D8E3024BEEF0E839FE7C1F3611EB18")
+                .addTestDevice("435EC5F610664462653ADEB2D6B1026B")
                 .build();
 
         adView.loadAd(adRequest);
@@ -167,7 +164,6 @@ public class CadastroCliente extends AppCompatActivity {
             }
         });
 
-        // adapter_cliente.notifyDataSetChanged();
     }
 
     @Override
@@ -193,10 +189,10 @@ public class CadastroCliente extends AppCompatActivity {
         searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
 
         searchView.setQueryHint("Pesquisar");
-        searchView.setIconified(false);
+        searchView.setIconified(true);
         searchView.setFocusable(true);
 
-        searchView.onActionViewExpanded();
+        searchitem.expandActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

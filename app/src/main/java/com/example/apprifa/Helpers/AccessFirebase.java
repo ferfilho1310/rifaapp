@@ -133,7 +133,6 @@ public class AccessFirebase extends AppCompatActivity {
 
         alrt_update_client.show();
 
-
     }
 
 
@@ -213,18 +212,18 @@ public class AccessFirebase extends AppCompatActivity {
             Toast.makeText(activity, "Senha inferior a 6 caracteres.", Toast.LENGTH_LONG).show();
             return;
         }
-        ProgressDialog progressDialog = new ProgressDialog(activity);
 
         if (senha.equals(senhaconfir)) {
 
             try {
 
-                progressDialog.setMessage("Cadastrando...");
-                progressDialog.show();
-
                 firebaseAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        final ProgressDialog progressDialog = new ProgressDialog(activity);
+                        progressDialog.setMessage("Cadastrando...");
+                        progressDialog.show();
 
                         if (task.isSuccessful()) {
 
@@ -242,9 +241,12 @@ public class AccessFirebase extends AppCompatActivity {
 
                             db_users.add(map);
 
+                            progressDialog.dismiss();
+
                             Toast.makeText(activity, "Usuário cadastrado com sucesso.", Toast.LENGTH_LONG).show();
 
                         }
+                        progressDialog.dismiss();
                     }
                 });
 
@@ -253,7 +255,7 @@ public class AccessFirebase extends AppCompatActivity {
                 Log.d("Erro", "Erro Cadastro de usuário: " + e.getMessage());
             }
 
-            progressDialog.dismiss();
+
 
         } else {
 

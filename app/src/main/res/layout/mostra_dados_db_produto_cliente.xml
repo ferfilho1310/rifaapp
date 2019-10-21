@@ -22,13 +22,13 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/txt_total"
-        app:layout_constraintHorizontal_bias="0.122"
-        app:layout_constraintStart_toStartOf="@+id/vlr_produto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vlr_produto"
         app:layout_constraintVertical_bias="0.0">
 
@@ -36,22 +36,20 @@
             android:id="@+id/ch_recebido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:text="@string/recebido" />
 
 
         <RadioButton
             android:id="@+id/ch_receb_parcial"
-            android:layout_width="125dp"
-            android:layout_height="44dp"
-            android:text="@string/recebido_parcialmente"/>
+            android:layout_width="130dp"
+            android:layout_height="43dp"
+            android:text="@string/recebido_parcialmente" />
 
         <RadioButton
             android:id="@+id/ch_devolvido"
-            android:layout_width="95dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="-12dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="-12dp"
             android:text="@string/devolvido" />
 
     </RadioGroup>

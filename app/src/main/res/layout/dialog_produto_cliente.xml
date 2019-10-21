@@ -5,69 +5,88 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout3"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="@string/nome_do_produto_dialog"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/ed_nome_produto"
-            android:layout_width="191dp"
-            android:layout_height="60dp"
-            tools:layout_editor_absoluteX="129dp"
-            tools:layout_editor_absoluteY="33dp"
-            android:inputType="text"/>
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout4"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="191dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/quantidade"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout3"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/nome_do_produto_dialog"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/ed_quantidade"
-            android:layout_width="191dp"
-            android:layout_height="60dp"
-            android:inputType="number"
-            tools:layout_editor_absoluteX="125dp"
-            tools:layout_editor_absoluteY="112dp" />
+                <EditText
+                    android:id="@+id/ed_nome_produto"
+                    android:layout_width="191dp"
+                    android:layout_height="60dp"
+                    android:inputType="text"
+                    tools:layout_editor_absoluteX="129dp"
+                    tools:layout_editor_absoluteY="33dp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout11"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/preco_do_produto"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout4"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="191dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="8dp"
+                android:hint="@string/quantidade"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
-        <EditText
-            android:id="@+id/ed_preco_produto"
-            android:layout_width="191dp"
-            android:layout_height="60dp"
-            android:inputType="numberDecimal"
-            tools:layout_editor_absoluteX="151dp"
-            tools:layout_editor_absoluteY="194dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+                <EditText
+                    android:id="@+id/ed_quantidade"
+                    android:layout_width="191dp"
+                    android:layout_height="60dp"
+                    android:inputType="number"
+                    tools:layout_editor_absoluteX="125dp"
+                    tools:layout_editor_absoluteY="112dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout11"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="@string/preco_do_produto"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+
+                <EditText
+                    android:id="@+id/ed_preco_produto"
+                    android:layout_width="191dp"
+                    android:layout_height="60dp"
+                    android:inputType="numberDecimal"
+                    tools:layout_editor_absoluteX="151dp"
+                    tools:layout_editor_absoluteY="194dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

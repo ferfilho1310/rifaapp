@@ -130,7 +130,6 @@
         android:layout_width="48dp"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:text="@string/cidade"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="@+id/textView10"
@@ -142,13 +141,12 @@
 
     <TextView
         android:id="@+id/txt_cidade"
-        android:layout_width="94dp"
+        android:layout_width="79dp"
         android:layout_height="wrap_content"
-        android:gravity="left"
         android:text="Textview"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="@+id/txt_bairro"
-        app:layout_constraintEnd_toEndOf="@+id/textView9"
+        app:layout_constraintEnd_toStartOf="@+id/txt_estado"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView9"
         app:layout_constraintTop_toTopOf="@+id/txt_bairro"
