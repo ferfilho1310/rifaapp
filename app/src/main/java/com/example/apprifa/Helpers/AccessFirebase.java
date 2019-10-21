@@ -25,6 +25,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthEmailException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -43,6 +47,8 @@ public class AccessFirebase extends AppCompatActivity {
     CollectionReference db_prod_cliente = FirebaseFirestore.getInstance().collection("produtos_cliente");
     CollectionReference db_datas_cobranca = FirebaseFirestore.getInstance().collection("datas_cobranca");
     CollectionReference db_users = FirebaseFirestore.getInstance().collection("Users");
+
+    ProgressDialog progressDialog;
 
     EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep;
 
@@ -207,62 +213,69 @@ public class AccessFirebase extends AppCompatActivity {
             return;
         }
 
-        if (senha.length() < 6) {
-
-            Toast.makeText(activity, "Senha inferior a 6 caracteres.", Toast.LENGTH_LONG).show();
-            return;
-        }
 
         if (senha.equals(senhaconfir)) {
 
-            try {
+            progressDialog = new ProgressDialog(activity);
+            progressDialog.setMessage("Cadastrando...");
+            progressDialog.show();
 
-                firebaseAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
+            firebaseAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
 
-                        final ProgressDialog progressDialog = new ProgressDialog(activity);
-                        progressDialog.setMessage("Cadastrando...");
-                        progressDialog.show();
+                    if (task.isSuccessful()) {
 
-                        if (task.isSuccessful()) {
+                        Map<String, String> map = new HashMap<>();
 
-                            Map<String, String> map = new HashMap<>();
+                        map.put("Nome", nome);
+                        map.put("E-mail", email);
+                        map.put("Senha", senha);
+                        map.put("Confirmar Senha", senhaconfir);
+                        map.put("Sexo", sexo);
 
-                            map.put("Nome", nome);
-                            map.put("E-mail", email);
-                            map.put("Senha", senha);
-                            map.put("Confirmar Senha", senhaconfir);
-                            map.put("Sexo", sexo);
+                        Intent intent = new Intent(activity, EntrarUsuario.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        activity.startActivity(intent);
 
-                            Intent intent = new Intent(activity, EntrarUsuario.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            activity.startActivity(intent);
+                        db_users.add(map);
 
-                            db_users.add(map);
+                        Toast.makeText(activity, "Usuário cadastrado com sucesso.", Toast.LENGTH_LONG).show();
 
+                    } else if (!task.isSuccessful()) {
+                        try {
+                            throw task.getException();
+                        } catch (FirebaseAuthWeakPasswordException e) {
+
+                            Toast.makeText(activity, "Senha inferior a 6 caracteres", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
 
-                            Toast.makeText(activity, "Usuário cadastrado com sucesso.", Toast.LENGTH_LONG).show();
+                        } catch (FirebaseAuthInvalidCredentialsException e) {
 
+                            Toast.makeText(activity, "E-mail inválido", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+
+                        } catch (FirebaseAuthUserCollisionException e) {
+
+                            Toast.makeText(activity, "Usuário já cadastrado", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                        } catch (Exception e) {
+                            Toast.makeText(activity, "Erro a cadastrar o usuário", Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
                         }
-                        progressDialog.dismiss();
                     }
-                });
+                }
 
-            } catch (Exception e) {
-                Toast.makeText(activity, "Ops! Ocorreu  um erro ao cadastrar o usuário", Toast.LENGTH_LONG).show();
-                Log.d("Erro", "Erro Cadastro de usuário: " + e.getMessage());
-            }
+            });
 
-
+            progressDialog.dismiss();
 
         } else {
 
             Toast.makeText(activity, "As senhas estão diferentes.", Toast.LENGTH_LONG).show();
             return;
-
         }
+
     }
 
     public void persistir_usuer(Activity activity) {
