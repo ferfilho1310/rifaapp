@@ -190,6 +190,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/corner_color"
         android:text="@string/cadastrar"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
