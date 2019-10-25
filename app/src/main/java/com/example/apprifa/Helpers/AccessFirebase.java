@@ -71,7 +71,6 @@ public class AccessFirebase extends AppCompatActivity {
         ed_estado = custom_layout.findViewById(R.id.ed_estado);
         ed_cep = custom_layout.findViewById(R.id.ed_cep);
 
-
         Button btn_cep = custom_layout.findViewById(R.id.btn_busca_cep);
 
         btn_cep.setOnClickListener(new View.OnClickListener() {
@@ -213,7 +212,6 @@ public class AccessFirebase extends AppCompatActivity {
             return;
         }
 
-
         if (senha.equals(senhaconfir)) {
 
             progressDialog = new ProgressDialog(activity);
@@ -259,23 +257,23 @@ public class AccessFirebase extends AppCompatActivity {
 
                             Toast.makeText(activity, "Usuário já cadastrado", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
+
                         } catch (Exception e) {
-                            Toast.makeText(activity, "Erro a cadastrar o usuário", Toast.LENGTH_SHORT).show();
+
+                            Toast.makeText(activity, "Ops!Erro a cadastrar o usuário", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
+
                         }
                     }
                 }
 
             });
-
-            progressDialog.dismiss();
-
         } else {
 
             Toast.makeText(activity, "As senhas estão diferentes.", Toast.LENGTH_LONG).show();
             return;
-        }
 
+        }
     }
 
     public void persistir_usuer(Activity activity) {
