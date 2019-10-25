@@ -85,7 +85,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
         MobileAds.initialize(DatasVendasCobranca.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("435EC5F610664462653ADEB2D6B1026B")
+                .addTestDevice("78D8E3024BEEF0E839FE7C1F3611EB18")
                 .build();
 
         adView_vendas.loadAd(adRequest);
@@ -218,7 +218,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
 
     public void search_datas_firestore(String search_datas) {
 
-        query = cl_datas
+        query = cl_datas.whereEqualTo("id_data",id_cliente_2)
                 .orderBy("data_venda").startAt(search_datas).endAt(search_datas + "\uf8ff");
 
         rc_options_datas = new FirestoreRecyclerOptions.Builder<DataCobrancaVenda>()
