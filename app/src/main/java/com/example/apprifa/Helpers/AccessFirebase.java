@@ -262,7 +262,6 @@ public class AccessFirebase extends AppCompatActivity {
 
                             Toast.makeText(activity, "Ops!Erro a cadastrar o usuário", Toast.LENGTH_SHORT).show();
                             progressDialog.dismiss();
-
                         }
                     }
                 }

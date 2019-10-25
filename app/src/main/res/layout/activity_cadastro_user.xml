@@ -31,7 +31,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_pessoa"
-
         app:layout_constraintBottom_toBottomOf="@+id/textInputLayout19"
         app:layout_constraintEnd_toStartOf="@+id/textInputLayout19"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +49,7 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout7"
         app:layout_constraintVertical_bias="0.065">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_cad_user_nome"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -82,7 +81,7 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout7"
         app:layout_constraintVertical_bias="0.21">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_cad_user_email"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -105,7 +104,7 @@
         app:layout_constraintVertical_bias="0.509"
         app:passwordToggleEnabled="true">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_cad_user_confirmasenha"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -139,7 +138,7 @@
         app:layout_constraintVertical_bias="0.358"
         app:passwordToggleEnabled="true">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_cad_user_senha"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
