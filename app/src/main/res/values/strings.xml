@@ -43,4 +43,9 @@
     <string name="data_de_cobran_a">Data de cobrança</string>
     <string name="devolvido">Devolvido</string>
     <string name="recebido_parcialmente">Recebido parcialmente</string>
+    <string name="logo">TODO</string>
+    <string name="textview">Textview</string>
+    <string name="todo">todo</string>
+    <string name="cep">Cep</string>
+    <string name="total_zero">0.00</string>
 </resources>

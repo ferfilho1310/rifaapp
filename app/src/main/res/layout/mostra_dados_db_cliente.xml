@@ -22,7 +22,8 @@
         app:layout_constraintHorizontal_bias="0.793"
         app:layout_constraintStart_toEndOf="@+id/txt_estado"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.438" />
+        app:layout_constraintVertical_bias="0.438"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/textView6"
@@ -32,7 +33,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/nome_do_cliente"
         android:textColor="@android:color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,9 +44,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Textview"
+        android:text="@string/textview"
         android:textColor="@android:color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -68,7 +69,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Textview"
+        android:text="@string/textview"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="@+id/textView7"
         app:layout_constraintHorizontal_bias="0.0"
@@ -91,7 +92,7 @@
         android:id="@+id/txt_numero"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Textview"
+        android:text="@string/textview"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="@+id/txt_local"
         app:layout_constraintEnd_toEndOf="@+id/textView8"
@@ -118,7 +119,7 @@
         android:layout_width="78dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Textview"
+        android:text="@string/textview"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toStartOf="@+id/txt_cidade"
         app:layout_constraintHorizontal_bias="0.0"
@@ -143,7 +144,7 @@
         android:id="@+id/txt_cidade"
         android:layout_width="79dp"
         android:layout_height="wrap_content"
-        android:text="Textview"
+        android:text="@string/textview"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="@+id/txt_bairro"
         app:layout_constraintEnd_toStartOf="@+id/txt_estado"
@@ -168,7 +169,7 @@
         android:id="@+id/txt_estado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Textview"
+        android:text="@string/textview"
         android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="@+id/txt_cidade"
         app:layout_constraintEnd_toEndOf="@+id/textView20"
@@ -188,7 +189,8 @@
         app:layout_constraintHorizontal_bias="0.794"
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.186" />
+        app:layout_constraintVertical_bias="0.186"
+        android:contentDescription="@string/todo"/>
 
     <ImageButton
         android:id="@+id/img_edit_cliente"
@@ -201,7 +203,8 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView6"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.571" />
+        app:layout_constraintVertical_bias="0.571"
+        android:contentDescription="@string/todo"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,7 +31,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_nome"
                     android:layout_width="191dp"
                     android:layout_height="60dp"
@@ -49,7 +49,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout10">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_estado"
                     android:layout_width="191dp"
                     android:layout_height="60dp"
@@ -67,7 +67,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_numero"
                     android:layout_width="191dp"
                     android:layout_height="60dp"
@@ -85,7 +85,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_bairro"
                     android:layout_width="191dp"
                     android:layout_height="60dp"
@@ -104,19 +104,19 @@
                 app:layout_constraintStart_toEndOf="@+id/textInputLayout5"
                 app:layout_constraintTop_toTopOf="@+id/textInputLayout5"
                 app:layout_constraintVertical_bias="1.0"
-                tools:ignore="MissingConstraints" />
+                tools:ignore="MissingConstraints,SmallSp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout5"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Cep"
+                android:hint="@string/cep"
                 app:counterMaxLength="8"
                 app:layout_constraintStart_toStartOf="@+id/textInputLayout7"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_cep"
                     android:layout_width="124dp"
                     android:layout_height="60dp"
@@ -134,7 +134,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_cidade"
                     android:layout_width="191dp"
                     android:layout_height="60dp"
@@ -152,7 +152,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edend"
                     android:layout_width="191dp"
                     android:layout_height="60dp"

@@ -55,7 +55,7 @@
             android:layout_marginStart="67dp"
             android:layout_marginTop="-28dp"
             android:layout_marginBottom="-26dp"
-            android:text="0.00"
+            android:text="@string/total_zero"
             android:textColor="@color/colorAccent"
             android:textSize="20sp"
             android:textStyle="bold" />

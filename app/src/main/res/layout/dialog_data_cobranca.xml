@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_data_venda"
             android:layout_width="152dp"
             android:layout_height="65dp"
@@ -35,7 +35,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/textInputLayout12"
         app:layout_constraintStart_toEndOf="@+id/textInputLayout12"
         app:layout_constraintTop_toTopOf="@+id/textInputLayout12"
-        app:layout_constraintVertical_bias="0.562" />
+        app:layout_constraintVertical_bias="0.562"
+        android:contentDescription="@string/todo"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout13"
@@ -49,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout12"
         app:layout_constraintVertical_bias="1.0">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_data_cobranca"
             android:layout_width="152dp"
             android:layout_height="65dp"
@@ -68,6 +69,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textInputLayout13"
         app:layout_constraintStart_toEndOf="@+id/textInputLayout13"
         app:layout_constraintTop_toTopOf="@+id/textInputLayout13"
-        app:layout_constraintVertical_bias="0.533" />
+        app:layout_constraintVertical_bias="0.533"
+        android:contentDescription="@string/todo"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
