@@ -3,6 +3,7 @@ package com.example.apprifa.Controlers;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.example.apprifa.Adapters.Adapter_produtos_cliente;
@@ -24,6 +25,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -63,7 +65,7 @@ public class ProdutosCliente extends AppCompatActivity {
 
     Adapter_produtos_cliente adapter_produtos_cliente;
 
-    TextView teste_soma;
+    TextView teste_soma, recebido_produtos;
 
     Produto produto = new Produto();
     AccessFirebase accessFirebase = new AccessFirebase();
@@ -81,6 +83,7 @@ public class ProdutosCliente extends AppCompatActivity {
         fb_prod_cliente = findViewById(R.id.fab_produto_cliente);
         teste_soma = findViewById(R.id.txt_soma);
         adView_produtos = findViewById(R.id.adView_produtos);
+        recebido_produtos = findViewById(R.id.txt_recebido);
 
         //Métodos para aparecer o botão "back" na action bar customizavel
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -109,6 +112,9 @@ public class ProdutosCliente extends AppCompatActivity {
 
         ler_dados_clientes();
         soma_total();
+        recebido();
+
+        //new Assync_somas().execute();
 
         fb_prod_cliente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,8 +261,64 @@ public class ProdutosCliente extends AppCompatActivity {
                             teste_soma.setText(String.valueOf(soma));
 
                         }
+
+
                     }
                 });
+    }
+
+    public void recebido() {
+
+        cl_clientes.whereEqualTo("id", id_data)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        float soma = 0;
+
+                        List<Float> ls_resultado = new ArrayList<>();
+
+                        QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+                        for (Produto produto : queryDocumentSnapshots.toObjects(Produto.class)) {
+
+                            if (produto.getRecebido() != false) {
+
+                                float i = Float.parseFloat(produto.getTotal());
+
+                                ls_resultado.add(i);
+                            }
+                        }
+
+                        for (int i = 0; i < ls_resultado.size(); i++) {
+
+                            soma = (soma + ls_resultado.get(i));
+                            recebido_produtos.setText(String.valueOf(soma));
+
+                        }
+                    }
+                });
+    }
+
+    public class Assync_somas extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                Thread.sleep(1000);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+
+        }
     }
 
     //Classe para inflar o menu customizado
@@ -278,6 +340,7 @@ public class ProdutosCliente extends AppCompatActivity {
                 break;
             case R.id.somar:
                 soma_total();
+                recebido();
                 break;
             default:
                 break;

@@ -11,6 +11,7 @@
         android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="@+id/adView_produtos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,8 +29,8 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="58dp"
             android:layout_marginEnd="0dp"
-            android:fitsSystemWindows="true"
             android:layout_marginBottom="120dp"
+            android:fitsSystemWindows="true"
             android:paddingStart="8dp"
             android:paddingEnd="8dp" />
 
@@ -43,7 +44,7 @@
             android:layout_marginBottom="-26dp"
             android:text="@string/total"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
@@ -52,13 +53,42 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/rc_produto_cliente"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="67dp"
+            android:layout_marginStart="50dp"
             android:layout_marginTop="-28dp"
             android:layout_marginBottom="-26dp"
             android:text="@string/total_zero"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/txt_soma"
+            android:layout_marginStart="11dp"
+            android:layout_marginBottom="0dp"
+            android:layout_toEndOf="@+id/txt_soma"
+            android:text="Recebido:"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_recebido"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView2"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="94dp"
+            android:layout_toEndOf="@+id/textView2"
+            android:text="@string/total_zero"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
 
     </RelativeLayout>
 
@@ -109,7 +139,6 @@
         app:adUnitId="ca-app-pub-2528240545678093/7895249818"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
