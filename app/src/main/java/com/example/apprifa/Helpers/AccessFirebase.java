@@ -46,6 +46,7 @@ public class AccessFirebase extends AppCompatActivity {
     CollectionReference firebaseFirestore = FirebaseFirestore.getInstance().collection("cadastro_clientes");
     CollectionReference db_prod_cliente = FirebaseFirestore.getInstance().collection("produtos_cliente");
     CollectionReference db_datas_cobranca = FirebaseFirestore.getInstance().collection("datas_cobranca");
+    CollectionReference db_receb_partcial = FirebaseFirestore.getInstance().collection("recebido_partcial");
     CollectionReference db_users = FirebaseFirestore.getInstance().collection("Users");
 
     ProgressDialog progressDialog;
@@ -141,6 +142,17 @@ public class AccessFirebase extends AppCompatActivity {
     }
 
 
+    public void  salva_recebido_parcial(String receb_parcial, String id_valor_recebido){
+
+        Map<String,Object> map = new HashMap<>();
+
+        map.put("id",id_valor_recebido);
+        map.put("Valor Recebido",receb_parcial);
+
+        db_receb_partcial.document(firebaseAuth.getUid()).collection("recebido parcial").add(map);
+
+    }
+
     public void salva_clientes(String nome, String enderecocliente, String numero, String bairro, String cidade, String cep, String estado) {
 
         Map<String, Object> map = new HashMap<>();
@@ -152,8 +164,6 @@ public class AccessFirebase extends AppCompatActivity {
         map.put("cidade", cidade);
         map.put("cep", cep);
         map.put("estado", estado);
-
-        /*databaseReference.child(firebaseAuth.getUid()).child("Serviços").push().setValue(map_categ_serv);*/
 
         firebaseFirestore.document(firebaseAuth.getUid()).collection("cliente").add(map);
     }
