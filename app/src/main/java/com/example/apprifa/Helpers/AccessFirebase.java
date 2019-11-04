@@ -142,12 +142,13 @@ public class AccessFirebase extends AppCompatActivity {
     }
 
 
-    public void  salva_recebido_parcial(String receb_parcial, String id_valor_recebido){
+    public void  salva_recebido_parcial(String receb_parcial, String id_valor_recebido,String data_recebimento){
 
         Map<String,Object> map = new HashMap<>();
 
         map.put("id",id_valor_recebido);
         map.put("Valor Recebido",receb_parcial);
+        map.put("Data de Recebimento",data_recebimento);
 
         db_receb_partcial.document(firebaseAuth.getUid()).collection("recebido parcial").add(map);
 
@@ -168,7 +169,7 @@ public class AccessFirebase extends AppCompatActivity {
         firebaseFirestore.document(firebaseAuth.getUid()).collection("cliente").add(map);
     }
 
-    public void salva_produtos(String dia, String nomedoproduto, String quantidade, String valor, String total, String id, boolean recebido, boolean recebido_parcial, boolean devolvido) {
+    public void salva_produtos(String dia, String nomedoproduto, String quantidade, String valor, String total, String id, boolean recebido, boolean devolvido) {
 
         Map<String, Object> map = new HashMap<>();
 
@@ -179,7 +180,6 @@ public class AccessFirebase extends AppCompatActivity {
         map.put("total", total);
         map.put("data", dia);
         map.put("recebido", recebido);
-        map.put("recebido_parcial", recebido_parcial);
         map.put("devolvido", devolvido);
 
         db_prod_cliente.document(firebaseAuth.getUid()).collection("produtos").add(map);

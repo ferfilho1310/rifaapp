@@ -216,8 +216,6 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
                             Snackbar.make(view,"Há datas de vendas associadas a este cliente",Snackbar.LENGTH_LONG)
                                     .show();
 
-                            //Toast.makeText(context, "Há datas de vendas associadas a este cliente", Toast.LENGTH_LONG).show();
-
                         } else {
 
                             documentReference.delete();

@@ -16,7 +16,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_dialog_recebido_parcial"
-            android:layout_width="120dp"
+            android:layout_width="150dp"
             android:layout_height="65dp" />
 
     </com.google.android.material.textfield.TextInputLayout>

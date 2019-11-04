@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -59,7 +60,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
     protected void onBindViewHolder(@NonNull final Viewholder_prod_cliente viewholder_prod_cliente, int i, @NonNull final Produto produto) {
 
         viewholder_prod_cliente.ch_recebido.setOnCheckedChangeListener(null);
-        viewholder_prod_cliente.ch_receb_parcial.setOnCheckedChangeListener(null);
         viewholder_prod_cliente.ch_devolvido.setOnCheckedChangeListener(null);
 
         viewholder_prod_cliente.nome_produto.setText(produto.getNomedoproduto());
@@ -68,7 +68,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
         viewholder_prod_cliente.total.setText(produto.getTotal());
         viewholder_prod_cliente.data.setText(produto.getData());
         viewholder_prod_cliente.ch_recebido.setChecked(produto.getRecebido());
-        viewholder_prod_cliente.ch_receb_parcial.setChecked(produto.getRecebido_parcial());
         viewholder_prod_cliente.ch_devolvido.setChecked(produto.getDevolvido());
 
         viewholder_prod_cliente.ch_recebido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -80,14 +79,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
             }
         });
 
-        viewholder_prod_cliente.ch_receb_parcial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-                estado_checkbox_receb_parcial(viewholder_prod_cliente.getAdapterPosition(), b);
-
-            }
-        });
 
         viewholder_prod_cliente.ch_devolvido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -135,16 +126,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
         getSnapshots().getSnapshot(i).getReference().update(map);
     }
 
-    public void estado_checkbox_receb_parcial(int i, boolean b) {
-
-        Map<String, Object> map = new HashMap<>();
-
-        map.put("recebido_parcial", b);
-
-        getSnapshots().getSnapshot(i).getReference().update(map);
-
-    }
-
     public void estado_checkbox_devolvido(int i, boolean b) {
 
         Map<String, Object> map = new HashMap<>();
@@ -160,7 +141,8 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
         TextView nome_produto, quantidade_produto, valor_produto, total, data;
         ImageButton btn_excluir_prod;
-        RadioButton ch_recebido, ch_receb_parcial, ch_devolvido;
+        RadioButton ch_recebido, ch_devolvido;
+        Button receb_parcial;
 
         public Viewholder_prod_cliente(@NonNull View itemView) {
             super(itemView);
@@ -172,8 +154,8 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
             btn_excluir_prod = itemView.findViewById(R.id.btn_excluir_produto);
             data = itemView.findViewById(R.id.txt_data);
             ch_recebido = itemView.findViewById(R.id.ch_recebido);
-            ch_receb_parcial = itemView.findViewById(R.id.ch_receb_parcial);
             ch_devolvido = itemView.findViewById(R.id.ch_devolvido);
+            receb_parcial = itemView.findViewById(R.id.btn_receb_partcial);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

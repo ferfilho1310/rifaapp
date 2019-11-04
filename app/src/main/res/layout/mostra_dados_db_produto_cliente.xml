@@ -23,15 +23,14 @@
         android:contentDescription="@string/todo"/>
 
     <RadioGroup
+        android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vlr_produto"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/vlr_produto">
 
         <RadioButton
             android:id="@+id/ch_recebido"
@@ -41,16 +40,9 @@
 
 
         <RadioButton
-            android:id="@+id/ch_receb_parcial"
-            android:layout_width="130dp"
-            android:layout_height="43dp"
-            android:text="@string/recebido_parcialmente" />
-
-        <RadioButton
             android:id="@+id/ch_devolvido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-12dp"
             android:text="@string/devolvido" />
 
     </RadioGroup>
@@ -200,6 +192,20 @@
         android:textSize="17sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+    <Button
+        android:id="@+id/btn_receb_partcial"
+        android:layout_width="146dp"
+        android:layout_height="52dp"
+        android:background="@drawable/corner_color"
+        android:text="Recebido Parcial"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        app:layout_constraintVertical_bias="0.041" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

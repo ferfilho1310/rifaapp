@@ -1,16 +1,16 @@
 package com.example.apprifa.Models;
 
-public class RecebidoParcial {
+public class RecebidoParcialModel {
 
     private String data;
     private String valor_recebido;
 
-    public RecebidoParcial(String data, String valor_recebido) {
+    public RecebidoParcialModel(String data, String valor_recebido) {
         this.data = data;
         this.valor_recebido = valor_recebido;
     }
 
-    public RecebidoParcial() {
+    public RecebidoParcialModel() {
     }
 
     public String getData() {
