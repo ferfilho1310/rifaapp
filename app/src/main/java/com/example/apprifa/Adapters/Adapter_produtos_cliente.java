@@ -17,6 +17,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apprifa.Controlers.ProdutosCliente;
@@ -31,7 +32,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.HashMap;
 
@@ -135,14 +138,22 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
         });
     }
 
-    public void recebido_parcialmente(int i){
+    public void recebido_parcialmente(int i) {
 
-        DocumentReference documentReference = getSnapshots().getSnapshot(i).getReference();
+        final DocumentReference documentReference = getSnapshots().getSnapshot(i).getReference();
 
-        Intent i_recebido_parcial = new Intent(context,RecebidoParcial.class);
-        i_recebido_parcial.putExtra("id_recebido_parcial",documentReference.getId());
-        context.startActivity(i_recebido_parcial);
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
+                Produto produto = documentSnapshot.toObject(Produto.class);
+
+                Intent i_recebido_parcial = new Intent(context, RecebidoParcial.class);
+                i_recebido_parcial.putExtra("id_recebido_parcial", documentReference.getId());
+                i_recebido_parcial.putExtra("produto",produto);
+                context.startActivity(i_recebido_parcial);
+            }
+        });
 
     }
 

@@ -12,9 +12,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.apprifa.Adapters.Adapter_Recebidos_Parcial;
 import com.example.apprifa.Helpers.AccessFirebase;
+import com.example.apprifa.Models.Produto;
 import com.example.apprifa.Models.RecebidoParcialModel;
 import com.example.apprifa.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -33,6 +35,8 @@ import java.util.Date;
 public class RecebidoParcial extends AppCompatActivity {
 
     String id_produto;
+    Produto produto;
+    TextView txt_valor_do_produto;
 
     FloatingActionButton fab_recebido_parcial;
     RecyclerView rc_recebido_parcial;
@@ -66,6 +70,7 @@ public class RecebidoParcial extends AppCompatActivity {
         fab_recebido_parcial = findViewById(R.id.fab_recebido_parcial);
         rc_recebido_parcial = findViewById(R.id.rc_recebido_parcial);
         ad_recebido_parcial = findViewById(R.id.adView_recebido_parcial);
+        txt_valor_do_produto = findViewById(R.id.txt_valor_do_produto);
 
         setTitle("Valor Recebido Parcial");
 
@@ -78,6 +83,9 @@ public class RecebidoParcial extends AppCompatActivity {
         ad_recebido_parcial.loadAd(adRequest);
 
         id_produto = getIntent().getExtras().getString("id_recebido_parcial");
+        produto = getIntent().getExtras().getParcelable("produto");
+
+        txt_valor_do_produto.setText(produto.getTotal());
 
         ler_dados_firebase_recebido_parcial();
 
@@ -122,7 +130,7 @@ public class RecebidoParcial extends AppCompatActivity {
                  .setQuery(recebido,RecebidoParcialModel.class)
                  .build();
 
-         adapter_recebidos_parcial = new Adapter_Recebidos_Parcial(fro_recebido);
+         adapter_recebidos_parcial = new Adapter_Recebidos_Parcial(fro_recebido,RecebidoParcial.this);
 
          rc_recebido_parcial.setLayoutManager(new GridLayoutManager(RecebidoParcial.this,2));
          rc_recebido_parcial.setAdapter(adapter_recebidos_parcial);

@@ -1,5 +1,8 @@
 package com.example.apprifa.Adapters;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 public class Adapter_Recebidos_Parcial extends FirestoreRecyclerAdapter<RecebidoParcialModel, Adapter_Recebidos_Parcial.View_Holder_Recebido_parcial> {
 
+    Context context;
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -23,8 +27,9 @@ public class Adapter_Recebidos_Parcial extends FirestoreRecyclerAdapter<Recebido
      *
      * @param options
      */
-    public Adapter_Recebidos_Parcial(@NonNull FirestoreRecyclerOptions<RecebidoParcialModel> options) {
+    public Adapter_Recebidos_Parcial(@NonNull FirestoreRecyclerOptions<RecebidoParcialModel> options, Context context) {
         super(options);
+        this.context = context;
     }
 
     @NonNull
@@ -46,10 +51,22 @@ public class Adapter_Recebidos_Parcial extends FirestoreRecyclerAdapter<Recebido
             @Override
             public void onClick(View view) {
 
-                delete_recebido(holder.getAdapterPosition());
+                AlertDialog.Builder alrt_excluir_recebido = new AlertDialog.Builder(context);
+                alrt_excluir_recebido.setTitle("Deseja realmente excluir o valor recebido ?");
 
+                alrt_excluir_recebido.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        delete_recebido(holder.getAdapterPosition());
+
+                    }
+                }).setNegativeButton("Cancelar", null);
+
+                alrt_excluir_recebido.show();
             }
         });
+
     }
 
     public void delete_recebido(int i) {

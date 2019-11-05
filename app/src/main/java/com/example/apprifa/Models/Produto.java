@@ -1,6 +1,9 @@
 package com.example.apprifa.Models;
 
-public class Produto {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Produto implements Parcelable {
 
     private String nomedoproduto;
     private String quantidade;
@@ -23,6 +26,30 @@ public class Produto {
 
     public Produto() {
     }
+
+    protected Produto(Parcel in) {
+        nomedoproduto = in.readString();
+        quantidade = in.readString();
+        valor = in.readString();
+        total = in.readString();
+        data = in.readString();
+        byte tmpRecebido = in.readByte();
+        recebido = tmpRecebido == 0 ? null : tmpRecebido == 1;
+        byte tmpDevolvido = in.readByte();
+        devolvido = tmpDevolvido == 0 ? null : tmpDevolvido == 1;
+    }
+
+    public static final Creator<Produto> CREATOR = new Creator<Produto>() {
+        @Override
+        public Produto createFromParcel(Parcel in) {
+            return new Produto(in);
+        }
+
+        @Override
+        public Produto[] newArray(int size) {
+            return new Produto[size];
+        }
+    };
 
     public String getNomedoproduto() {
         return nomedoproduto;
@@ -78,5 +105,21 @@ public class Produto {
 
     public void setDevolvido(Boolean devolvido) {
         this.devolvido = devolvido;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(nomedoproduto);
+        parcel.writeString(quantidade);
+        parcel.writeString(valor);
+        parcel.writeString(total);
+        parcel.writeString(data);
+        parcel.writeByte((byte) (recebido == null ? 0 : recebido ? 1 : 2));
+        parcel.writeByte((byte) (devolvido == null ? 0 : devolvido ? 1 : 2));
     }
 }
