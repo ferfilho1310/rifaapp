@@ -41,6 +41,7 @@ public class Adapter_Recebidos_Parcial extends FirestoreRecyclerAdapter<Recebido
 
         holder.txt_recebido_parcial.setText(model.getValor_recebido());
         holder.txt_data_recebido.setText(model.getData());
+
         holder.btn_img_recebido_parcial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
