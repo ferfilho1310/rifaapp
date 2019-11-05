@@ -19,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -197,7 +198,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
 
         adapter_datas = new Adapter_Data_Cobranca(rc_options_datas, DatasVendasCobranca.this);
         rc_datas.setAdapter(adapter_datas);
-        rc_datas.setLayoutManager(new LinearLayoutManager(DatasVendasCobranca.this, LinearLayoutManager.VERTICAL, false));
+        rc_datas.setLayoutManager(new GridLayoutManager(DatasVendasCobranca.this, 2));
         rc_datas.setHasFixedSize(true);
 
         adapter_datas.setOnItemClicklistener(new Adapter_Data_Cobranca.OnItemClickListener() {
