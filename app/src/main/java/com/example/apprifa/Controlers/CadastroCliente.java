@@ -137,7 +137,7 @@ public class CadastroCliente extends AppCompatActivity {
     @SuppressLint("WrongConstant")
     public void seachview(String search) {
 
-        query = cl_clientes.orderBy("nome").startAt(search).endAt(search + "\uf8ff");
+        query = cl_clientes.orderBy("nome_maiusculo").startAt(search.toUpperCase()).endAt(search.toUpperCase() + "\uf8ff");
 
         firt_cad_clientes = new FirestoreRecyclerOptions.Builder<Cliente>()
                 .setQuery(query, Cliente.class)

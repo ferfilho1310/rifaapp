@@ -131,7 +131,7 @@ public class AccessFirebase extends AppCompatActivity {
                 cliente.setCep(ed_cep.getText().toString());
 
                 salva_clientes(cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
-                        , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado());
+                        , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado(),cliente.getNome().toUpperCase());
 
 
             }
@@ -153,11 +153,12 @@ public class AccessFirebase extends AppCompatActivity {
 
     }
 
-    public void salva_clientes(String nome, String enderecocliente, String numero, String bairro, String cidade, String cep, String estado) {
+    public void salva_clientes(String nome, String enderecocliente, String numero, String bairro, String cidade, String cep, String estado,String nome_maiusculo) {
 
         Map<String, Object> map = new HashMap<>();
 
         map.put("nome", nome);
+        map.put("nome_maiusculo", nome_maiusculo);
         map.put("logradouro", enderecocliente);
         map.put("numero", numero);
         map.put("bairro", bairro);
