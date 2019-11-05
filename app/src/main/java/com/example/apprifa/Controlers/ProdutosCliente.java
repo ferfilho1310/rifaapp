@@ -95,8 +95,9 @@ public class ProdutosCliente extends AppCompatActivity {
         Intent receber = getIntent();
         Bundle data = receber.getExtras();
 
-        id_data = data.getString("id_data_compra");
-
+        if(data != null) {
+            id_data = data.getString("id_data_compra");
+        }
         setTitle("Produtos do Cliente");
 
         MobileAds.initialize(ProdutosCliente.this, "ca-app-pub-2528240545678093~1740905001");

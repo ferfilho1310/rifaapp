@@ -8,11 +8,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.apprifa.Adapters.Adapter_Recebidos_Parcial;
 import com.example.apprifa.Helpers.AccessFirebase;
@@ -85,7 +88,10 @@ public class RecebidoParcial extends AppCompatActivity {
         id_produto = getIntent().getExtras().getString("id_recebido_parcial");
         produto = getIntent().getExtras().getParcelable("produto");
 
-        txt_valor_do_produto.setText(produto.getTotal());
+        if(produto != null){
+
+            txt_valor_do_produto.setText(produto.getTotal());
+        }
 
         ler_dados_firebase_recebido_parcial();
 
@@ -124,17 +130,17 @@ public class RecebidoParcial extends AppCompatActivity {
 
     public void ler_dados_firebase_recebido_parcial() {
 
-         recebido = cl_recebido_parcial.whereEqualTo("id",id_produto);
+        recebido = cl_recebido_parcial.whereEqualTo("id", id_produto);
 
-         fro_recebido = new FirestoreRecyclerOptions.Builder<RecebidoParcialModel>()
-                 .setQuery(recebido,RecebidoParcialModel.class)
-                 .build();
+        fro_recebido = new FirestoreRecyclerOptions.Builder<RecebidoParcialModel>()
+                .setQuery(recebido, RecebidoParcialModel.class)
+                .build();
 
-         adapter_recebidos_parcial = new Adapter_Recebidos_Parcial(fro_recebido,RecebidoParcial.this);
+        adapter_recebidos_parcial = new Adapter_Recebidos_Parcial(fro_recebido, RecebidoParcial.this);
 
-         rc_recebido_parcial.setLayoutManager(new GridLayoutManager(RecebidoParcial.this,2));
-         rc_recebido_parcial.setAdapter(adapter_recebidos_parcial);
-         rc_recebido_parcial.hasFixedSize();
+        rc_recebido_parcial.setLayoutManager(new GridLayoutManager(RecebidoParcial.this, 2));
+        rc_recebido_parcial.setAdapter(adapter_recebidos_parcial);
+        rc_recebido_parcial.hasFixedSize();
 
     }
 
@@ -156,6 +162,7 @@ public class RecebidoParcial extends AppCompatActivity {
 
             case android.R.id.home:
                 onBackPressed();
+
             default:
                 break;
         }
