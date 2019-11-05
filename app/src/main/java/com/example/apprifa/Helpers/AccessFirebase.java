@@ -141,16 +141,15 @@ public class AccessFirebase extends AppCompatActivity {
 
     }
 
-
     public void  salva_recebido_parcial(String receb_parcial, String id_valor_recebido,String data_recebimento){
 
         Map<String,Object> map = new HashMap<>();
 
         map.put("id",id_valor_recebido);
-        map.put("Valor Recebido",receb_parcial);
-        map.put("Data de Recebimento",data_recebimento);
+        map.put("valor_recebido",receb_parcial);
+        map.put("data",data_recebimento);
 
-        db_receb_partcial.document(firebaseAuth.getUid()).collection("recebido parcial").add(map);
+        db_receb_partcial.document(firebaseAuth.getUid()).collection("recebido_parcial").add(map);
 
     }
 

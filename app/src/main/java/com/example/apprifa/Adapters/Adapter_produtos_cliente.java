@@ -3,11 +3,14 @@ package com.example.apprifa.Adapters;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 
@@ -17,12 +20,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apprifa.Controlers.ProdutosCliente;
+import com.example.apprifa.Controlers.RecebidoParcial;
+import com.example.apprifa.Models.Cliente;
 import com.example.apprifa.Models.Produto;
 import com.example.apprifa.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
@@ -34,6 +43,13 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
     OnItemClickListener listener;
     Context context;
+
+    FirebaseAuth db_users = FirebaseAuth.getInstance();
+
+    FirebaseFirestore db_produtos = FirebaseFirestore.getInstance();
+    CollectionReference cl_datas = db_produtos.collection("recebido_partcial")
+            .document(db_users.getUid())
+            .collection("recebido parcial");
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -70,6 +86,16 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
         viewholder_prod_cliente.ch_recebido.setChecked(produto.getRecebido());
         viewholder_prod_cliente.ch_devolvido.setChecked(produto.getDevolvido());
 
+        viewholder_prod_cliente.recebido_parcial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                recebido_parcialmente(viewholder_prod_cliente.getAdapterPosition());
+
+            }
+        });
+
         viewholder_prod_cliente.ch_recebido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -78,7 +104,6 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
             }
         });
-
 
         viewholder_prod_cliente.ch_devolvido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -110,10 +135,20 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
         });
     }
 
+    public void recebido_parcialmente(int i){
+
+        DocumentReference documentReference = getSnapshots().getSnapshot(i).getReference();
+
+        Intent i_recebido_parcial = new Intent(context,RecebidoParcial.class);
+        i_recebido_parcial.putExtra("id_recebido_parcial",documentReference.getId());
+        context.startActivity(i_recebido_parcial);
+
+
+    }
+
     public void delete_categoria(int i) {
 
         getSnapshots().getSnapshot(i).getReference().delete();
-
 
     }
 
@@ -136,13 +171,12 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
     }
 
-
     public class Viewholder_prod_cliente extends RecyclerView.ViewHolder {
 
         TextView nome_produto, quantidade_produto, valor_produto, total, data;
         ImageButton btn_excluir_prod;
         RadioButton ch_recebido, ch_devolvido;
-        Button receb_parcial;
+        Button recebido_parcial;
 
         public Viewholder_prod_cliente(@NonNull View itemView) {
             super(itemView);
@@ -155,7 +189,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
             data = itemView.findViewById(R.id.txt_data);
             ch_recebido = itemView.findViewById(R.id.ch_recebido);
             ch_devolvido = itemView.findViewById(R.id.ch_devolvido);
-            receb_parcial = itemView.findViewById(R.id.btn_receb_partcial);
+            recebido_parcial = itemView.findViewById(R.id.btn_receb_parcial);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -166,10 +200,8 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
                         listener.onItemClick(getSnapshots().getSnapshot(position), position);
                     }
-
                 }
             });
-
         }
     }
 

@@ -16,11 +16,10 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_dialog_recebido_parcial"
-            android:layout_width="150dp"
+            android:inputType="numberDecimal"
+            android:layout_width="260dp"
             android:layout_height="65dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

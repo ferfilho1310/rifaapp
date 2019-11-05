@@ -1,40 +1,56 @@
 package com.example.apprifa.Controlers;
 
-import android.content.DialogInterface;
-import android.os.Bundle;
-
-import com.example.apprifa.Helpers.AccessFirebase;
-import com.example.apprifa.Models.RecebidoParcialModel;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
+import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.apprifa.Adapters.Adapter_Recebidos_Parcial;
+import com.example.apprifa.Helpers.AccessFirebase;
+import com.example.apprifa.Models.RecebidoParcialModel;
 import com.example.apprifa.R;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RecebidoParcial extends AppCompatActivity {
 
-    RecyclerView rc_recebido_parcial;
-    AdView ad_recebido_parcial;
-    FloatingActionButton fab_recebido_parcial;
+    String id_produto;
 
-    AccessFirebase accessFirebase = new AccessFirebase();
-    RecebidoParcialModel recebidoParcialModel = new RecebidoParcialModel();
+    FloatingActionButton fab_recebido_parcial;
+    RecyclerView rc_recebido_parcial;
+
+    FirestoreRecyclerOptions fro_recebido;
+    Query recebido;
+    Adapter_Recebidos_Parcial adapter_recebidos_parcial;
+
+    AdView ad_recebido_parcial;
+
+    RecebidoParcialModel recebidoParcial = new RecebidoParcialModel();
+
+    FirebaseAuth db_users = FirebaseAuth.getInstance();
+
+    FirebaseFirestore db_recebido = FirebaseFirestore.getInstance();
+    CollectionReference cl_recebido_parcial = db_recebido.collection("recebido_partcial")
+            .document(db_users.getUid())
+            .collection("recebido_parcial");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +59,15 @@ public class RecebidoParcial extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        rc_recebido_parcial = findViewById(R.id.rc_recebido_parcial);
-        ad_recebido_parcial = findViewById(R.id.ad_recebido_parcial);
-        fab_recebido_parcial = findViewById(R.id.fab_recebido_parcial);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
 
-        FirebaseInstanceId.getInstance();
+        fab_recebido_parcial = findViewById(R.id.fab_recebido_parcial);
+        rc_recebido_parcial = findViewById(R.id.rc_recebido_parcial);
+        ad_recebido_parcial = findViewById(R.id.adView_recebido_parcial);
+
+        setTitle("Valor Recebido Parcial");
 
         MobileAds.initialize(RecebidoParcial.this, "ca-app-pub-2528240545678093~1740905001");
 
@@ -60,45 +77,77 @@ public class RecebidoParcial extends AppCompatActivity {
 
         ad_recebido_parcial.loadAd(adRequest);
 
+        id_produto = getIntent().getExtras().getString("id_recebido_parcial");
+
+        ler_dados_firebase_recebido_parcial();
+
         fab_recebido_parcial.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
 
-                AlertDialog.Builder altr_receb_parcial = new AlertDialog.Builder(RecebidoParcial.this);
-                altr_receb_parcial.setTitle("Informe o valor recebido");
-                final View dialgo_receb_parc = getLayoutInflater().inflate(R.layout.dialog_cad_recebido_parcial, null);
-                altr_receb_parcial.setView(dialgo_receb_parc);
+                AlertDialog.Builder alrt_valor_recebido = new AlertDialog.Builder(RecebidoParcial.this);
+                View view1 = getLayoutInflater().inflate(R.layout.dialog_cad_recebido_parcial, null);
+                alrt_valor_recebido.setTitle("Informe o valor recebido");
+                alrt_valor_recebido.setView(view1);
 
-                altr_receb_parcial.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                final EditText ed_valor_recebido = view1.findViewById(R.id.ed_dialog_recebido_parcial);
+
+                alrt_valor_recebido.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        SimpleDateFormat format_date = new SimpleDateFormat("dd/MM/yyyy");
+                        SimpleDateFormat form_data = new SimpleDateFormat("dd/MM/yyyy");
                         Date date = new Date();
-                        String data = format_date.format(date);
+                        String data = form_data.format(date);
 
-                        EditText ed_valor_recebido = dialgo_receb_parc.findViewById(R.id.ed_dialog_recebido_parcial);
+                        recebidoParcial.setData(data);
+                        recebidoParcial.setValor_recebido(ed_valor_recebido.getText().toString());
 
-                        recebidoParcialModel.setData(data);
-                        recebidoParcialModel.setValor_recebido(ed_valor_recebido.getText().toString());
 
-                        //accessFirebase.salva_recebido_parcial(recebidoParcialModel.getValor_recebido(),);
-
+                        new AccessFirebase().salva_recebido_parcial(recebidoParcial.getValor_recebido(), id_produto, recebidoParcial.getData());
 
                     }
-                }).setNegativeButton("Cancelar", null);
 
-                altr_receb_parcial.show();
+                }).setNegativeButton("Cancelar", null);
+                alrt_valor_recebido.show();
             }
         });
+    }
+
+    public void ler_dados_firebase_recebido_parcial() {
+
+         recebido = cl_recebido_parcial.whereEqualTo("id",id_produto);
+
+         fro_recebido = new FirestoreRecyclerOptions.Builder<RecebidoParcialModel>()
+                 .setQuery(recebido,RecebidoParcialModel.class)
+                 .build();
+
+         adapter_recebidos_parcial = new Adapter_Recebidos_Parcial(fro_recebido);
+
+         rc_recebido_parcial.setLayoutManager(new GridLayoutManager(RecebidoParcial.this,2));
+         rc_recebido_parcial.setAdapter(adapter_recebidos_parcial);
+         rc_recebido_parcial.hasFixedSize();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter_recebidos_parcial.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter_recebidos_parcial.stopListening();
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+
             case android.R.id.home:
                 onBackPressed();
-
             default:
                 break;
         }

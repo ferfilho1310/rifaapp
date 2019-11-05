@@ -13,10 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".Controlers.RecebidoParcial"
-            android:label="@string/title_activity_recebido_parcial"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Controlers.RecebidoParcial"></activity>
         <activity
             android:name=".Controlers.DatasVendasCobranca"
             android:label="@string/title_activity_datas_vendas_cobranca"

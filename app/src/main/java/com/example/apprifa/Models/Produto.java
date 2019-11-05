@@ -8,17 +8,15 @@ public class Produto {
     private String total;
     private String data;
     private Boolean recebido;
-    private Boolean recebido_parcial;
     private Boolean devolvido;
 
-    public Produto(String nomedoproduto, String quantidade, String valor,String total, String data, Boolean recebido,Boolean recebido_parcial, Boolean devolvido) {
+    public Produto(String nomedoproduto, String quantidade, String valor,String total, String data, Boolean recebido, Boolean devolvido) {
         this.nomedoproduto = nomedoproduto;
         this.quantidade = quantidade;
         this.valor = valor;
         this.total = total;
         this.data = data;
         this.recebido = recebido;
-        this.recebido_parcial = recebido_parcial;
         this.devolvido = devolvido;
 
     }
@@ -72,14 +70,6 @@ public class Produto {
 
     public void setRecebido(Boolean recebido) {
         this.recebido = recebido;
-    }
-
-    public Boolean getRecebido_parcial() {
-        return recebido_parcial;
-    }
-
-    public void setRecebido_parcial(Boolean recebido_parcial) {
-        this.recebido_parcial = recebido_parcial;
     }
 
     public Boolean getDevolvido() {
