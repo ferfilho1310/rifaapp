@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.apprifa.Adapters.Adapter_Data_Cobranca;
+import com.example.apprifa.Adapters.AdapterDataCobranca;
 import com.example.apprifa.Helpers.AccessFirebase;
 import com.example.apprifa.Models.DataCobrancaVenda;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -32,7 +32,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.example.apprifa.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,7 +61,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
             .collection("data_de_cobraca");
 
     RecyclerView rc_datas;
-    Adapter_Data_Cobranca adapter_datas;
+    AdapterDataCobranca adapter_datas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,12 +195,12 @@ public class DatasVendasCobranca extends AppCompatActivity {
                 .setQuery(query, DataCobrancaVenda.class)
                 .build();
 
-        adapter_datas = new Adapter_Data_Cobranca(rc_options_datas, DatasVendasCobranca.this);
+        adapter_datas = new AdapterDataCobranca(rc_options_datas, DatasVendasCobranca.this);
         rc_datas.setAdapter(adapter_datas);
         rc_datas.setLayoutManager(new GridLayoutManager(DatasVendasCobranca.this, 2));
         rc_datas.setHasFixedSize(true);
 
-        adapter_datas.setOnItemClicklistener(new Adapter_Data_Cobranca.OnItemClickListener() {
+        adapter_datas.setOnItemClicklistener(new AdapterDataCobranca.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 
@@ -226,12 +225,12 @@ public class DatasVendasCobranca extends AppCompatActivity {
                 .setQuery(query, DataCobrancaVenda.class)
                 .build();
 
-        adapter_datas = new Adapter_Data_Cobranca(rc_options_datas, DatasVendasCobranca.this);
+        adapter_datas = new AdapterDataCobranca(rc_options_datas, DatasVendasCobranca.this);
         rc_datas.setAdapter(adapter_datas);
         rc_datas.setLayoutManager(new LinearLayoutManager(DatasVendasCobranca.this, LinearLayoutManager.VERTICAL, false));
         rc_datas.setHasFixedSize(true);
 
-        adapter_datas.setOnItemClicklistener(new Adapter_Data_Cobranca.OnItemClickListener() {
+        adapter_datas.setOnItemClicklistener(new AdapterDataCobranca.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 

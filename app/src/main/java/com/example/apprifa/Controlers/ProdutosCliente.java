@@ -3,10 +3,9 @@ package com.example.apprifa.Controlers;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
-import com.example.apprifa.Adapters.Adapter_produtos_cliente;
+import com.example.apprifa.Adapters.AdapterProdutosCliente;
 import com.example.apprifa.Helpers.AccessFirebase;
 
 import com.example.apprifa.Models.Produto;
@@ -25,7 +24,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -63,7 +61,7 @@ public class ProdutosCliente extends AppCompatActivity {
             .document(db_users.getUid())
             .collection("produtos");
 
-    Adapter_produtos_cliente adapter_produtos_cliente;
+    AdapterProdutosCliente adapter_produtos_cliente;
 
     TextView teste_soma, recebido_produtos;
 
@@ -211,7 +209,7 @@ public class ProdutosCliente extends AppCompatActivity {
         //Instacia do adapter do produtos para carregar
         // os itens vindo do banco do banco no formado de linhas na vertical
 
-        adapter_produtos_cliente = new Adapter_produtos_cliente(firt_cad_clientes, ProdutosCliente.this);
+        adapter_produtos_cliente = new AdapterProdutosCliente(firt_cad_clientes, ProdutosCliente.this);
         rc_prod_cliente.setLayoutManager(new LinearLayoutManager(ProdutosCliente.this, LinearLayoutManager.VERTICAL, false));
         rc_prod_cliente.setHasFixedSize(true);
         rc_prod_cliente.setAdapter(adapter_produtos_cliente);

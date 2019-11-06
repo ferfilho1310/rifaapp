@@ -17,7 +17,7 @@ import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.apprifa.Adapters.Adapter_cliente;
+import com.example.apprifa.Adapters.AdapterCliente;
 import com.example.apprifa.Helpers.AccessFirebase;
 import com.example.apprifa.Models.Cliente;
 import com.example.apprifa.R;
@@ -57,7 +57,7 @@ public class CadastroCliente extends AppCompatActivity {
             .document(db_users.getUid())
             .collection("cliente");
 
-    Adapter_cliente adapter_cliente;
+    AdapterCliente adapter_cliente;
 
     Cliente cliente = new Cliente();
     AccessFirebase accessFirebase = new AccessFirebase();
@@ -111,14 +111,14 @@ public class CadastroCliente extends AppCompatActivity {
                 .setQuery(query, Cliente.class)
                 .build();
 
-        adapter_cliente = new Adapter_cliente(firt_cad_clientes, CadastroCliente.this);
+        adapter_cliente = new AdapterCliente(firt_cad_clientes, CadastroCliente.this);
         layout_manager_cliente = new GridLayoutManager(CadastroCliente.this, 1);
 
         rc_produto.setLayoutManager(layout_manager_cliente);
         rc_produto.setHasFixedSize(true);
         rc_produto.setAdapter(adapter_cliente);
 
-        adapter_cliente.setOnItemClicklistener(new Adapter_cliente.OnItemClickListener() {
+        adapter_cliente.setOnItemClicklistener(new AdapterCliente.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 
@@ -143,13 +143,13 @@ public class CadastroCliente extends AppCompatActivity {
                 .setQuery(query, Cliente.class)
                 .build();
 
-        adapter_cliente = new Adapter_cliente(firt_cad_clientes, CadastroCliente.this);
+        adapter_cliente = new AdapterCliente(firt_cad_clientes, CadastroCliente.this);
         layout_manager_cliente = new GridLayoutManager(CadastroCliente.this, 1);
 
         rc_produto.setHasFixedSize(true);
         rc_produto.setAdapter(adapter_cliente);
 
-        adapter_cliente.setOnItemClicklistener(new Adapter_cliente.OnItemClickListener() {
+        adapter_cliente.setOnItemClicklistener(new AdapterCliente.OnItemClickListener() {
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
 

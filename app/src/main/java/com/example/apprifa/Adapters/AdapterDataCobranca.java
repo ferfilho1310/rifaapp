@@ -25,7 +25,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class Adapter_Data_Cobranca extends FirestoreRecyclerAdapter<DataCobrancaVenda, Adapter_Data_Cobranca.ViewHolder_datas> {
+public class AdapterDataCobranca extends FirestoreRecyclerAdapter<DataCobrancaVenda, AdapterDataCobranca.ViewHolder_datas> {
 
     OnItemClickListener listener;
     Context context;
@@ -46,7 +46,7 @@ public class Adapter_Data_Cobranca extends FirestoreRecyclerAdapter<DataCobranca
      *
      * @param options
      */
-    public Adapter_Data_Cobranca(@NonNull FirestoreRecyclerOptions<DataCobrancaVenda> options, Context context) {
+    public AdapterDataCobranca(@NonNull FirestoreRecyclerOptions<DataCobrancaVenda> options, Context context) {
         super(options);
         this.context = context;
     }

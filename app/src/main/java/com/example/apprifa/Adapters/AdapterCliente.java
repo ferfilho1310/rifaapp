@@ -40,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_cliente.Viewholder_clientes> {
+public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCliente.Viewholder_clientes> {
 
     OnItemClickListener listener;
     private Context context;
@@ -60,7 +60,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
      *
      * @param options
      */
-    public Adapter_cliente(@NonNull FirestoreRecyclerOptions<Cliente> options, Context context) {
+    public AdapterCliente(@NonNull FirestoreRecyclerOptions<Cliente> options, Context context) {
         super(options);
         this.context = context;
 
@@ -68,7 +68,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
 
     @NonNull
     @Override
-    public Adapter_cliente.Viewholder_clientes onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterCliente.Viewholder_clientes onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mostra_dados_db_cliente, parent, false);
 
@@ -76,7 +76,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull final Adapter_cliente.Viewholder_clientes viewholder_clientes, int i, @NonNull final Cliente cliente) {
+    protected void onBindViewHolder(@NonNull final AdapterCliente.Viewholder_clientes viewholder_clientes, int i, @NonNull final Cliente cliente) {
 
         viewholder_clientes.nome.setText(cliente.getNome());
         viewholder_clientes.endereco_cli.setText(cliente.getLogradouro());
@@ -116,7 +116,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
         });
     }
 
-    public void atualiza_dados_cliente(final Adapter_cliente.Viewholder_clientes viewholder_clientes, View view, final Cliente cliente) {
+    public void atualiza_dados_cliente(final AdapterCliente.Viewholder_clientes viewholder_clientes, View view, final Cliente cliente) {
 
         AlertDialog.Builder alrt_update_client = new AlertDialog.Builder(context);
         final View custom_layout = LayoutInflater.from(view.getContext()).inflate(R.layout.dialog_cad_clientes, null);

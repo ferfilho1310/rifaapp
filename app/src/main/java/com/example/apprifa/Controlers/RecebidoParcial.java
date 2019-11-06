@@ -8,18 +8,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.apprifa.Adapters.Adapter_Recebidos_Parcial;
+import com.example.apprifa.Adapters.AdapterRecebidosParcial;
 import com.example.apprifa.Helpers.AccessFirebase;
-import com.example.apprifa.Models.Produto;
 import com.example.apprifa.Models.RecebidoParcialModel;
 import com.example.apprifa.R;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -44,7 +39,7 @@ public class RecebidoParcial extends AppCompatActivity {
 
     FirestoreRecyclerOptions fro_recebido;
     Query recebido;
-    Adapter_Recebidos_Parcial adapter_recebidos_parcial;
+    AdapterRecebidosParcial adapter_recebidos_parcial;
 
     AdView ad_recebido_parcial;
 
@@ -128,7 +123,7 @@ public class RecebidoParcial extends AppCompatActivity {
                 .setQuery(recebido, RecebidoParcialModel.class)
                 .build();
 
-        adapter_recebidos_parcial = new Adapter_Recebidos_Parcial(fro_recebido, RecebidoParcial.this);
+        adapter_recebidos_parcial = new AdapterRecebidosParcial(fro_recebido, RecebidoParcial.this);
 
         rc_recebido_parcial.setLayoutManager(new GridLayoutManager(RecebidoParcial.this, 2));
         rc_recebido_parcial.setAdapter(adapter_recebidos_parcial);

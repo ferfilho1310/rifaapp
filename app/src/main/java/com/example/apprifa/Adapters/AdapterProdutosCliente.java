@@ -8,21 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.apprifa.Controlers.ProdutosCliente;
 import com.example.apprifa.Controlers.RecebidoParcial;
-import com.example.apprifa.Models.Cliente;
 import com.example.apprifa.Models.Produto;
 import com.example.apprifa.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
@@ -35,9 +30,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
@@ -45,7 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, Adapter_produtos_cliente.Viewholder_prod_cliente> {
+public class AdapterProdutosCliente extends FirestoreRecyclerAdapter<Produto, AdapterProdutosCliente.Viewholder_prod_cliente> {
 
 
     OnItemClickListener listener;
@@ -65,7 +58,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
      * @param options
      */
 
-    public Adapter_produtos_cliente(@NonNull FirestoreRecyclerOptions<Produto> options, Context context) {
+    public AdapterProdutosCliente(@NonNull FirestoreRecyclerOptions<Produto> options, Context context) {
         super(options);
         this.context = context;
     }
