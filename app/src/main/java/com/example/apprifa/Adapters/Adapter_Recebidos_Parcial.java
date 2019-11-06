@@ -16,10 +16,20 @@ import com.example.apprifa.Models.RecebidoParcialModel;
 import com.example.apprifa.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class Adapter_Recebidos_Parcial extends FirestoreRecyclerAdapter<RecebidoParcialModel, Adapter_Recebidos_Parcial.View_Holder_Recebido_parcial> {
 
     Context context;
+
+
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -49,7 +59,7 @@ public class Adapter_Recebidos_Parcial extends FirestoreRecyclerAdapter<Recebido
 
         holder.btn_img_recebido_parcial.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
 
                 AlertDialog.Builder alrt_excluir_recebido = new AlertDialog.Builder(context);
                 alrt_excluir_recebido.setTitle("Deseja realmente excluir o valor recebido ?");

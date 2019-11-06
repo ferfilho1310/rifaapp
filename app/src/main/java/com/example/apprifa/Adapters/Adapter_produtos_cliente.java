@@ -28,6 +28,9 @@ import com.example.apprifa.R;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -35,6 +38,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 
@@ -49,10 +53,10 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
     FirebaseAuth db_users = FirebaseAuth.getInstance();
 
-    FirebaseFirestore db_produtos = FirebaseFirestore.getInstance();
-    CollectionReference cl_datas = db_produtos.collection("recebido_partcial")
+    FirebaseFirestore db_recebido = FirebaseFirestore.getInstance();
+    CollectionReference cl_recebido_parcial = db_recebido.collection("recebido_partcial")
             .document(db_users.getUid())
-            .collection("recebido parcial");
+            .collection("recebido_parcial");
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -119,7 +123,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
         viewholder_prod_cliente.btn_excluir_prod.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
 
                 AlertDialog.Builder alert_excluir = new AlertDialog.Builder(context);
                 alert_excluir.setMessage("Deseja realmente excluir o produto ?");
@@ -128,7 +132,7 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        delete_categoria(viewholder_prod_cliente.getAdapterPosition());
+                        delete_categoria(viewholder_prod_cliente.getAdapterPosition(),view);
 
                     }
                 }).setNegativeButton("Cancelar", null);
@@ -142,24 +146,37 @@ public class Adapter_produtos_cliente extends FirestoreRecyclerAdapter<Produto, 
 
         final DocumentReference documentReference = getSnapshots().getSnapshot(i).getReference();
 
-        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-
-                Produto produto = documentSnapshot.toObject(Produto.class);
-
-                Intent i_recebido_parcial = new Intent(context, RecebidoParcial.class);
+                final Intent i_recebido_parcial = new Intent(context, RecebidoParcial.class);
                 i_recebido_parcial.putExtra("id_recebido_parcial", documentReference.getId());
-                i_recebido_parcial.putExtra("produto",produto);
                 context.startActivity(i_recebido_parcial);
-            }
-        });
-
     }
 
-    public void delete_categoria(int i) {
+    public void delete_categoria(int i, final View view) {
 
-        getSnapshots().getSnapshot(i).getReference().delete();
+        final DocumentReference documentReference = getSnapshots().getSnapshot(i).getReference();
+
+        cl_recebido_parcial
+                .whereEqualTo("id", documentReference.getId())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        QuerySnapshot queryDocumentSnapshot = task.getResult();
+
+                        if (!queryDocumentSnapshot.isEmpty()) {
+
+                            Snackbar.make(view, "Há valores recebidos referente a esse produto", Snackbar.LENGTH_LONG)
+                                    .show();
+
+                        } else {
+
+                            documentReference.delete();
+
+                        }
+                    }
+
+                });
 
     }
 

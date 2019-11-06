@@ -38,8 +38,6 @@ import java.util.Date;
 public class RecebidoParcial extends AppCompatActivity {
 
     String id_produto;
-    Produto produto;
-    TextView txt_valor_do_produto;
 
     FloatingActionButton fab_recebido_parcial;
     RecyclerView rc_recebido_parcial;
@@ -73,25 +71,19 @@ public class RecebidoParcial extends AppCompatActivity {
         fab_recebido_parcial = findViewById(R.id.fab_recebido_parcial);
         rc_recebido_parcial = findViewById(R.id.rc_recebido_parcial);
         ad_recebido_parcial = findViewById(R.id.adView_recebido_parcial);
-        txt_valor_do_produto = findViewById(R.id.txt_valor_do_produto);
 
         setTitle("Valor Recebido Parcial");
 
         MobileAds.initialize(RecebidoParcial.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("78D8E3024BEEF0E839FE7C1F3611EB18")
+                .addTestDevice("435EC5F610664462653ADEB2D6B1026B")
                 .build();
 
         ad_recebido_parcial.loadAd(adRequest);
 
         id_produto = getIntent().getExtras().getString("id_recebido_parcial");
-        produto = getIntent().getExtras().getParcelable("produto");
 
-        if(produto != null){
-
-            txt_valor_do_produto.setText(produto.getTotal());
-        }
 
         ler_dados_firebase_recebido_parcial();
 
@@ -157,11 +149,20 @@ public class RecebidoParcial extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
 
             case android.R.id.home:
+
                 onBackPressed();
+
+                return true;
 
             default:
                 break;
