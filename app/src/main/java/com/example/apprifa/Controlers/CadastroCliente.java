@@ -188,7 +188,7 @@ public class CadastroCliente extends AppCompatActivity {
 
         searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
 
-        searchView.setQueryHint("Pesquisar");
+        searchView.setQueryHint("Digite o nome do cliente");
         searchView.setIconified(true);
         searchView.setFocusable(true);
 

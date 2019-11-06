@@ -40,7 +40,7 @@
     <string name="cadastrar_datas">Cadastrar datas</string>
     <string name="cadastrar_cliente">Cadastrar Cliente</string>
     <string name="data_da_venda">Data da venda</string>
-    <string name="data_de_cobran_a">Data de cobrança</string>
+    <string name="data_de_cobran_a">Data de cobrar</string>
     <string name="devolvido">Devolvido</string>
     <string name="recebido_parcialmente">Recebido parcialmente</string>
     <string name="logo">TODO</string>

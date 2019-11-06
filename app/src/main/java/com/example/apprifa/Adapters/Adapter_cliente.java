@@ -30,6 +30,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -95,7 +96,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        delete_categoria(viewholder_clientes.getAdapterPosition(),view);
+                        delete_categoria(viewholder_clientes.getAdapterPosition(), view);
 
 
                     }
@@ -176,25 +177,51 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
             }
         });
 
-        alrt_update_client.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        alrt_update_client.setPositiveButton("OK", null)
+                .setNegativeButton("Cancelar", null);
+
+        final AlertDialog valida_campos = alrt_update_client.create();
+        valida_campos.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onShow(final DialogInterface dialogInterface) {
 
-                cliente.setNome(ed_nome.getText().toString());
-                cliente.setLogradouro(ed_endereco.getText().toString());
-                cliente.setNumero(ed_numero.getText().toString());
-                cliente.setBairro(ed_bairro.getText().toString());
-                cliente.setCidade(ed_cidade.getText().toString());
-                cliente.setEstado(ed_estado.getText().toString());
-                cliente.setCep(ed_cep.getText().toString());
+                Button btn_ok = valida_campos.getButton(AlertDialog.BUTTON_POSITIVE);
 
-                atualizada_dados_cliente_adapter(viewholder_clientes.getAdapterPosition(), cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
-                        , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado());
+                btn_ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
+                        cliente.setNome(ed_nome.getText().toString());
+                        cliente.setLogradouro(ed_endereco.getText().toString());
+                        cliente.setNumero(ed_numero.getText().toString());
+                        cliente.setBairro(ed_bairro.getText().toString());
+                        cliente.setCidade(ed_cidade.getText().toString());
+                        cliente.setEstado(ed_estado.getText().toString());
+                        cliente.setCep(ed_cep.getText().toString());
+
+                        if (ed_nome.getText().length() == 0) {
+                            ed_nome.setError("Informe o novo nome");
+                        } else if (ed_endereco.getText().length() == 0) {
+                            ed_endereco.setError("Informe o novo endereço");
+                        } else if (ed_numero.getText().length() == 0) {
+                            ed_numero.setError("Informe o novo número");
+                        } else if (ed_bairro.getText().length() == 0) {
+                            ed_bairro.setError("Informe o novo bairro");
+                        } else if (ed_cidade.getText().length() == 0) {
+                            ed_cidade.setError("Informe a nova cidade");
+                        } else if (ed_estado.getText().length() == 0) {
+                            ed_estado.setError("Informe o novo estado");
+                        } else {
+                            atualizada_dados_cliente_adapter(viewholder_clientes.getAdapterPosition(), cliente.getNome(), cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
+                                    , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado());
+                            dialogInterface.dismiss();
+                        }
+                    }
+                });
             }
-        }).setNegativeButton("Cancelar", null);
+        });
 
-        alrt_update_client.show();
+        valida_campos.show();
 
     }
 
@@ -213,7 +240,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
 
                         if (!queryDocumentSnapshot.isEmpty()) {
 
-                            Snackbar.make(view,"Há datas de vendas associadas a este cliente",Snackbar.LENGTH_LONG)
+                            Snackbar.make(view, "Há datas de vendas associadas a este cliente", Snackbar.LENGTH_LONG)
                                     .show();
 
                         } else {
@@ -265,11 +292,12 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
 
     }
 
-    public void atualizada_dados_cliente_adapter(int i, String nome, String enderecocliente, String numero, String bairro, String cidade, String cep, String estado) {
+    public void atualizada_dados_cliente_adapter(int i, String nome, String nome_maiusculo, String enderecocliente, String numero, String bairro, String cidade, String cep, String estado) {
 
         Map<String, Object> map = new HashMap<>();
 
         map.put("nome", nome);
+        map.put("nome_maiusculo", nome_maiusculo.toUpperCase());
         map.put("logradouro", enderecocliente);
         map.put("numero", numero);
         map.put("bairro", bairro);
@@ -277,7 +305,7 @@ public class Adapter_cliente extends FirestoreRecyclerAdapter<Cliente, Adapter_c
         map.put("cep", cep);
         map.put("estado", estado);
 
-        getSnapshots().getSnapshot(i).getReference().update(map);
+        getSnapshots().getSnapshot(i).getReference().set(map, SetOptions.merge());
     }
 
     public class Viewholder_clientes extends RecyclerView.ViewHolder {

@@ -95,7 +95,7 @@ public class ProdutosCliente extends AppCompatActivity {
         Intent receber = getIntent();
         Bundle data = receber.getExtras();
 
-        if(data != null) {
+        if (data != null) {
             id_data = data.getString("id_data_compra");
         }
         setTitle("Produtos do Cliente");
@@ -149,7 +149,7 @@ public class ProdutosCliente extends AppCompatActivity {
                                 } else if (qtd_produto.getText().length() == 0) {
                                     qtd_produto.setError("Informe o valor do produto");
                                 } else if (vl_produto.getText().length() == 0) {
-                                    vl_produto.setError("Inforne a quantidade de produto");
+                                    vl_produto.setError("Inforne a quantidade do produto");
                                 } else {
                                     salva_produto_cliente(custom_layout);
                                     soma_total();

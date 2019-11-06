@@ -256,7 +256,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
 
         searchView = (SearchView) MenuItemCompat.getActionView(searchitem);
 
-        searchView.setQueryHint("Pesquisar");
+        searchView.setQueryHint("Digite a data da venda");
         searchView.setIconified(true);
         searchView.setFocusable(true);
         searchView.setInputType(InputType.TYPE_CLASS_DATETIME);

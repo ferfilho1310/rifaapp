@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -167,6 +168,7 @@ public class AccessFirebase extends AppCompatActivity {
         map.put("estado", estado);
 
         firebaseFirestore.document(firebaseAuth.getUid()).collection("cliente").add(map);
+        SetOptions.merge();
     }
 
     public void salva_produtos(String dia, String nomedoproduto, String quantidade, String valor, String total, String id, boolean recebido, boolean devolvido) {
