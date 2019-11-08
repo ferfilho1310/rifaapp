@@ -7,7 +7,7 @@
     android:layout_gravity="center"
     android:background="@color/backgroundrecycler"
     android:fitsSystemWindows="true"
-    tools:context=".Controlers.CadastroCliente">
+    tools:context="br.com.medeve.Controlers.CadastroCliente">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"

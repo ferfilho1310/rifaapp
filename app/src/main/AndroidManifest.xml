@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.apprifa">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="br.com.medeve">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -12,9 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:debuggable="false"
+        tools:ignore="GoogleAppIndexingWarning,HardcodedDebugMode">
         <activity
-            android:name=".Controlers.SplashScreen"
+            android:name="br.com.medeve.Controlers.SplashScreen"
             android:screenOrientation="portrait">
 
             <intent-filter>
@@ -26,35 +29,35 @@
 
         </activity>
         <activity
-            android:name=".Controlers.RecebidoParcial"
+            android:name="br.com.medeve.Controlers.RecebidoParcial"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Controlers.DatasVendasCobranca"
+            android:name="br.com.medeve.Controlers.DatasVendasCobranca"
             android:label="@string/title_activity_datas_vendas_cobranca"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Controlers.ResetSenha"
+            android:name="br.com.medeve.Controlers.ResetSenha"
             android:label="@string/title_activity_reset_senha"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Controlers.ProdutosCliente"
+            android:name="br.com.medeve.Controlers.ProdutosCliente"
             android:label="@string/title_activity_produtos_cliente"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Controlers.CadastroUser"
+            android:name="br.com.medeve.Controlers.CadastroUser"
             android:label="@string/title_activity_cadastro_user"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Controlers.EntrarUsuario"
+            android:name="br.com.medeve.Controlers.EntrarUsuario"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".Controlers.CadastroCliente"
+            android:name="br.com.medeve.Controlers.CadastroCliente"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

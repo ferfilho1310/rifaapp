@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:237237182115:android:44e6afe00248ed3c",
         "android_client_info": {
-          "package_name": "com.example.apprifa"
+          "package_name": "br.com.medeve"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "237237182115-qfe42uoggi5spt9kt24viq96gc63qdjb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.apprifa",
+            "package_name": "br.com.medeve",
             "certificate_hash": "1a25dcd749a38cedda61870799afefb2985f9d05"
           }
         },

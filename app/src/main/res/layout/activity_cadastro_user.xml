@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical"
-    tools:context=".Controlers.CadastroUser">
+    tools:context="br.com.medeve.Controlers.CadastroUser">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout7"
