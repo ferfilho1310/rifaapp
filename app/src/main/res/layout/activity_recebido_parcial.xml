@@ -45,7 +45,8 @@
             android:layout_marginEnd="3dp"
             android:layout_marginBottom="92dp"
             android:fitsSystemWindows="true"
-            android:paddingLeft="8dp"/>
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
 
     </RelativeLayout>
 
@@ -79,6 +80,7 @@
         app:adUnitId="ca-app-pub-2528240545678093/7895249818"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

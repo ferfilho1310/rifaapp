@@ -197,7 +197,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
 
         adapter_datas = new AdapterDataCobranca(rc_options_datas, DatasVendasCobranca.this);
         rc_datas.setAdapter(adapter_datas);
-        rc_datas.setLayoutManager(new GridLayoutManager(DatasVendasCobranca.this, 2));
+        rc_datas.setLayoutManager(new LinearLayoutManager(DatasVendasCobranca.this,LinearLayoutManager.VERTICAL, false));
         rc_datas.setHasFixedSize(true);
 
         adapter_datas.setOnItemClicklistener(new AdapterDataCobranca.OnItemClickListener() {

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
@@ -125,7 +126,7 @@ public class RecebidoParcial extends AppCompatActivity {
 
         adapter_recebidos_parcial = new AdapterRecebidosParcial(fro_recebido, RecebidoParcial.this);
 
-        rc_recebido_parcial.setLayoutManager(new GridLayoutManager(RecebidoParcial.this, 2));
+        rc_recebido_parcial.setLayoutManager(new LinearLayoutManager(RecebidoParcial.this,LinearLayoutManager.VERTICAL,false));
         rc_recebido_parcial.setAdapter(adapter_recebidos_parcial);
         rc_recebido_parcial.hasFixedSize();
 
