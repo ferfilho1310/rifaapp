@@ -72,7 +72,6 @@ public class RecebidoParcial extends AppCompatActivity {
         MobileAds.initialize(RecebidoParcial.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("435EC5F610664462653ADEB2D6B1026B")
                 .build();
 
         ad_recebido_parcial.loadAd(adRequest);
@@ -81,6 +80,11 @@ public class RecebidoParcial extends AppCompatActivity {
 
 
         ler_dados_firebase_recebido_parcial();
+
+        fab_recebido_parcial();
+    }
+
+    public void fab_recebido_parcial(){
 
         fab_recebido_parcial.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +117,7 @@ public class RecebidoParcial extends AppCompatActivity {
                 alrt_valor_recebido.show();
             }
         });
+
     }
 
     public void ler_dados_firebase_recebido_parcial() {

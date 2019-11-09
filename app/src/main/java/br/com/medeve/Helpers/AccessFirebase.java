@@ -51,7 +51,7 @@ public class AccessFirebase extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
-    EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep;
+    EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep,ed_telefone;
 
     public AccessFirebase() {
 
@@ -71,6 +71,7 @@ public class AccessFirebase extends AppCompatActivity {
         ed_cidade = custom_layout.findViewById(R.id.ed_cidade);
         ed_estado = custom_layout.findViewById(R.id.ed_estado);
         ed_cep = custom_layout.findViewById(R.id.ed_cep);
+        ed_telefone = custom_layout.findViewById(R.id.ed_telefone);
 
         Button btn_cep = custom_layout.findViewById(R.id.btn_busca_cep);
 
@@ -129,9 +130,10 @@ public class AccessFirebase extends AppCompatActivity {
                 cliente.setCidade(ed_cidade.getText().toString());
                 cliente.setEstado(ed_estado.getText().toString());
                 cliente.setCep(ed_cep.getText().toString());
+                cliente.setTelefone(ed_telefone.getText().toString());
 
                 salva_clientes(cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
-                        , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado(),cliente.getNome().toUpperCase());
+                        , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado(),cliente.getNome().toUpperCase(),cliente.getTelefone());
 
 
             }
@@ -153,7 +155,8 @@ public class AccessFirebase extends AppCompatActivity {
 
     }
 
-    public void salva_clientes(String nome, String enderecocliente, String numero, String bairro, String cidade, String cep, String estado,String nome_maiusculo) {
+    public void salva_clientes(String nome, String enderecocliente, String numero, String bairro,
+                               String cidade, String cep, String estado,String nome_maiusculo, String telefone) {
 
         Map<String, Object> map = new HashMap<>();
 
@@ -165,6 +168,7 @@ public class AccessFirebase extends AppCompatActivity {
         map.put("cidade", cidade);
         map.put("cep", cep);
         map.put("estado", estado);
+        map.put("telefone",telefone);
 
         firebaseFirestore.document(firebaseAuth.getUid()).collection("cliente").add(map);
         SetOptions.merge();

@@ -10,6 +10,7 @@ import br.com.medeve.Adapters.AdapterProdutosCliente;
 import br.com.medeve.Helpers.AccessFirebase;
 
 import br.com.medeve.Models.Produto;
+
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -101,7 +102,6 @@ public class ProdutosCliente extends AppCompatActivity {
         MobileAds.initialize(ProdutosCliente.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("435EC5F610664462653ADEB2D6B1026B")
                 .build();
 
         adView_produtos.loadAd(adRequest);
@@ -112,8 +112,10 @@ public class ProdutosCliente extends AppCompatActivity {
         ler_dados_clientes();
         soma_total();
         recebido();
+        fab_cad_produto_cliente();
+    }
 
-        //new Assync_somas().execute();
+    public void fab_cad_produto_cliente() {
 
         fb_prod_cliente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +163,7 @@ public class ProdutosCliente extends AppCompatActivity {
                 valida_campo.show();
             }
         });
+
     }
 
     //classe que pega o valor digitado pelo usuário e salva no banco de dados

@@ -10,6 +10,7 @@ import br.com.medeve.R;
 import br.com.medeve.Adapters.AdapterDataCobranca;
 import br.com.medeve.Helpers.AccessFirebase;
 import br.com.medeve.Models.DataCobrancaVenda;
+
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -43,6 +44,8 @@ import java.util.Calendar;
 
 public class DatasVendasCobranca extends AppCompatActivity {
 
+
+    FloatingActionButton fab;
     Query query;
     FirestoreRecyclerOptions<DataCobrancaVenda> rc_options_datas;
     AdView adView_vendas;
@@ -69,7 +72,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab_data_venda);
+        fab = findViewById(R.id.fab_data_venda);
         rc_datas = findViewById(R.id.rc_data_cobranca);
         adView_vendas = findViewById(R.id.adView_datas);
 
@@ -84,12 +87,17 @@ public class DatasVendasCobranca extends AppCompatActivity {
         MobileAds.initialize(DatasVendasCobranca.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("435EC5F610664462653ADEB2D6B1026B")
                 .build();
 
         adView_vendas.loadAd(adRequest);
 
         ler_dados_firestore_datas();
+
+        fab_cad_data_clientes();
+
+    }
+
+    public void fab_cad_data_clientes() {
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,6 +178,8 @@ public class DatasVendasCobranca extends AppCompatActivity {
                 cliente.show();
             }
         });
+
+
     }
 
     public void datascobranca(View view) {
@@ -196,7 +206,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
 
         adapter_datas = new AdapterDataCobranca(rc_options_datas, DatasVendasCobranca.this);
         rc_datas.setAdapter(adapter_datas);
-        rc_datas.setLayoutManager(new LinearLayoutManager(DatasVendasCobranca.this,LinearLayoutManager.VERTICAL, false));
+        rc_datas.setLayoutManager(new LinearLayoutManager(DatasVendasCobranca.this, LinearLayoutManager.VERTICAL, false));
         rc_datas.setHasFixedSize(true);
 
         adapter_datas.setOnItemClicklistener(new AdapterDataCobranca.OnItemClickListener() {
@@ -217,7 +227,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
 
     public void search_datas_firestore(String search_datas) {
 
-        query = cl_datas.whereEqualTo("id_data",id_cliente_2)
+        query = cl_datas.whereEqualTo("id_data", id_cliente_2)
                 .orderBy("data_venda").startAt(search_datas).endAt(search_datas + "\uf8ff");
 
         rc_options_datas = new FirestoreRecyclerOptions.Builder<DataCobrancaVenda>()

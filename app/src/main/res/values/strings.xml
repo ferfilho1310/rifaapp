@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Me Deve</string>
+    <string name="app_name">Me Pague</string>
     <string name="action_settings">Sair</string>
     <string name="nome_do_cliente">Nome do cliente:</string>
     <string name="endereco">Endereço</string>
@@ -50,4 +50,5 @@
     <string name="total_zero">0.00</string>
     <string name="title_activity_recebido_parcial">RecebidoParcial</string>
     <string name="receber_parcialmente">Receber Parcialmente</string>
+    <string name="telefone">Telefone</string>
 </resources>

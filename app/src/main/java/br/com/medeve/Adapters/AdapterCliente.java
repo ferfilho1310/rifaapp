@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import br.com.medeve.R;
 import br.com.medeve.Models.Cliente;
 import br.com.medeve.Retrofit.RetrofitInit;
+
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,7 +45,7 @@ public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCli
 
     OnItemClickListener listener;
     private Context context;
-    private EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep;
+    private EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep, ed_telefone;
 
     FirebaseAuth db_users = FirebaseAuth.getInstance();
 
@@ -52,7 +53,6 @@ public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCli
     CollectionReference cl_datas = db_datas.collection("datas_cobranca")
             .document(db_users.getUid())
             .collection("data_de_cobraca");
-
 
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
@@ -84,6 +84,7 @@ public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCli
         viewholder_clientes.bairro.setText(cliente.getBairro());
         viewholder_clientes.cidade.setText(cliente.getCidade());
         viewholder_clientes.estado.setText(cliente.getEstado());
+        viewholder_clientes.telefone.setText(cliente.getTelefone());
 
         viewholder_clientes.excluir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,6 +199,7 @@ public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCli
                         cliente.setCidade(ed_cidade.getText().toString());
                         cliente.setEstado(ed_estado.getText().toString());
                         cliente.setCep(ed_cep.getText().toString());
+                        cliente.setTelefone(ed_telefone.getText().toString());
 
                         if (ed_nome.getText().length() == 0) {
                             ed_nome.setError("Informe o novo nome");
@@ -211,9 +213,11 @@ public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCli
                             ed_cidade.setError("Informe a nova cidade");
                         } else if (ed_estado.getText().length() == 0) {
                             ed_estado.setError("Informe o novo estado");
+                        } else if (ed_telefone.getText().length() == 0) {
+                            ed_telefone.setError("Informe o novo telefone");
                         } else {
                             atualizada_dados_cliente_adapter(viewholder_clientes.getAdapterPosition(), cliente.getNome(), cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
-                                    , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado());
+                                    , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado(), cliente.getTelefone());
                             dialogInterface.dismiss();
                         }
                     }
@@ -250,49 +254,10 @@ public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCli
                     }
 
                 });
-
-         /* for (QueryDocumentSnapshot queryDocumentSnapshots : task.getResult()) {
-
-                            Map<String, Object> map = new HashMap<>();
-
-                            map.put("id_data", FieldValue.delete());
-                            map.put("data_venda", FieldValue.delete());
-                            map.put("data_cobranca", FieldValue.delete());
-
-                            queryDocumentSnapshots.getReference().update(map);
-
-                        }*/
-
-        /*cl_clientes
-                .whereEqualTo("id", documentReference1.getId())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        for (QueryDocumentSnapshot queryDocumentSnapshots : task.getResult()) {
-
-                            Map<String, Object> map = new HashMap<>();
-
-                            map.put("id", FieldValue.delete());
-                            map.put("nomedoproduto", FieldValue.delete());
-                            map.put("quantidade", FieldValue.delete());
-                            map.put("valor", FieldValue.delete());
-                            map.put("total", FieldValue.delete());
-                            map.put("data", FieldValue.delete());
-                            map.put("recebido", FieldValue.delete());
-                            map.put("recebido_parcial", FieldValue.delete());
-                            map.put("devolvido", FieldValue.delete());
-
-                            queryDocumentSnapshots.getReference().update(map);
-
-                        }
-                    }
-                });*/
-
     }
 
-    public void atualizada_dados_cliente_adapter(int i, String nome, String nome_maiusculo, String enderecocliente, String numero, String bairro, String cidade, String cep, String estado) {
+    public void atualizada_dados_cliente_adapter(int i, String nome, String nome_maiusculo, String enderecocliente,
+                                                 String numero, String bairro, String cidade, String cep, String estado, String telefone) {
 
         Map<String, Object> map = new HashMap<>();
 
@@ -304,13 +269,14 @@ public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCli
         map.put("cidade", cidade);
         map.put("cep", cep);
         map.put("estado", estado);
+        map.put("telefone", telefone);
 
         getSnapshots().getSnapshot(i).getReference().set(map, SetOptions.merge());
     }
 
     public class Viewholder_clientes extends RecyclerView.ViewHolder {
 
-        TextView nome, endereco_cli, numero, bairro, cidade, estado;
+        TextView nome, endereco_cli, numero, bairro, cidade, estado, telefone;
         ImageButton excluir, editar;
 
         public Viewholder_clientes(@NonNull View itemView) {
@@ -324,6 +290,7 @@ public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCli
             excluir = itemView.findViewById(R.id.btn_excluir_cliente);
             estado = itemView.findViewById(R.id.txt_estado);
             editar = itemView.findViewById(R.id.img_edit_cliente);
+            telefone = itemView.findViewById(R.id.txt_telefone);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
