@@ -51,4 +51,5 @@
     <string name="title_activity_recebido_parcial">RecebidoParcial</string>
     <string name="receber_parcialmente">Receber Parcialmente</string>
     <string name="telefone">Telefone</string>
+    <string name="cadastrar_datas_de_vendas">Cadastrar datas de vendas</string>
 </resources>

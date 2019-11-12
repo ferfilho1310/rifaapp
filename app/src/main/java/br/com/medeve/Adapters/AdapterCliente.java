@@ -131,6 +131,7 @@ public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCli
         ed_cidade = custom_layout.findViewById(R.id.ed_cidade);
         ed_estado = custom_layout.findViewById(R.id.ed_estado);
         ed_cep = custom_layout.findViewById(R.id.ed_cep);
+        ed_telefone = custom_layout.findViewById(R.id.ed_telefone);
 
         Button btn_cep = custom_layout.findViewById(R.id.btn_busca_cep);
 
