@@ -271,6 +271,7 @@ public class ProdutosCliente extends AppCompatActivity {
         cl_clientes.whereEqualTo("id", id_data)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
@@ -287,15 +288,16 @@ public class ProdutosCliente extends AppCompatActivity {
                                 float i = Float.parseFloat(produto.getTotal());
 
                                 ls_resultado.add(i);
+                            } else {
+
+                                recebido_produtos.setText("0.00");
+
                             }
                         }
 
                         for (int i = 0; i < ls_resultado.size(); i++) {
 
                             soma = (soma + ls_resultado.get(i));
-                            if(soma == 0){
-
-                            }
                             recebido_produtos.setText(String.valueOf(soma));
 
                         }
