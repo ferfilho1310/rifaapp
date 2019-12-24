@@ -293,6 +293,9 @@ public class ProdutosCliente extends AppCompatActivity {
                         for (int i = 0; i < ls_resultado.size(); i++) {
 
                             soma = (soma + ls_resultado.get(i));
+                            if(soma == 0){
+
+                            }
                             recebido_produtos.setText(String.valueOf(soma));
 
                         }
