@@ -271,11 +271,11 @@ public class ProdutosCliente extends AppCompatActivity {
         cl_clientes.whereEqualTo("id", id_data)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
                         float soma = 0;
+                        String zero = "0.00";
 
                         List<Float> ls_resultado = new ArrayList<>();
 
@@ -290,7 +290,7 @@ public class ProdutosCliente extends AppCompatActivity {
                                 ls_resultado.add(i);
                             } else {
 
-                                recebido_produtos.setText("0.00");
+                                recebido_produtos.setText(zero);
 
                             }
                         }
