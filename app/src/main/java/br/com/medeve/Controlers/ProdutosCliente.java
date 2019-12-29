@@ -34,11 +34,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.internal.FederatedSignInActivity;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -317,10 +320,12 @@ public class ProdutosCliente extends AppCompatActivity {
 
                         float soma_total = 0;
                         float soma_recebido = 0;
-                        float areceber = 0;
+                        float soma_devolvido = 0;
+                        float areceber;
 
                         List<Float> recebido = new ArrayList<>();
                         List<Float> total = new ArrayList<>();
+                        List<Float> devolvido = new ArrayList<>();
 
                         QuerySnapshot queryDocumentSnapshots = task.getResult();
 
@@ -339,7 +344,15 @@ public class ProdutosCliente extends AppCompatActivity {
                                 float j = Float.parseFloat(produto_recebido.getTotal());
                                 recebido.add(j);
                             }
+                        }
 
+                        for (Produto produto_devolvido : queryDocumentSnapshots.toObjects(Produto.class)) {
+
+                            if (produto_devolvido.getDevolvido() != false) {
+
+                                float f = Float.parseFloat(produto_devolvido.getTotal());
+                                devolvido.add(f);
+                            }
                         }
 
                         for (int j = 0; j < total.size(); j++) {
@@ -352,9 +365,16 @@ public class ProdutosCliente extends AppCompatActivity {
                             soma_recebido = (soma_recebido + recebido.get(i));
                         }
 
-                        areceber = soma_total - soma_recebido;
+                        for (int f = 0; f < devolvido.size(); f++) {
 
-                        a_receber.setText(String.valueOf(areceber));
+                            soma_devolvido = (soma_devolvido + devolvido.get(f));
+                        }
+
+                        areceber = (soma_total - soma_recebido) - soma_devolvido;
+
+                        NumberFormat format_a_receber = new DecimalFormat("0.##");
+
+                        a_receber.setText(format_a_receber.format(areceber));
                     }
                 });
     }

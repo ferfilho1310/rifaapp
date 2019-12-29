@@ -174,7 +174,8 @@ public class AccessFirebase extends AppCompatActivity {
         SetOptions.merge();
     }
 
-    public void salva_produtos(String dia, String nomedoproduto, String quantidade, String valor, String total, String id, boolean recebido, boolean devolvido) {
+    public void salva_produtos(String dia, String nomedoproduto, String quantidade,
+                               String valor, String total, String id, boolean recebido, boolean devolvido) {
 
         Map<String, Object> map = new HashMap<>();
 

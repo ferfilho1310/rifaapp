@@ -86,6 +86,7 @@ public class AdapterProdutosCliente extends FirestoreRecyclerAdapter<Produto, Ad
         viewholder_prod_cliente.ch_recebido.setChecked(produto.getRecebido());
         viewholder_prod_cliente.ch_devolvido.setChecked(produto.getDevolvido());
 
+
         viewholder_prod_cliente.recebido_parcial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

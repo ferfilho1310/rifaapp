@@ -13,7 +13,8 @@ public class Produto implements Parcelable {
     private Boolean recebido;
     private Boolean devolvido;
 
-    public Produto(String nomedoproduto, String quantidade, String valor,String total, String data, Boolean recebido, Boolean devolvido) {
+    public Produto(String nomedoproduto, String quantidade, String valor, String total, String data,
+                   Boolean recebido, Boolean devolvido) {
         this.nomedoproduto = nomedoproduto;
         this.quantidade = quantidade;
         this.valor = valor;
@@ -21,7 +22,6 @@ public class Produto implements Parcelable {
         this.data = data;
         this.recebido = recebido;
         this.devolvido = devolvido;
-
     }
 
     public Produto() {
