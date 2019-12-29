@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="8dp">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout12"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:hint="@string/data_da_venda"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -27,28 +27,26 @@
 
     <ImageButton
         android:id="@+id/btn_data_venda"
-        android:layout_width="75dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/corner_color"
+        android:contentDescription="@string/todo"
+        android:padding="12dp"
         android:src="@drawable/ic_date"
         app:layout_constraintBottom_toBottomOf="@+id/textInputLayout12"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textInputLayout12"
-        app:layout_constraintTop_toTopOf="@+id/textInputLayout12"
-        app:layout_constraintVertical_bias="0.562"
-        android:contentDescription="@string/todo"/>
+        app:layout_constraintTop_toTopOf="@+id/textInputLayout12" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout13"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:hint="@string/data_de_cobran_a"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout12"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout12"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout12">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_data_cobranca"
@@ -61,15 +59,16 @@
 
     <ImageButton
         android:id="@+id/btn_data_cobranca"
-        android:layout_width="75dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/corner_color"
+        android:contentDescription="@string/todo"
+        android:padding="12dp"
         android:src="@drawable/ic_date"
         app:layout_constraintBottom_toBottomOf="@+id/textInputLayout13"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textInputLayout13"
         app:layout_constraintTop_toTopOf="@+id/textInputLayout13"
-        app:layout_constraintVertical_bias="0.533"
-        android:contentDescription="@string/todo"/>
+        app:layout_constraintVertical_bias="0.437" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

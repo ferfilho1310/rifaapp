@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/shadow_dialog"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:padding="8dp">
 
     <ImageButton
         android:id="@+id/btn_excluir_produto"

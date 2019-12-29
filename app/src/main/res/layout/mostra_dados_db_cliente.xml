@@ -7,27 +7,23 @@
     android:layout_gravity="center"
     android:background="@drawable/shadow_dialog"
     android:orientation="vertical"
+    android:padding="8dp"
     tools:layout_editor_absoluteX="70dp">
 
     <TextView
         android:id="@+id/imageView"
-        android:layout_width="63dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:contentDescription="@string/todo"
-        android:textSize="12sp"
         android:gravity="center"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimary"
         android:text="@string/cadastrar_datas_de_vendas"
+        android:textColor="@color/colorPrimary"
+        android:textSize="17sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.793"
-        app:layout_constraintStart_toEndOf="@+id/txt_estado"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.438" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_telefone" />
 
     <TextView
         android:id="@+id/textView6"
@@ -210,27 +206,27 @@
         android:layout_width="44dp"
         android:layout_height="33dp"
         android:background="@android:color/white"
+        android:contentDescription="@string/todo"
         android:src="@drawable/ic_delete"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.794"
+        app:layout_constraintHorizontal_bias="0.931"
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.186"
-        android:contentDescription="@string/todo"/>
+        app:layout_constraintVertical_bias="0.007" />
 
     <ImageButton
         android:id="@+id/img_edit_cliente"
         android:layout_width="42dp"
         android:layout_height="33dp"
         android:background="@android:color/white"
+        android:contentDescription="@string/todo"
         android:src="@drawable/ic_edit"
         app:layout_constraintBottom_toBottomOf="@+id/btn_excluir_cliente"
         app:layout_constraintEnd_toStartOf="@+id/btn_excluir_cliente"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView6"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.571"
-        android:contentDescription="@string/todo"/>
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

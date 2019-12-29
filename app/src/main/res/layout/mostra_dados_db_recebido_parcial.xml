@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="8dp"
     android:background="@drawable/shadow_dialog">
 
     <ImageButton
@@ -23,8 +24,7 @@
         android:id="@+id/textView5"
         android:layout_width="85dp"
         android:layout_height="46dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
         android:text="Valor Recebido"
         android:textColor="@android:color/black"
         android:textSize="17sp"
