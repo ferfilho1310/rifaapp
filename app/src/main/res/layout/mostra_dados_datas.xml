@@ -61,21 +61,21 @@
 
     <TextView
         android:id="@+id/imageView"
-        android:layout_width="206dp"
-        android:layout_height="37dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:contentDescription="@string/todo"
         android:gravity="center"
-        android:text="Cadastrar produtos vendidos"
+        android:text="Cadastre os produtos vendidos - Clique Aqui"
         android:textColor="@color/colorPrimary"
-        android:textSize="15sp"
+        android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_data_cobranca"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:id="@+id/btn_excluir_data"
