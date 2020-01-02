@@ -81,7 +81,7 @@ public class CadastroCliente extends AppCompatActivity {
 
         FirebaseApp.initializeApp(CadastroCliente.this);
 
-        setTitle("Clientes Cadastrados");
+        setTitle("Dados dos clientes");
 
         MobileAds.initialize(CadastroCliente.this, "ca-app-pub-2528240545678093~1740905001");
 

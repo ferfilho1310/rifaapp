@@ -41,6 +41,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DecimalFormat;
+import java.text.Format;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -158,6 +159,7 @@ public class ProdutosCliente extends AppCompatActivity {
                                 } else {
                                     salva_produto_cliente(custom_layout);
                                     soma_total();
+                                    valor_a_receber();
                                     dialogInterface.dismiss();
                                 }
                             }
@@ -186,7 +188,8 @@ public class ProdutosCliente extends AppCompatActivity {
         produto.setNomedoproduto(nm_produto.getText().toString());
         produto.setQuantidade(qtd_produto.getText().toString());
         produto.setValor(vl_produto.getText().toString());
-        produto.setTotal(String.valueOf(Float.parseFloat(qtd_produto.getText().toString()) * Float.parseFloat(vl_produto.getText().toString())));
+        produto.setTotal(String.valueOf(Float.parseFloat(qtd_produto.getText().toString())
+                * Float.parseFloat(vl_produto.getText().toString())));
         produto.setData(data);
         produto.setRecebido(false);
         produto.setDevolvido(false);
@@ -264,9 +267,11 @@ public class ProdutosCliente extends AppCompatActivity {
                         for (int i = 0; i < ls_resultado.size(); i++) {
 
                             soma = (soma + ls_resultado.get(i));
-                            teste_soma.setText(String.valueOf(soma));
-
                         }
+
+                        NumberFormat format_soma = new DecimalFormat("0.##");
+
+                        teste_soma.setText(format_soma.format(soma));
                     }
                 });
     }
@@ -303,9 +308,11 @@ public class ProdutosCliente extends AppCompatActivity {
                         for (int i = 0; i < ls_resultado.size(); i++) {
 
                             soma = (soma + ls_resultado.get(i));
-                            recebido_produtos.setText(String.valueOf(soma));
-
                         }
+
+                        NumberFormat format_recebido = new DecimalFormat("0.##");
+
+                        recebido_produtos.setText(format_recebido.format(soma));
                     }
                 });
     }
