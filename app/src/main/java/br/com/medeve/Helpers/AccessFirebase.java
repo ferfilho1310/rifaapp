@@ -21,6 +21,7 @@ import br.com.medeve.Controlers.EntrarUsuario;
 import br.com.medeve.Controlers.CadastroCliente;
 import br.com.medeve.Models.Cliente;
 import br.com.medeve.Retrofit.RetrofitInit;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -43,6 +44,8 @@ public class AccessFirebase extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
+    private static AccessFirebase accessFirebase;
+
     CollectionReference firebaseFirestore = FirebaseFirestore.getInstance().collection("cadastro_clientes");
     CollectionReference db_prod_cliente = FirebaseFirestore.getInstance().collection("produtos_cliente");
     CollectionReference db_datas_cobranca = FirebaseFirestore.getInstance().collection("datas_cobranca");
@@ -51,10 +54,18 @@ public class AccessFirebase extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
-    EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep,ed_telefone;
+    EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep, ed_telefone;
 
-    public AccessFirebase() {
+    private AccessFirebase(){
 
+    }
+
+    public static synchronized AccessFirebase getinstance() {
+
+        if (accessFirebase == null) {
+            accessFirebase = new AccessFirebase();
+        }
+        return accessFirebase;
     }
 
     public void cadastro_cliente(View view, final Cliente cliente, final Activity context) {
@@ -133,7 +144,7 @@ public class AccessFirebase extends AppCompatActivity {
                 cliente.setTelefone(ed_telefone.getText().toString());
 
                 salva_clientes(cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
-                        , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado(),cliente.getNome().toUpperCase(),cliente.getTelefone());
+                        , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado(), cliente.getNome().toUpperCase(), cliente.getTelefone());
 
 
             }
@@ -143,20 +154,20 @@ public class AccessFirebase extends AppCompatActivity {
 
     }
 
-    public void  salva_recebido_parcial(String receb_parcial, String id_valor_recebido,String data_recebimento){
+    public void salva_recebido_parcial(String receb_parcial, String id_valor_recebido, String data_recebimento) {
 
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
-        map.put("id",id_valor_recebido);
-        map.put("valor_recebido",receb_parcial);
-        map.put("data",data_recebimento);
+        map.put("id", id_valor_recebido);
+        map.put("valor_recebido", receb_parcial);
+        map.put("data", data_recebimento);
 
         db_receb_partcial.document(firebaseAuth.getUid()).collection("recebido_parcial").add(map);
 
     }
 
     public void salva_clientes(String nome, String enderecocliente, String numero, String bairro,
-                               String cidade, String cep, String estado,String nome_maiusculo, String telefone) {
+                               String cidade, String cep, String estado, String nome_maiusculo, String telefone) {
 
         Map<String, Object> map = new HashMap<>();
 
@@ -168,7 +179,7 @@ public class AccessFirebase extends AppCompatActivity {
         map.put("cidade", cidade);
         map.put("cep", cep);
         map.put("estado", estado);
-        map.put("telefone",telefone);
+        map.put("telefone", telefone);
 
         firebaseFirestore.document(firebaseAuth.getUid()).collection("cliente").add(map);
         SetOptions.merge();

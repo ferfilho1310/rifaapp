@@ -61,7 +61,6 @@ public class CadastroCliente extends AppCompatActivity {
     AdapterCliente adapter_cliente;
 
     Cliente cliente = new Cliente();
-    AccessFirebase accessFirebase = new AccessFirebase();
 
     SearchView searchView;
 
@@ -96,7 +95,7 @@ public class CadastroCliente extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                accessFirebase.cadastro_cliente(view, cliente, CadastroCliente.this);
+                AccessFirebase.getinstance().cadastro_cliente(view, cliente, CadastroCliente.this);
 
             }
         });
@@ -249,7 +248,7 @@ public class CadastroCliente extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
 
-                    new AccessFirebase().sign_out_firebase(CadastroCliente.this);
+                    AccessFirebase.getinstance().sign_out_firebase(CadastroCliente.this);
 
                 }
             }).setNegativeButton("Cancelar", null);

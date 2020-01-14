@@ -39,7 +39,7 @@ public class ResetSenha extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                new AccessFirebase().reset_senha(email_reset.getText().toString(), ResetSenha.this);
+                AccessFirebase.getinstance().reset_senha(email_reset.getText().toString(), ResetSenha.this);
 
             }
         });
