@@ -45,13 +45,13 @@ public class EntrarUsuario extends AppCompatActivity {
 
         FirebaseApp.initializeApp(EntrarUsuario.this);
 
-        new AccessFirebase().persistir_usuer(EntrarUsuario.this);
+        AccessFirebase.getinstance().persistir_usuer(EntrarUsuario.this);
 
         btn_entrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                new AccessFirebase().entrar_firebase(ed_email.getText().toString(), ed_senha.getText().toString(), EntrarUsuario.this);
+                AccessFirebase.getinstance().entrar_firebase(ed_email.getText().toString(), ed_senha.getText().toString(), EntrarUsuario.this);
 
             }
         });

@@ -109,7 +109,7 @@ public class RecebidoParcial extends AppCompatActivity {
                         recebidoParcial.setValor_recebido(ed_valor_recebido.getText().toString());
 
 
-                        new AccessFirebase().salva_recebido_parcial(recebidoParcial.getValor_recebido(), id_produto, recebidoParcial.getData());
+                        AccessFirebase.getinstance().salva_recebido_parcial(recebidoParcial.getValor_recebido(), id_produto, recebidoParcial.getData());
 
                     }
 

@@ -21,8 +21,6 @@ public class AdapterRecebidosParcial extends FirestoreRecyclerAdapter<RecebidoPa
 
     Context context;
 
-
-
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.

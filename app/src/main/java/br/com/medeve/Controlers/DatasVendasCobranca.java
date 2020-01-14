@@ -190,7 +190,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
         datasVendasCobranca.setData_cobranca(ed_data_cobranca.getText().toString());
         datasVendasCobranca.setData_venda(ed_data_venda.getText().toString());
 
-        new AccessFirebase().data_cobranca(id_cliente_2, datasVendasCobranca.getData_venda(), datasVendasCobranca.getData_cobranca());
+       AccessFirebase.getinstance().data_cobranca(id_cliente_2, datasVendasCobranca.getData_venda(), datasVendasCobranca.getData_cobranca());
 
     }
 

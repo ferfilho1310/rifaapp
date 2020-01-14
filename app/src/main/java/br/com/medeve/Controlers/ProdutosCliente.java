@@ -71,7 +71,6 @@ public class ProdutosCliente extends AppCompatActivity {
     TextView teste_soma, recebido_produtos, a_receber;
 
     Produto produto = new Produto();
-    AccessFirebase accessFirebase = new AccessFirebase();
 
     String id_data;
 
@@ -196,7 +195,7 @@ public class ProdutosCliente extends AppCompatActivity {
 
         //Metodo para salvar os dados do produto do cliente no banco de dados
 
-        accessFirebase.salva_produtos(produto.getData(), produto.getNomedoproduto(), produto.getQuantidade(),
+        AccessFirebase.getinstance().salva_produtos(produto.getData(), produto.getNomedoproduto(), produto.getQuantidade(),
                 produto.getValor(), produto.getTotal(), id_data, produto.getRecebido(), produto.getDevolvido());
 
     }
