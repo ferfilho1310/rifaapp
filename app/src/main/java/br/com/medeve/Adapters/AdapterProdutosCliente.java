@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import br.com.medeve.Models.Cliente;
 import br.com.medeve.R;
 import br.com.medeve.Controlers.RecebidoParcial;
 import br.com.medeve.Models.Produto;
@@ -30,7 +33,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
@@ -86,7 +91,6 @@ public class AdapterProdutosCliente extends FirestoreRecyclerAdapter<Produto, Ad
         viewholder_prod_cliente.ch_recebido.setChecked(produto.getRecebido());
         viewholder_prod_cliente.ch_devolvido.setChecked(produto.getDevolvido());
 
-
         viewholder_prod_cliente.recebido_parcial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,9 +144,20 @@ public class AdapterProdutosCliente extends FirestoreRecyclerAdapter<Produto, Ad
 
         final DocumentReference documentReference = getSnapshots().getSnapshot(i).getReference();
 
+        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+
+                Produto produto = documentSnapshot.toObject(Produto.class);
+
                 final Intent i_recebido_parcial = new Intent(context, RecebidoParcial.class);
                 i_recebido_parcial.putExtra("id_recebido_parcial", documentReference.getId());
+                i_recebido_parcial.putExtra("info_produto",produto);
                 context.startActivity(i_recebido_parcial);
+
+            }
+        });
+
     }
 
     public void delete_categoria(int i, final View view) {
@@ -193,10 +208,19 @@ public class AdapterProdutosCliente extends FirestoreRecyclerAdapter<Produto, Ad
 
     }
 
+    public void estado_checkbox_recebido_parcial(int i, boolean b) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("recebidoparcia", b);
+
+        getSnapshots().getSnapshot(i).getReference().update(map);
+    }
+
     public class Viewholder_prod_cliente extends RecyclerView.ViewHolder {
 
         TextView nome_produto, quantidade_produto, valor_produto, total, data;
-        ImageButton btn_excluir_prod;
+        ImageButton btn_excluir_prod;;
         RadioButton ch_recebido, ch_devolvido;
         Button recebido_parcial;
 
