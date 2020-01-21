@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import br.com.medeve.Models.Cliente;
 import br.com.medeve.R;
 import br.com.medeve.Adapters.AdapterDataCobranca;
 import br.com.medeve.Helpers.AccessFirebase;
@@ -33,6 +34,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -50,8 +52,11 @@ public class DatasVendasCobranca extends AppCompatActivity {
     FirestoreRecyclerOptions<DataCobrancaVenda> rc_options_datas;
     AdView adView_vendas;
     SearchView searchView;
+    TextView nome_cliente_extra, telefone_extra;
 
     private String id_cliente_2;
+
+    Cliente cliente;
 
     DataCobrancaVenda datasVendasCobranca = new DataCobrancaVenda();
 
@@ -75,6 +80,8 @@ public class DatasVendasCobranca extends AppCompatActivity {
         fab = findViewById(R.id.fab_data_venda);
         rc_datas = findViewById(R.id.rc_data_cobranca);
         adView_vendas = findViewById(R.id.adView_datas);
+        nome_cliente_extra = findViewById(R.id.txt_nome_cliente_extra);
+        telefone_extra = findViewById(R.id.txt_telefone_extra);
 
         setTitle("Datas de venda e cobrança");
 
@@ -83,6 +90,10 @@ public class DatasVendasCobranca extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
 
         id_cliente_2 = getIntent().getExtras().getString("id_cliente");
+
+        cliente = getIntent().getExtras().getParcelable("info_cliente");
+        nome_cliente_extra.setText(cliente.getNome());
+        telefone_extra.setText(cliente.getTelefone());
 
         MobileAds.initialize(DatasVendasCobranca.this, "ca-app-pub-2528240545678093~1740905001");
 
@@ -164,7 +175,6 @@ public class DatasVendasCobranca extends AppCompatActivity {
                     }
                 });
 
-
                 cliente.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -178,8 +188,6 @@ public class DatasVendasCobranca extends AppCompatActivity {
                 cliente.show();
             }
         });
-
-
     }
 
     public void datascobranca(View view) {
@@ -190,7 +198,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
         datasVendasCobranca.setData_cobranca(ed_data_cobranca.getText().toString());
         datasVendasCobranca.setData_venda(ed_data_venda.getText().toString());
 
-       AccessFirebase.getinstance().data_cobranca(id_cliente_2, datasVendasCobranca.getData_venda(), datasVendasCobranca.getData_cobranca());
+        AccessFirebase.getinstance().data_cobranca(id_cliente_2, datasVendasCobranca.getData_venda(), datasVendasCobranca.getData_cobranca());
 
     }
 
@@ -216,9 +224,8 @@ public class DatasVendasCobranca extends AppCompatActivity {
                 String id_data = documentSnapshot.getId();
 
                 Intent i_data = new Intent(getApplicationContext(), ProdutosCliente.class);
-                Bundle data = new Bundle();
-                data.putString("id_data_compra", id_data);
-                i_data.putExtras(data);
+                i_data.putExtra("id_data_compra", id_data);
+                i_data.putExtra("dados_cliente",cliente);
                 startActivity(i_data);
 
             }
