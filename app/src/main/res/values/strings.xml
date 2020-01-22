@@ -51,5 +51,6 @@
     <string name="title_activity_recebido_parcial">RecebidoParcial</string>
     <string name="receber_parcialmente">Receber Parcialmente</string>
     <string name="telefone">Telefone</string>
-    <string name="cadastrar_datas_de_vendas">Cadastre as datas de vendas - Clique Aqui</string>
+    <string name="cadastrar_datas_de_vendas">CADASTRE AS DATAS DE VENDAS - CLIQUE AQUI</string>
+    <string name="cadastre_os_produtos_vendidos_clique_aqui">CADASTRE OS PRODUTOS VENDIDOS - CLIQUE AQUI</string>
 </resources>

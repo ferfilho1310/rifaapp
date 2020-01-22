@@ -12,11 +12,14 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import br.com.medeve.Models.Produto;
 import br.com.medeve.R;
 import br.com.medeve.Adapters.AdapterRecebidosParcial;
 import br.com.medeve.Helpers.AccessFirebase;
 import br.com.medeve.Models.RecebidoParcialModel;
+
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -33,6 +36,7 @@ import java.util.Date;
 public class RecebidoParcial extends AppCompatActivity {
 
     String id_produto;
+    Produto produto;
 
     FloatingActionButton fab_recebido_parcial;
     RecyclerView rc_recebido_parcial;
@@ -52,6 +56,8 @@ public class RecebidoParcial extends AppCompatActivity {
             .document(db_users.getUid())
             .collection("recebido_parcial");
 
+    TextView valor_produto, quantidade_produto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +72,8 @@ public class RecebidoParcial extends AppCompatActivity {
         fab_recebido_parcial = findViewById(R.id.fab_recebido_parcial);
         rc_recebido_parcial = findViewById(R.id.rc_recebido_parcial);
         ad_recebido_parcial = findViewById(R.id.adView_recebido_parcial);
+        valor_produto = findViewById(R.id.txt_vlr_produto);
+        quantidade_produto = findViewById(R.id.txt_quant_produto);
 
         setTitle("Valor Recebido Parcial");
 
@@ -78,13 +86,16 @@ public class RecebidoParcial extends AppCompatActivity {
 
         id_produto = getIntent().getExtras().getString("id_recebido_parcial");
 
+        produto = getIntent().getExtras().getParcelable("info_produto");
+        valor_produto.setText(produto.getValor());
+        quantidade_produto.setText(produto.getQuantidade());
 
         ler_dados_firebase_recebido_parcial();
 
         fab_recebido_parcial();
     }
 
-    public void fab_recebido_parcial(){
+    public void fab_recebido_parcial() {
 
         fab_recebido_parcial.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +119,6 @@ public class RecebidoParcial extends AppCompatActivity {
                         recebidoParcial.setData(data);
                         recebidoParcial.setValor_recebido(ed_valor_recebido.getText().toString());
 
-
                         AccessFirebase.getinstance().salva_recebido_parcial(recebidoParcial.getValor_recebido(), id_produto, recebidoParcial.getData());
 
                     }
@@ -130,7 +140,7 @@ public class RecebidoParcial extends AppCompatActivity {
 
         adapter_recebidos_parcial = new AdapterRecebidosParcial(fro_recebido, RecebidoParcial.this);
 
-        rc_recebido_parcial.setLayoutManager(new LinearLayoutManager(RecebidoParcial.this,LinearLayoutManager.VERTICAL,false));
+        rc_recebido_parcial.setLayoutManager(new LinearLayoutManager(RecebidoParcial.this, LinearLayoutManager.VERTICAL, false));
         rc_recebido_parcial.setAdapter(adapter_recebidos_parcial);
         rc_recebido_parcial.hasFixedSize();
 

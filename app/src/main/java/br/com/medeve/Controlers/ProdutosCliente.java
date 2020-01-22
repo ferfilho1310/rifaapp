@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import br.com.medeve.Models.Cliente;
 import br.com.medeve.R;
 import br.com.medeve.Adapters.AdapterProdutosCliente;
 import br.com.medeve.Helpers.AccessFirebase;
@@ -56,6 +57,7 @@ public class ProdutosCliente extends AppCompatActivity {
     FirestoreRecyclerOptions firt_cad_clientes;
     Query query;
     AdView adView_produtos;
+    TextView nome_cliente,telefone_cliente;
 
     FirebaseAuth db_users = FirebaseAuth.getInstance();
 
@@ -73,6 +75,7 @@ public class ProdutosCliente extends AppCompatActivity {
     Produto produto = new Produto();
 
     String id_data;
+    Cliente cliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,8 @@ public class ProdutosCliente extends AppCompatActivity {
         adView_produtos = findViewById(R.id.adView_produtos);
         recebido_produtos = findViewById(R.id.txt_recebido);
         a_receber = findViewById(R.id.valor_a_receber);
+        nome_cliente = findViewById(R.id.txt_nome_cliente_extra_produto);
+        telefone_cliente = findViewById(R.id.txt_telefone_extra_produto);
 
         //Métodos para aparecer o botão "back" na action bar customizavel
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -101,6 +106,11 @@ public class ProdutosCliente extends AppCompatActivity {
         if (data != null) {
             id_data = data.getString("id_data_compra");
         }
+
+        cliente = getIntent().getExtras().getParcelable("dados_cliente");
+        nome_cliente.setText(cliente.getNome());
+        telefone_cliente.setText(cliente.getTelefone());
+
         setTitle("Produtos do Cliente");
 
         MobileAds.initialize(ProdutosCliente.this, "ca-app-pub-2528240545678093~1740905001");

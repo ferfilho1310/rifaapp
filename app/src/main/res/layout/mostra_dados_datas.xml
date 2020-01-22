@@ -63,19 +63,17 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:contentDescription="@string/todo"
         android:gravity="center"
-        android:text="Cadastre os produtos vendidos - Clique Aqui"
+        android:text="@string/cadastre_os_produtos_vendidos_clique_aqui"
         android:textColor="@color/colorPrimary"
-        android:textSize="17sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_data_cobranca"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.263" />
 
     <ImageButton
         android:id="@+id/btn_excluir_data"
