@@ -3,13 +3,17 @@ package br.com.medeve.Controlers;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -28,6 +32,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +41,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 @SuppressLint("Registered")
@@ -63,6 +70,7 @@ public class CadastroCliente extends AppCompatActivity {
     Cliente cliente = new Cliente();
 
     SearchView searchView;
+    TextView nenhum_dado_cad;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -75,6 +83,7 @@ public class CadastroCliente extends AppCompatActivity {
         rc_produto = findViewById(R.id.rc_cad_clientes);
         fab_cad_cliente = findViewById(R.id.fab_cad_clientes);
         adView = findViewById(R.id.adView);
+        nenhum_dado_cad = findViewById(R.id.txt_nenhum_dado_cad);
 
         FirebaseInstanceId.getInstance();
 
@@ -85,10 +94,12 @@ public class CadastroCliente extends AppCompatActivity {
         MobileAds.initialize(CadastroCliente.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("B6D5B7288C97DD6A90A5F0E267BADDA5")
                 .build();
 
         adView.loadAd(adRequest);
 
+        mostrarimagem();
         ler_dados_clientes();
 
         fab_cad_cliente.setOnClickListener(new View.OnClickListener() {
@@ -96,9 +107,40 @@ public class CadastroCliente extends AppCompatActivity {
             public void onClick(View view) {
 
                 AccessFirebase.getinstance().cadastro_cliente(view, cliente, CadastroCliente.this);
-
             }
         });
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public void mostrarimagem() {
+        Handler mostra_texto = new Handler();
+
+        mostra_texto.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                cl_clientes.
+                        get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                QuerySnapshot queryDocumentSnapshots = task.getResult();
+
+                                for (Cliente cliente : queryDocumentSnapshots.toObjects(Cliente.class)) {
+
+                                    if (cliente.getNome() != null) {
+                                        nenhum_dado_cad.setVisibility(View.GONE);
+                                    } else {
+                                        nenhum_dado_cad.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            }
+                        });
+
+            }
+        },0);
+
     }
 
     @SuppressLint("WrongConstant")
@@ -207,7 +249,7 @@ public class CadastroCliente extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
 
-               if (s.trim().isEmpty()) {
+                if (s.trim().isEmpty()) {
                     seachview(s);
                     adapter_cliente.startListening();
                 }

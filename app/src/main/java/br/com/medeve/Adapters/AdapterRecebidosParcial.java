@@ -16,6 +16,7 @@ import br.com.medeve.R;
 import br.com.medeve.Models.RecebidoParcialModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 public class AdapterRecebidosParcial extends FirestoreRecyclerAdapter<RecebidoParcialModel, AdapterRecebidosParcial.View_Holder_Recebido_parcial> {
 
@@ -87,6 +88,11 @@ public class AdapterRecebidosParcial extends FirestoreRecyclerAdapter<RecebidoPa
             txt_recebido_parcial = itemView.findViewById(R.id.txt_valor_recebido);
             btn_img_recebido_parcial = itemView.findViewById(R.id.btn_img_delete_recebido);
 
+
+
         }
+
+
     }
+
 }

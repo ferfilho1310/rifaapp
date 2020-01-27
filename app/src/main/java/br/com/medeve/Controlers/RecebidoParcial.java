@@ -7,8 +7,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -86,9 +89,13 @@ public class RecebidoParcial extends AppCompatActivity {
 
         id_produto = getIntent().getExtras().getString("id_recebido_parcial");
 
-        produto = getIntent().getExtras().getParcelable("info_produto");
-        valor_produto.setText(produto.getValor());
-        quantidade_produto.setText(produto.getQuantidade());
+        try {
+            produto = getIntent().getExtras().getParcelable("info_produto");
+            valor_produto.setText(produto.getValor());
+            quantidade_produto.setText(produto.getQuantidade());
+        } catch (Exception e) {
+            Log.i("Erro", "Erro ao excluir o valor recebido parcial", e);
+        }
 
         ler_dados_firebase_recebido_parcial();
 
@@ -112,7 +119,7 @@ public class RecebidoParcial extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        SimpleDateFormat form_data = new SimpleDateFormat("dd/MM/yyyy");
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat form_data = new SimpleDateFormat("dd/MM/yyyy");
                         Date date = new Date();
                         String data = form_data.format(date);
 

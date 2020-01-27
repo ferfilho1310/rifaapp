@@ -91,16 +91,15 @@ public class AdapterProdutosCliente extends FirestoreRecyclerAdapter<Produto, Ad
         viewholder_prod_cliente.ch_recebido.setChecked(produto.getRecebido());
         viewholder_prod_cliente.ch_devolvido.setChecked(produto.getDevolvido());
 
-        viewholder_prod_cliente.recebido_parcial.setOnClickListener(new View.OnClickListener() {
+        /*viewholder_prod_cliente.recebido_parcial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
                 recebido_parcialmente(viewholder_prod_cliente.getAdapterPosition());
 
             }
         });
-
+*/
         viewholder_prod_cliente.ch_recebido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -140,7 +139,7 @@ public class AdapterProdutosCliente extends FirestoreRecyclerAdapter<Produto, Ad
         });
     }
 
-    public void recebido_parcialmente(int i) {
+    /*public void recebido_parcialmente(int i) {
 
         final DocumentReference documentReference = getSnapshots().getSnapshot(i).getReference();
 
@@ -148,17 +147,14 @@ public class AdapterProdutosCliente extends FirestoreRecyclerAdapter<Produto, Ad
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
-                Produto produto = documentSnapshot.toObject(Produto.class);
-
                 final Intent i_recebido_parcial = new Intent(context, RecebidoParcial.class);
                 i_recebido_parcial.putExtra("id_recebido_parcial", documentReference.getId());
-                i_recebido_parcial.putExtra("info_produto",produto);
                 context.startActivity(i_recebido_parcial);
 
             }
         });
 
-    }
+    }*/
 
     public void delete_categoria(int i, final View view) {
 
@@ -253,6 +249,11 @@ public class AdapterProdutosCliente extends FirestoreRecyclerAdapter<Produto, Ad
 
     public interface OnItemClickListener {
         void onItemClick(DocumentSnapshot documentSnapshot, int position);
+
+    }
+
+    public void setOnItemClicklistener(AdapterProdutosCliente.OnItemClickListener listener) {
+        this.listener = listener;
     }
 
 }
