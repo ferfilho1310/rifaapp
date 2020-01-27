@@ -48,7 +48,7 @@ public class CadastroUser extends AppCompatActivity {
         rd_feminino = findViewById(R.id.femi);
         rd_masculino = findViewById(R.id.masc);
 
-        setTitle("Cadastro de usuário");
+        setTitle("Cadastre-se");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);

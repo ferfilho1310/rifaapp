@@ -46,7 +46,6 @@
 
     </RadioGroup>
 
-
     <TextView
         android:id="@+id/txt_nm_produto"
         android:layout_width="wrap_content"
@@ -200,6 +199,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup"
         app:layout_constraintVertical_bias="0.588" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

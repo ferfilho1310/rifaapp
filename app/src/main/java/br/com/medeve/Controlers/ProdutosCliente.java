@@ -27,6 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +38,7 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.internal.FederatedSignInActivity;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -57,7 +59,7 @@ public class ProdutosCliente extends AppCompatActivity {
     FirestoreRecyclerOptions firt_cad_clientes;
     Query query;
     AdView adView_produtos;
-    TextView nome_cliente,telefone_cliente;
+    TextView nome_cliente, telefone_cliente;
 
     FirebaseAuth db_users = FirebaseAuth.getInstance();
 
@@ -107,9 +109,17 @@ public class ProdutosCliente extends AppCompatActivity {
             id_data = data.getString("id_data_compra");
         }
 
-        cliente = getIntent().getExtras().getParcelable("dados_cliente");
-        nome_cliente.setText(cliente.getNome());
-        telefone_cliente.setText(cliente.getTelefone());
+        try {
+
+            cliente = getIntent().getExtras().getParcelable("dados_cliente");
+            nome_cliente.setText(cliente.getNome());
+            telefone_cliente.setText(cliente.getTelefone());
+
+        } catch (Exception e) {
+
+            Log.i("TAG", "Erro a obter nome e telefone");
+
+        }
 
         setTitle("Produtos do Cliente");
 
@@ -186,7 +196,7 @@ public class ProdutosCliente extends AppCompatActivity {
 
     private void salva_produto_cliente(View custom_layout) {
 
-        SimpleDateFormat format_date = new SimpleDateFormat("dd/MM/yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format_date = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         String data = format_date.format(date);
 
@@ -233,6 +243,19 @@ public class ProdutosCliente extends AppCompatActivity {
         rc_prod_cliente.setLayoutManager(new LinearLayoutManager(ProdutosCliente.this, LinearLayoutManager.VERTICAL, false));
         rc_prod_cliente.setHasFixedSize(true);
         rc_prod_cliente.setAdapter(adapter_produtos_cliente);
+        adapter_produtos_cliente.setOnItemClicklistener(new AdapterProdutosCliente.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+
+                Produto produto = documentSnapshot.toObject(Produto.class);
+
+                final Intent i_recebido_parcial = new Intent(getApplicationContext(), RecebidoParcial.class);
+                i_recebido_parcial.putExtra("id_recebido_parcial", documentSnapshot.getId());
+                i_recebido_parcial.putExtra("info_produto",produto);
+                startActivity(i_recebido_parcial);
+
+            }
+        });
 
     }
 
