@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import br.com.medeve.Controlers.CadastroCliente;
 import br.com.medeve.R;
 import br.com.medeve.Models.Cliente;
 import br.com.medeve.Retrofit.RetrofitInit;
@@ -78,43 +79,42 @@ public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCli
     @Override
     protected void onBindViewHolder(@NonNull final AdapterCliente.Viewholder_clientes viewholder_clientes, int i, @NonNull final Cliente cliente) {
 
-            viewholder_clientes.nome.setText(cliente.getNome());
-            viewholder_clientes.endereco_cli.setText(cliente.getLogradouro());
-            viewholder_clientes.numero.setText(cliente.getNumero());
-            viewholder_clientes.bairro.setText(cliente.getBairro());
-            viewholder_clientes.cidade.setText(cliente.getCidade());
-            viewholder_clientes.estado.setText(cliente.getEstado());
-            viewholder_clientes.telefone.setText(cliente.getTelefone());
+        viewholder_clientes.nome.setText(cliente.getNome());
+        viewholder_clientes.endereco_cli.setText(cliente.getLogradouro());
+        viewholder_clientes.numero.setText(cliente.getNumero());
+        viewholder_clientes.bairro.setText(cliente.getBairro());
+        viewholder_clientes.cidade.setText(cliente.getCidade());
+        viewholder_clientes.estado.setText(cliente.getEstado());
+        viewholder_clientes.telefone.setText(cliente.getTelefone());
 
-            viewholder_clientes.excluir.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View view) {
+        viewholder_clientes.excluir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
 
-                    AlertDialog.Builder alert_excluir = new AlertDialog.Builder(context);
-                    alert_excluir.setMessage("Deseja realmente excluir os dados do cliente ?");
+                AlertDialog.Builder alert_excluir = new AlertDialog.Builder(context);
+                alert_excluir.setMessage("Deseja realmente excluir os dados do cliente ?");
 
-                    alert_excluir.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                alert_excluir.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-                            delete_categoria(viewholder_clientes.getAdapterPosition(), view);
+                        delete_categoria(viewholder_clientes.getAdapterPosition(), view);
 
+                    }
+                }).setNegativeButton("Cancelar", null);
 
-                        }
-                    }).setNegativeButton("Cancelar", null);
+                alert_excluir.show();
+            }
+        });
 
-                    alert_excluir.show();
-                }
-            });
+        viewholder_clientes.editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
 
-            viewholder_clientes.editar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(final View view) {
+                atualiza_dados_cliente(viewholder_clientes, view, cliente);
 
-                    atualiza_dados_cliente(viewholder_clientes, view, cliente);
-
-                }
-            });
+            }
+        });
     }
 
     public void atualiza_dados_cliente(final AdapterCliente.Viewholder_clientes viewholder_clientes, View view, final Cliente cliente) {

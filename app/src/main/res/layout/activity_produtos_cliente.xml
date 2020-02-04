@@ -58,8 +58,9 @@
 
             <TextView
                 android:id="@+id/txt_nome_cliente_extra_produto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="145dp"
+                android:layout_height="60dp"
+                android:gravity="center"
                 android:text="@string/textview"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
@@ -111,7 +112,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="200dp"
             android:layout_marginEnd="0dp"
-            android:layout_marginBottom="144dp"
+            android:layout_marginBottom="120dp"
             android:fitsSystemWindows="true"
             android:paddingStart="8dp"
             android:paddingEnd="8dp" />
@@ -126,7 +127,7 @@
             android:layout_marginBottom="-26dp"
             android:text="@string/total"
             android:textColor="@color/colorAccent"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -135,12 +136,12 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/rc_produto_cliente"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="70dp"
             android:layout_marginTop="-28dp"
             android:layout_marginBottom="-26dp"
             android:text="@string/total_zero"
             android:textColor="@color/colorAccent"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -153,7 +154,7 @@
             android:layout_toEndOf="@+id/txt_soma"
             android:text="Recebido:"
             android:textColor="@color/colorAccent"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -162,16 +163,16 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/textView2"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="94dp"
             android:layout_toEndOf="@+id/textView2"
             android:text="@string/total_zero"
             android:textColor="@color/colorAccent"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/a_receber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -195,7 +196,7 @@
             android:text="0.00"
             android:textColor="@color/colorAccent"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold" />-->
 
     </RelativeLayout>
 

@@ -47,7 +47,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 @SuppressLint("Registered")
 public class CadastroCliente extends AppCompatActivity {
 
-    private static final int TIME_INTERVAL = 3000; //Intervalo de tempo para click no botão de voltar para sair do aplicativo
+    private static final int TIME_INTERVAL = 3000; //Intervalo de tempo ao clicar no botão de voltar para sair do aplicativo
     private long mBackPressed;
 
     FloatingActionButton fab_cad_cliente;
@@ -70,7 +70,6 @@ public class CadastroCliente extends AppCompatActivity {
     Cliente cliente = new Cliente();
 
     SearchView searchView;
-    TextView nenhum_dado_cad;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -83,7 +82,6 @@ public class CadastroCliente extends AppCompatActivity {
         rc_produto = findViewById(R.id.rc_cad_clientes);
         fab_cad_cliente = findViewById(R.id.fab_cad_clientes);
         adView = findViewById(R.id.adView);
-        nenhum_dado_cad = findViewById(R.id.txt_nenhum_dado_cad);
 
         FirebaseInstanceId.getInstance();
 
@@ -94,12 +92,10 @@ public class CadastroCliente extends AppCompatActivity {
         MobileAds.initialize(CadastroCliente.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("B6D5B7288C97DD6A90A5F0E267BADDA5")
                 .build();
 
         adView.loadAd(adRequest);
 
-        mostrarimagem();
         ler_dados_clientes();
 
         fab_cad_cliente.setOnClickListener(new View.OnClickListener() {
@@ -111,37 +107,6 @@ public class CadastroCliente extends AppCompatActivity {
         });
     }
 
-    @SuppressLint("StaticFieldLeak")
-    public void mostrarimagem() {
-        Handler mostra_texto = new Handler();
-
-        mostra_texto.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                cl_clientes.
-                        get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                                QuerySnapshot queryDocumentSnapshots = task.getResult();
-
-                                for (Cliente cliente : queryDocumentSnapshots.toObjects(Cliente.class)) {
-
-                                    if (cliente.getNome() != null) {
-                                        nenhum_dado_cad.setVisibility(View.GONE);
-                                    } else {
-                                        nenhum_dado_cad.setVisibility(View.VISIBLE);
-                                    }
-                                }
-                            }
-                        });
-
-            }
-        },0);
-
-    }
 
     @SuppressLint("WrongConstant")
     public void ler_dados_clientes() {
@@ -265,7 +230,6 @@ public class CadastroCliente extends AppCompatActivity {
 
         if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
             super.onBackPressed();
-
 
             return;
         } else {
