@@ -98,6 +98,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
         MobileAds.initialize(DatasVendasCobranca.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("B6D5B7288C97DD6A90A5F0E267BADDA5")
                 .build();
 
         adView_vendas.loadAd(adRequest);

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.FrameMetricsAggregator;
 import androidx.recyclerview.widget.RecyclerView;
 
 import br.com.medeve.Controlers.CadastroCliente;
@@ -44,6 +45,9 @@ import retrofit2.Response;
 
 public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCliente.Viewholder_clientes> {
 
+    public static final int VIEW_TYPE_EMPTY = 1;
+    public static final int VIEW_TYPE_NORMAL = 0;
+
     OnItemClickListener listener;
     private Context context;
     private EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep, ed_telefone;
@@ -71,9 +75,8 @@ public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCli
     @Override
     public AdapterCliente.Viewholder_clientes onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mostra_dados_db_cliente, parent, false);
-
-        return new Viewholder_clientes(view);
+            View view_normal = LayoutInflater.from(parent.getContext()).inflate(R.layout.mostra_dados_db_cliente, parent, false);
+            return new Viewholder_clientes(view_normal);
     }
 
     @Override
@@ -275,6 +278,18 @@ public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCli
 
         getSnapshots().getSnapshot(i).getReference().set(map, SetOptions.merge());
     }
+
+    public class Viewholder_vazio extends RecyclerView.ViewHolder {
+
+        TextView vazio;
+
+        public Viewholder_vazio(@NonNull View itemView) {
+            super(itemView);
+
+            vazio = itemView.findViewById(R.id.txt_vazio);
+        }
+    }
+
 
     public class Viewholder_clientes extends RecyclerView.ViewHolder {
 
