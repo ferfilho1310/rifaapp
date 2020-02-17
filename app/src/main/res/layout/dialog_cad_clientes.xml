@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical">
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_gravity="center">
+    android:orientation="vertical"
+    android:layout_gravity="center">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -33,7 +27,6 @@
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
@@ -57,10 +50,6 @@
                 android:background="@drawable/corner_color"
                 android:text="@string/buscar"
                 android:textSize="9sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textInputLayout5"
-                app:layout_constraintStart_toEndOf="@+id/textInputLayout5"
-                app:layout_constraintTop_toTopOf="@+id/textInputLayout5"
-                app:layout_constraintVertical_bias="1.0"
                 tools:ignore="MissingConstraints,SmallSp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -71,9 +60,7 @@
                 android:layout_marginTop="-55dp"
                 android:hint="@string/cep"
                 android:paddingRight="80dp"
-                app:counterMaxLength="8"
-                app:layout_constraintStart_toStartOf="@+id/textInputLayout7"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
+                app:counterMaxLength="8">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_cep"
@@ -88,10 +75,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/endereco"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
+                android:hint="@string/endereco">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edend"
@@ -106,10 +90,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/bairro"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
+                android:hint="@string/bairro">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_bairro"
@@ -124,10 +105,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/cidade"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
+                android:hint="@string/cidade">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_cidade"
@@ -142,10 +120,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/numero"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
+                android:hint="@string/numero">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_numero"
@@ -155,16 +130,13 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout14"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/estado"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout10">
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_estado"
@@ -176,6 +148,4 @@
 
         </LinearLayout>
 
-    </ScrollView>
-
-</LinearLayout>
+</ScrollView>
