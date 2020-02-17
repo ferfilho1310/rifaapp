@@ -218,7 +218,6 @@ public class AdapterProdutosCliente extends FirestoreRecyclerAdapter<Produto, Ad
         TextView nome_produto, quantidade_produto, valor_produto, total, data;
         ImageButton btn_excluir_prod;;
         RadioButton ch_recebido, ch_devolvido;
-        Button recebido_parcial;
 
         public Viewholder_prod_cliente(@NonNull View itemView) {
             super(itemView);
@@ -231,7 +230,6 @@ public class AdapterProdutosCliente extends FirestoreRecyclerAdapter<Produto, Ad
             data = itemView.findViewById(R.id.txt_data);
             ch_recebido = itemView.findViewById(R.id.ch_recebido);
             ch_devolvido = itemView.findViewById(R.id.ch_devolvido);
-            recebido_parcial = itemView.findViewById(R.id.btn_receb_parcial);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

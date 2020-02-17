@@ -7,34 +7,6 @@
     tools:context="br.com.medeve.Controlers.ResetSenha">
 
 
-    <Button
-        android:id="@+id/btn_alterar_senha"
-        android:layout_width="309dp"
-        android:layout_height="67dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/corner_color"
-        android:text="@string/enviar_e_mail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="310dp"
-        android:layout_height="50dp"
-        android:gravity="center_horizontal"
-        android:text="@string/voc_receber_um_e_mail_de_altera_o_de_senha_no_e_mail_cadastrado_como_login"
-        android:textColor="@android:color/black"
-        android:textSize="17sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_alterar_senha"
-        app:layout_constraintVertical_bias="0.105" />
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout4"
         android:layout_width="match_parent"
@@ -49,25 +21,59 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:hint="@string/email"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout4">
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout4"
+        app:layout_constraintVertical_bias="0.449">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ed_reset_email"
-            android:layout_width="293dp"
-            android:layout_height="64dp" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_reset_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_alterar_senha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/corner_color"
+            android:padding="25dp"
+            android:text="@string/enviar_e_mail" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal"
+            android:text="@string/voc_receber_um_e_mail_de_altera_o_de_senha_no_e_mail_cadastrado_como_login"
+            android:textColor="@android:color/black"
+            android:textSize="17sp"
+            android:textStyle="italic" />
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

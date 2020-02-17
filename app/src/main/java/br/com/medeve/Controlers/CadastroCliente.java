@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,6 +22,7 @@ import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import br.com.medeve.Adapters.AdapterViewEmpty;
 import br.com.medeve.R;
 import br.com.medeve.Adapters.AdapterCliente;
 import br.com.medeve.Helpers.AccessFirebase;
@@ -36,10 +38,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -47,7 +52,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 @SuppressLint("Registered")
 public class CadastroCliente extends AppCompatActivity {
 
-    private static final int TIME_INTERVAL = 3000; //Intervalo de tempo para click no botão de voltar para sair do aplicativo
+    private static final int TIME_INTERVAL = 3000; //Intervalo de tempo ao clicar no botão de voltar para sair do aplicativo
     private long mBackPressed;
 
     FloatingActionButton fab_cad_cliente;
@@ -59,6 +64,7 @@ public class CadastroCliente extends AppCompatActivity {
     Query query;
 
     FirebaseAuth db_users = FirebaseAuth.getInstance();
+    FirebaseAnalytics firebaseAnalytics;
 
     FirebaseFirestore db_clientes = FirebaseFirestore.getInstance();
     CollectionReference cl_clientes = db_clientes.collection("cadastro_clientes")
@@ -66,11 +72,11 @@ public class CadastroCliente extends AppCompatActivity {
             .collection("cliente");
 
     AdapterCliente adapter_cliente;
+    TextView no_data;
 
     Cliente cliente = new Cliente();
 
     SearchView searchView;
-    TextView nenhum_dado_cad;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -83,9 +89,10 @@ public class CadastroCliente extends AppCompatActivity {
         rc_produto = findViewById(R.id.rc_cad_clientes);
         fab_cad_cliente = findViewById(R.id.fab_cad_clientes);
         adView = findViewById(R.id.adView);
-        nenhum_dado_cad = findViewById(R.id.txt_nenhum_dado_cad);
+        no_data = findViewById(R.id.no_data);
 
         FirebaseInstanceId.getInstance();
+        firebaseAnalytics = FirebaseAnalytics.getInstance(CadastroCliente.this);
 
         FirebaseApp.initializeApp(CadastroCliente.this);
 
@@ -99,8 +106,10 @@ public class CadastroCliente extends AppCompatActivity {
 
         adView.loadAd(adRequest);
 
-        mostrarimagem();
         ler_dados_clientes();
+
+        AdapterViewEmpty adapterViewEmpty = new AdapterViewEmpty(no_data, rc_produto);
+        adapter_cliente.registerAdapterDataObserver(adapterViewEmpty);
 
         fab_cad_cliente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,38 +118,6 @@ public class CadastroCliente extends AppCompatActivity {
                 AccessFirebase.getinstance().cadastro_cliente(view, cliente, CadastroCliente.this);
             }
         });
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    public void mostrarimagem() {
-        Handler mostra_texto = new Handler();
-
-        mostra_texto.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                cl_clientes.
-                        get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                                QuerySnapshot queryDocumentSnapshots = task.getResult();
-
-                                for (Cliente cliente : queryDocumentSnapshots.toObjects(Cliente.class)) {
-
-                                    if (cliente.getNome() != null) {
-                                        nenhum_dado_cad.setVisibility(View.GONE);
-                                    } else {
-                                        nenhum_dado_cad.setVisibility(View.VISIBLE);
-                                    }
-                                }
-                            }
-                        });
-
-            }
-        },0);
-
     }
 
     @SuppressLint("WrongConstant")
@@ -201,10 +178,8 @@ public class CadastroCliente extends AppCompatActivity {
                 i_cliente.putExtra("info_cliente", cliente_snap);
                 i_cliente.putExtra("id_cliente", id_cliente);
                 startActivity(i_cliente);
-
             }
         });
-
     }
 
     @Override
@@ -218,7 +193,6 @@ public class CadastroCliente extends AppCompatActivity {
         super.onStop();
         adapter_cliente.stopListening();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -259,19 +233,15 @@ public class CadastroCliente extends AppCompatActivity {
         return true;
     }
 
-
     @Override
     public void onBackPressed() {
 
         if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
             super.onBackPressed();
-
-
             return;
         } else {
 
             Toast.makeText(CadastroCliente.this, "Toque novamente para sair", Toast.LENGTH_SHORT).show();
-
             mBackPressed = System.currentTimeMillis();
         }
     }
@@ -296,11 +266,8 @@ public class CadastroCliente extends AppCompatActivity {
             }).setNegativeButton("Cancelar", null);
 
             alert_exit.show();
-
             return true;
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import br.com.medeve.Adapters.AdapterViewEmpty;
 import br.com.medeve.Models.Cliente;
 import br.com.medeve.R;
 import br.com.medeve.Adapters.AdapterDataCobranca;
@@ -46,13 +47,12 @@ import java.util.Calendar;
 
 public class DatasVendasCobranca extends AppCompatActivity {
 
-
     FloatingActionButton fab;
     Query query;
     FirestoreRecyclerOptions<DataCobrancaVenda> rc_options_datas;
     AdView adView_vendas;
     SearchView searchView;
-    TextView nome_cliente_extra, telefone_extra;
+    TextView nome_cliente_extra, telefone_extra,no_data;
 
     private String id_cliente_2;
 
@@ -82,6 +82,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
         adView_vendas = findViewById(R.id.adView_datas);
         nome_cliente_extra = findViewById(R.id.txt_nome_cliente_extra);
         telefone_extra = findViewById(R.id.txt_telefone_extra);
+        no_data = findViewById(R.id.no_data_de_vendas);
 
         setTitle("Datas de venda e cobrança");
 
@@ -98,6 +99,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
         MobileAds.initialize(DatasVendasCobranca.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("B6D5B7288C97DD6A90A5F0E267BADDA5")
                 .build();
 
         adView_vendas.loadAd(adRequest);
@@ -106,6 +108,8 @@ public class DatasVendasCobranca extends AppCompatActivity {
 
         fab_cad_data_clientes();
 
+        AdapterViewEmpty adapterViewEmpty = new AdapterViewEmpty(no_data,rc_datas);
+        adapter_datas.registerAdapterDataObserver(adapterViewEmpty);
     }
 
     public void fab_cad_data_clientes() {

@@ -1,6 +1,7 @@
 package br.com.medeve.Controlers;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import br.com.medeve.R;
@@ -9,13 +10,17 @@ import br.com.medeve.Helpers.AccessFirebase;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+
+import static java.lang.Thread.sleep;
 
 public class EntrarUsuario extends AppCompatActivity {
 
@@ -62,7 +67,7 @@ public class EntrarUsuario extends AppCompatActivity {
 
                 Intent i_cadastrar = new Intent(getApplicationContext(), CadastroUser.class);
                 startActivity(i_cadastrar);
-                i_cadastrar.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i_cadastrar.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             }
         });

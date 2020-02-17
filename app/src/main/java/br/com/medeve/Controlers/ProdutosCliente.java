@@ -91,7 +91,7 @@ public class ProdutosCliente extends AppCompatActivity {
         teste_soma = findViewById(R.id.txt_soma);
         adView_produtos = findViewById(R.id.adView_produtos);
         recebido_produtos = findViewById(R.id.txt_recebido);
-        a_receber = findViewById(R.id.valor_a_receber);
+        //a_receber = findViewById(R.id.valor_a_receber);
         nome_cliente = findViewById(R.id.txt_nome_cliente_extra_produto);
         telefone_cliente = findViewById(R.id.txt_telefone_extra_produto);
 
@@ -137,7 +137,7 @@ public class ProdutosCliente extends AppCompatActivity {
         soma_total();
         recebido();
         fab_cad_produto_cliente();
-        valor_a_receber();
+        //valor_a_receber();
     }
 
     public void fab_cad_produto_cliente() {
@@ -178,7 +178,7 @@ public class ProdutosCliente extends AppCompatActivity {
                                 } else {
                                     salva_produto_cliente(custom_layout);
                                     soma_total();
-                                    valor_a_receber();
+                                    //valor_a_receber();
                                     dialogInterface.dismiss();
                                 }
                             }
@@ -349,7 +349,7 @@ public class ProdutosCliente extends AppCompatActivity {
                 });
     }
 
-    public void valor_a_receber() {
+    /*public void valor_a_receber(){
 
         cl_clientes.whereEqualTo("id", id_data)
                 .get()
@@ -417,7 +417,7 @@ public class ProdutosCliente extends AppCompatActivity {
                     }
                 });
     }
-
+*/
     //Classe para inflar o menu customizado
 
     @Override
@@ -438,7 +438,7 @@ public class ProdutosCliente extends AppCompatActivity {
             case R.id.somar:
                 soma_total();
                 recebido();
-                valor_a_receber();
+                //valor_a_receber();
                 break;
             default:
                 break;
