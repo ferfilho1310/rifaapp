@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import br.com.medeve.Adapters.AdapterViewEmpty;
 import br.com.medeve.Models.Cliente;
 import br.com.medeve.R;
 import br.com.medeve.Adapters.AdapterProdutosCliente;
@@ -59,7 +60,7 @@ public class ProdutosCliente extends AppCompatActivity {
     FirestoreRecyclerOptions firt_cad_clientes;
     Query query;
     AdView adView_produtos;
-    TextView nome_cliente, telefone_cliente;
+    TextView nome_cliente, telefone_cliente, no_data_produtos;
 
     FirebaseAuth db_users = FirebaseAuth.getInstance();
 
@@ -94,6 +95,7 @@ public class ProdutosCliente extends AppCompatActivity {
         //a_receber = findViewById(R.id.valor_a_receber);
         nome_cliente = findViewById(R.id.txt_nome_cliente_extra_produto);
         telefone_cliente = findViewById(R.id.txt_telefone_extra_produto);
+        no_data_produtos = findViewById(R.id.no_data_produtos_cliente);
 
         //Métodos para aparecer o botão "back" na action bar customizavel
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -110,15 +112,11 @@ public class ProdutosCliente extends AppCompatActivity {
         }
 
         try {
-
             cliente = getIntent().getExtras().getParcelable("dados_cliente");
             nome_cliente.setText(cliente.getNome());
             telefone_cliente.setText(cliente.getTelefone());
-
         } catch (Exception e) {
-
             Log.i("TAG", "Erro a obter nome e telefone");
-
         }
 
         setTitle("Produtos do Cliente");
@@ -138,6 +136,9 @@ public class ProdutosCliente extends AppCompatActivity {
         recebido();
         fab_cad_produto_cliente();
         //valor_a_receber();
+
+        AdapterViewEmpty adapterViewEmpty = new AdapterViewEmpty(no_data_produtos, rc_prod_cliente);
+        adapter_produtos_cliente.registerAdapterDataObserver(adapterViewEmpty);
     }
 
     public void fab_cad_produto_cliente() {
@@ -185,11 +186,9 @@ public class ProdutosCliente extends AppCompatActivity {
                         });
                     }
                 });
-
                 valida_campo.show();
             }
         });
-
     }
 
     //classe que pega o valor digitado pelo usuário e salva no banco de dados
@@ -251,7 +250,7 @@ public class ProdutosCliente extends AppCompatActivity {
 
                 final Intent i_recebido_parcial = new Intent(getApplicationContext(), RecebidoParcial.class);
                 i_recebido_parcial.putExtra("id_recebido_parcial", documentSnapshot.getId());
-                i_recebido_parcial.putExtra("info_produto",produto);
+                i_recebido_parcial.putExtra("info_produto", produto);
                 startActivity(i_recebido_parcial);
 
             }
@@ -431,9 +430,7 @@ public class ProdutosCliente extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-
                 onBackPressed();
-
                 break;
             case R.id.somar:
                 soma_total();

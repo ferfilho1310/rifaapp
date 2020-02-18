@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import br.com.medeve.Adapters.AdapterViewEmpty;
 import br.com.medeve.Models.Produto;
 import br.com.medeve.R;
 import br.com.medeve.Adapters.AdapterRecebidosParcial;
@@ -59,7 +60,7 @@ public class RecebidoParcial extends AppCompatActivity {
             .document(db_users.getUid())
             .collection("recebido_parcial");
 
-    TextView valor_produto, quantidade_produto;
+    TextView valor_produto, quantidade_produto, no_data_valor_parcial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class RecebidoParcial extends AppCompatActivity {
         ad_recebido_parcial = findViewById(R.id.adView_recebido_parcial);
         valor_produto = findViewById(R.id.txt_vlr_produto);
         quantidade_produto = findViewById(R.id.txt_quant_produto);
+        no_data_valor_parcial = findViewById(R.id.no_data_valor_parcial);
 
         setTitle("Valor Recebido Parcial");
 
@@ -98,8 +100,10 @@ public class RecebidoParcial extends AppCompatActivity {
         }
 
         ler_dados_firebase_recebido_parcial();
-
         fab_recebido_parcial();
+
+        AdapterViewEmpty adapterViewEmpty = new AdapterViewEmpty(no_data_valor_parcial,rc_recebido_parcial);
+        adapter_recebidos_parcial.registerAdapterDataObserver(adapterViewEmpty);
     }
 
     public void fab_recebido_parcial() {
@@ -167,24 +171,18 @@ public class RecebidoParcial extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
         super.onBackPressed();
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-
             case android.R.id.home:
-
                 onBackPressed();
-
                 return true;
-
             default:
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

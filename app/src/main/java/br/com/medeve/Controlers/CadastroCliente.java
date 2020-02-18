@@ -101,7 +101,6 @@ public class CadastroCliente extends AppCompatActivity {
         MobileAds.initialize(CadastroCliente.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("B6D5B7288C97DD6A90A5F0E267BADDA5")
                 .build();
 
         adView.loadAd(adRequest);

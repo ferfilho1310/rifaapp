@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:layout_gravity="center">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical">
+            android:layout_gravity="center">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout6"
+                android:id="@+id/nom_txt"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/nome_do_cliente">
+                android:layout_above="@id/nome_txt"
+                android:hint="@string/telefone">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_nome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:inputType="text"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nome_txt"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,24 +48,14 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/btn_busca_cep"
-                android:layout_width="75dp"
-                android:layout_height="55dp"
-                android:layout_marginStart="125dp"
-                android:background="@drawable/corner_color"
-                android:text="@string/buscar"
-                android:textSize="9sp"
-                tools:ignore="MissingConstraints,SmallSp" />
-
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout5"
+                android:id="@+id/cep_txt"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-55dp"
+                android:layout_below="@id/nome_txt"
+                android:layout_toStartOf="@id/btn_busca_cep"
                 android:hint="@string/cep"
-                android:paddingRight="80dp"
                 app:counterMaxLength="8">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -70,11 +66,24 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <Button
+                android:id="@+id/btn_busca_cep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="53dp"
+                android:background="@drawable/corner_color"
+                android:text="@string/buscar"
+                android:textSize="9sp"
+                tools:ignore="MissingConstraints,SmallSp" />
+
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout7"
+                android:id="@+id/end_txt"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/cep_txt"
                 android:hint="@string/endereco">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -86,40 +95,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout9"
+                android:id="@+id/numero_txt"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/bairro">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ed_bairro"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout10"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/cidade">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ed_cidade"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout8"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_below="@id/end_txt"
                 android:hint="@string/numero">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -131,12 +111,45 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout14"
+                android:id="@+id/bairro_txt"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/estado"
-                >
+                android:layout_below="@id/cidade_txt"
+                android:hint="@string/bairro">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_bairro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cidade_txt"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/numero_txt"
+                android:hint="@string/cidade">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_cidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/estado_txt"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bairro_txt"
+                android:layout_alignParentBottom="true"
+                android:hint="@string/estado">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_estado"
@@ -146,6 +159,8 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
 
-</ScrollView>
+    </ScrollView>
+
+</RelativeLayout>
