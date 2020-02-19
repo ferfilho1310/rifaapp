@@ -252,10 +252,8 @@ public class ProdutosCliente extends AppCompatActivity {
                 i_recebido_parcial.putExtra("id_recebido_parcial", documentSnapshot.getId());
                 i_recebido_parcial.putExtra("info_produto", produto);
                 startActivity(i_recebido_parcial);
-
             }
         });
-
     }
 
     @Override

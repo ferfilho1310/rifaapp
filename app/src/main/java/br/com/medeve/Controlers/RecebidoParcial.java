@@ -93,7 +93,7 @@ public class RecebidoParcial extends AppCompatActivity {
 
         try {
             produto = getIntent().getExtras().getParcelable("info_produto");
-            valor_produto.setText(produto.getValor());
+            valor_produto.setText(produto.getTotal());
             quantidade_produto.setText(produto.getQuantidade());
         } catch (Exception e) {
             Log.i("Erro", "Erro ao excluir o valor recebido parcial", e);

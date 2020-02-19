@@ -29,11 +29,13 @@
 
         </activity>
         <activity
-            android:name="br.com.medeve.Controlers.RecebidoParcial" />
+            android:name="br.com.medeve.Controlers.RecebidoParcial"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="br.com.medeve.Controlers.DatasVendasCobranca"
             android:label="@string/title_activity_datas_vendas_cobranca"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="br.com.medeve.Controlers.ResetSenha"
             android:label="@string/title_activity_reset_senha"
@@ -42,7 +44,8 @@
         <activity
             android:name="br.com.medeve.Controlers.ProdutosCliente"
             android:label="@string/title_activity_produtos_cliente"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="br.com.medeve.Controlers.CadastroUser"
             android:label="@string/title_activity_cadastro_user"
@@ -57,7 +60,8 @@
             android:name="br.com.medeve.Controlers.CadastroCliente"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
