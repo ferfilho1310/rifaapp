@@ -5,5 +5,8 @@ Este aplicativo foi criado para pessoas que precisam controlar quem são seus de
 
 <strong>Tecnologias utilizadas</strong>
 
-- Firebase: Ótima ferramenta para quem não tem condições de ter uma infraestrutura montada. 
+- Firebase: Ótima ferramenta para quem não tem condições de ter uma infraestrutura. 
 - AdMob: Ferramenta para monetização de aplicativos e sites. 
+
+<strong>Imagens da aplicação</strong>
+
