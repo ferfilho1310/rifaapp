@@ -2,7 +2,7 @@
 
 Este aplicativo foi criado para pessoas que precisam controlar quem são seus devedores e o que eles as devem.
 É um aplicativo simples, porém útil se você precisa controlar quem lhe deve. 
-O app foi desenvolvido todo em Java android nativo e utilizado a IDE Android Studio.
+O app foi desenvolvido todo em Java android nativo e utilizado Android Studio.
 
 <strong>Tecnologias utilizadas</strong>
 
