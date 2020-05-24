@@ -1,7 +1,7 @@
 <strong>Sobre</strong>
 
 Este aplicativo foi criado para pessoas que precisam controlar quem são seus devedores e o que eles as devem.
-É um aplicativo simples, porém útil se você precisa controlar quem lhe deve. 
+É um aplicativo simples, porém útil se você é um micro-empreendedor ou um vendedor autônomo. 
 
 <strong>Instalação</strong>
 
