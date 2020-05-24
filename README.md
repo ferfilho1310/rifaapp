@@ -2,7 +2,6 @@
 
 Este aplicativo foi criado para pessoas que precisam controlar quem são seus devedores e o que eles as devem.
 É um aplicativo simples, porém útil se você precisa controlar quem lhe deve. 
-O app foi desenvolvido todo em Java android nativo e IDE Android Studio.
 
 <strong>Instalação</strong>
 
@@ -12,7 +11,8 @@ Acesse o link: https://play.google.com/store/apps/details?id=br.com.medeve
 
 - Firebase: Ótima ferramenta para quem não tem condições de ter uma infraestrutura. 
 - AdMob: Ferramenta para monetização de aplicativos e sites.
-
+- Android Studio: IDE de desenvolvimento
+- Linguagem utilizada: Java Android
 
 <strong>Imagens da aplicação</strong>
 
