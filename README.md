@@ -5,7 +5,7 @@ Este aplicativo foi criado para pessoas que precisam controlar quem são seus de
 
 <strong>Instalação</strong>
 
-Acesse o link: https://play.google.com/store/apps/details?id=br.com.medeve
+Acesse o link da play store para baixar: https://play.google.com/store/apps/details?id=br.com.medeve
 
 <strong>Tecnologia e Arquitetura utilizada</strong>
 
