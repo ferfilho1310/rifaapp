@@ -7,12 +7,12 @@ Este aplicativo foi criado para pessoas que precisam controlar quem são seus de
 
 Acesse o link: https://play.google.com/store/apps/details?id=br.com.medeve
 
-<strong>Tecnologias utilizadas</strong>
+<strong>Tecnologia e Arquitetura utilizada</strong>
 
-- Firebase: Ótima ferramenta para quem não tem condições de ter uma infraestrutura. 
-- AdMob: Ferramenta para monetização de aplicativos e sites.
-- Android Studio: IDE de desenvolvimento
-- Linguagem utilizada: Java Android
+- Firebase
+- AdMob
+- Android Studio
+- MVC
 
 <strong>Imagens da aplicação</strong>
 
