@@ -10,3 +10,4 @@ Este aplicativo foi criado para pessoas que precisam controlar quem são seus de
 
 <strong>Imagens da aplicação</strong>
 
+<img src="https://lh3.googleusercontent.com/OoG1i_TuDaZQgTKjKC5w_w4Pv7eyDn8OYhIoKe7MiMkP7rWnp0ct0hU47Ii8GFQdaL0=w1366-h576-rw">
