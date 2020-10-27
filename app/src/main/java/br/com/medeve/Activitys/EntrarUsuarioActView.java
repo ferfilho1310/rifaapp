@@ -1,20 +1,19 @@
-package br.com.medeve.Controlers;
+package br.com.medeve.Activitys;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
+import br.com.medeve.Controlers.UsuarioControler;
+import br.com.medeve.Models.Usuario;
 import br.com.medeve.R;
 import br.com.medeve.Helpers.AccessFirebase;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
@@ -22,7 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import static java.lang.Thread.sleep;
 
-public class EntrarUsuario extends AppCompatActivity {
+public class EntrarUsuarioActView extends AppCompatActivity {
 
     Button btn_entrar, btn_user_cadastrar;
     EditText ed_email, ed_senha;
@@ -48,23 +47,24 @@ public class EntrarUsuario extends AppCompatActivity {
 
         db_users = FirebaseAuth.getInstance();
 
-        FirebaseApp.initializeApp(EntrarUsuario.this);
+        FirebaseApp.initializeApp(EntrarUsuarioActView.this);
 
-        AccessFirebase.getinstance().persistir_usuer(EntrarUsuario.this);
+        AccessFirebase.getinstance().persistir_usuer(EntrarUsuarioActView.this);
 
         btn_entrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Usuario usuario = new Usuario();
+                usuario.setEmail(ed_email.getText().toString());
+                usuario.setSenha(ed_senha.getText().toString());
 
-                AccessFirebase.getinstance().entrar_firebase(ed_email.getText().toString(), ed_senha.getText().toString(), EntrarUsuario.this);
-
+                UsuarioControler.getInstance().entrar(usuario);
             }
         });
 
         btn_user_cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent i_cadastrar = new Intent(getApplicationContext(), CadastroUser.class);
                 startActivity(i_cadastrar);
                 i_cadastrar.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -75,10 +75,8 @@ public class EntrarUsuario extends AppCompatActivity {
         reset_senha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent i_reset = new Intent(getApplicationContext(), ResetSenha.class);
                 startActivity(i_reset);
-
             }
         });
     }

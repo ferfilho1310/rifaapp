@@ -17,8 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import br.com.medeve.R;
-import br.com.medeve.Controlers.EntrarUsuario;
-import br.com.medeve.Controlers.CadastroCliente;
+import br.com.medeve.Activitys.EntrarUsuarioActView;
+import br.com.medeve.Activitys.CadastroClienteActView;
 import br.com.medeve.Models.Cliente;
 import br.com.medeve.Retrofit.RetrofitInit;
 
@@ -259,7 +259,7 @@ public class AccessFirebase extends AppCompatActivity {
                         map.put("Confirmar Senha", senhaconfir);
                         map.put("Sexo", sexo);
 
-                        Intent intent = new Intent(activity, EntrarUsuario.class);
+                        Intent intent = new Intent(activity, EntrarUsuarioActView.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         activity.startActivity(intent);
 
@@ -306,7 +306,7 @@ public class AccessFirebase extends AppCompatActivity {
 
         if (firebaseAuth.getCurrentUser() != null) {
 
-            Intent intent = new Intent(activity, CadastroCliente.class);
+            Intent intent = new Intent(activity, CadastroClienteActView.class);
             activity.startActivity(intent);
             activity.finish();
         }
@@ -314,7 +314,7 @@ public class AccessFirebase extends AppCompatActivity {
 
     public void sign_out_firebase(Activity activity) {
 
-        Intent intent = new Intent(activity, EntrarUsuario.class);
+        Intent intent = new Intent(activity, EntrarUsuarioActView.class);
         activity.startActivity(intent);
         activity.finish();
 
@@ -344,7 +344,7 @@ public class AccessFirebase extends AppCompatActivity {
                 try {
                     if (task.isSuccessful()) {
 
-                        Intent i_entrar_prof = new Intent(activity, CadastroCliente.class);
+                        Intent i_entrar_prof = new Intent(activity, CadastroClienteActView.class);
                         i_entrar_prof.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         activity.startActivity(i_entrar_prof);
                         activity.finish();
@@ -381,7 +381,7 @@ public class AccessFirebase extends AppCompatActivity {
 
                         Toast.makeText(context, "Enviado e-mail para reset de senha para " + email, Toast.LENGTH_LONG).show();
 
-                        Intent intent = new Intent(context, EntrarUsuario.class);
+                        Intent intent = new Intent(context, EntrarUsuarioActView.class);
                         context.startActivity(intent);
                         context.finish();
 

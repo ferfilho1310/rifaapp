@@ -1,4 +1,4 @@
-package br.com.medeve.Controlers;
+package br.com.medeve.Activitys;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -323,7 +323,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent intent = new Intent(getApplicationContext(), CadastroCliente.class);
+        Intent intent = new Intent(getApplicationContext(), CadastroClienteActView.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
@@ -332,7 +332,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
 
-                Intent i_cad_user = new Intent(DatasVendasCobranca.this, CadastroCliente.class);
+                Intent i_cad_user = new Intent(DatasVendasCobranca.this, CadastroClienteActView.class);
                 i_cad_user.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i_cad_user);
                 finish();

@@ -15,7 +15,6 @@ public class RetrofitInit {
     }
 
     public PostmonService getcep(){
-
         return retrofit.create(PostmonService.class);
     }
 }

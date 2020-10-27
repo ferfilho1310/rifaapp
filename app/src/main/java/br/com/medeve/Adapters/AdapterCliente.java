@@ -14,10 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.FrameMetricsAggregator;
 import androidx.recyclerview.widget.RecyclerView;
 
-import br.com.medeve.Controlers.CadastroCliente;
 import br.com.medeve.R;
 import br.com.medeve.Models.Cliente;
 import br.com.medeve.Retrofit.RetrofitInit;

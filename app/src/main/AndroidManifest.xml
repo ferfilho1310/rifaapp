@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning,HardcodedDebugMode">
         <activity
-            android:name="br.com.medeve.Controlers.SplashScreen"
+            android:name="br.com.medeve.Activitys.SplashScreen"
             android:screenOrientation="portrait">
 
             <intent-filter>
@@ -29,34 +29,34 @@
 
         </activity>
         <activity
-            android:name="br.com.medeve.Controlers.RecebidoParcial"
+            android:name="br.com.medeve.Activitys.RecebidoParcial"
             android:screenOrientation="portrait" />
         <activity
-            android:name="br.com.medeve.Controlers.DatasVendasCobranca"
+            android:name="br.com.medeve.Activitys.DatasVendasCobranca"
             android:label="@string/title_activity_datas_vendas_cobranca"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="br.com.medeve.Controlers.ResetSenha"
+            android:name="br.com.medeve.Activitys.ResetSenha"
             android:label="@string/title_activity_reset_senha"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="br.com.medeve.Controlers.ProdutosCliente"
+            android:name="br.com.medeve.Activitys.ProdutosCliente"
             android:label="@string/title_activity_produtos_cliente"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="br.com.medeve.Controlers.CadastroUser"
+            android:name="br.com.medeve.Activitys.CadastroUser"
             android:label="@string/title_activity_cadastro_user"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="br.com.medeve.Controlers.EntrarUsuario"
+            android:name="br.com.medeve.Activitys.EntrarUsuarioActView"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="br.com.medeve.Controlers.CadastroCliente"
+            android:name="br.com.medeve.Activitys.CadastroClienteActView"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />

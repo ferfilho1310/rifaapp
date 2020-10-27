@@ -1,4 +1,4 @@
-package br.com.medeve.Controlers;
+package br.com.medeve.Activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -98,7 +98,7 @@ public class CadastroUser extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent i_cad_user = new Intent(getApplicationContext(), EntrarUsuario.class);//ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
+                Intent i_cad_user = new Intent(getApplicationContext(), EntrarUsuarioActView.class);//ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
                 startActivity(i_cad_user);//O efeito ao ser pressionado do botão (no caso abre a activity)
                 finish();  //Método para matar a activity e não deixa-lá indexada na pilhagem
                 break;

@@ -1,11 +1,8 @@
-package br.com.medeve.Controlers;
+package br.com.medeve.Activitys;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.VersionedPackage;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -30,7 +27,7 @@ public class SplashScreen extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent i_splash = new Intent(SplashScreen.this, EntrarUsuario.class);
+                Intent i_splash = new Intent(SplashScreen.this, EntrarUsuarioActView.class);
                 startActivity(i_splash);
                 finish();
 
