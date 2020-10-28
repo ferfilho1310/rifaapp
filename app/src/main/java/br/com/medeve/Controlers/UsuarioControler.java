@@ -1,5 +1,7 @@
 package br.com.medeve.Controlers;
 
+import android.app.Activity;
+
 import br.com.medeve.Dao.UsuarioDao;
 import br.com.medeve.Interfaces.IUsuarioControler;
 import br.com.medeve.Interfaces.IUsuarioDao;
@@ -31,5 +33,15 @@ public class UsuarioControler implements IUsuarioControler {
     @Override
     public void recuperarSenha(Usuario usuario) {
         iUsuarioDao.recuperarSenhaUsuario(usuario);
+    }
+
+    @Override
+    public void persistirUsuario(Activity activity, Class clazz) {
+        iUsuarioDao.persistirUsuario(clazz, activity);
+    }
+
+    @Override
+    public void sair(Activity activity, Class clazz) {
+        iUsuarioDao.sair(activity, clazz);
     }
 }

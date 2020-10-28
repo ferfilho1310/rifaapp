@@ -1,5 +1,7 @@
 package br.com.medeve.Interfaces;
 
+import android.app.Activity;
+
 import br.com.medeve.Models.Cliente;
 import br.com.medeve.Models.Usuario;
 
@@ -10,4 +12,8 @@ public interface IUsuarioControler {
     void cadastrar(Usuario usuario);
 
     void recuperarSenha(Usuario usuario);
+
+    void persistirUsuario(Activity activity, Class clazz);
+
+    void sair(Activity activity, Class clazz);
 }

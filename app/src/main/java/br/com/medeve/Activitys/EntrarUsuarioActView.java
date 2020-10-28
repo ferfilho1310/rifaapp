@@ -1,9 +1,10 @@
 package br.com.medeve.Activitys;
 
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import br.com.medeve.Controlers.UsuarioControler;
+import br.com.medeve.Helpers.IntentHelper;
 import br.com.medeve.Models.Usuario;
 import br.com.medeve.R;
 import br.com.medeve.Helpers.AccessFirebase;
@@ -15,17 +16,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 
 import static java.lang.Thread.sleep;
 
-public class EntrarUsuarioActView extends AppCompatActivity {
+public class EntrarUsuarioActView extends AppCompatActivity implements View.OnClickListener {
 
-    Button btn_entrar, btn_user_cadastrar;
-    EditText ed_email, ed_senha;
-    TextView reset_senha;
+    Button btnEntrar;
+    Button btnCadastrarUsuario;
+    EditText edtEmail;
+    EditText edtSenha;
+    TextView txtResetSenha;
 
     FirebaseAuth db_users;
 
@@ -36,11 +40,11 @@ public class EntrarUsuarioActView extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        btn_entrar = findViewById(R.id.btn_entrar);
-        btn_user_cadastrar = findViewById(R.id.btn_entrar_cadastrar);
-        ed_email = findViewById(R.id.ed_entrar_email);
-        ed_senha = findViewById(R.id.ed_entrar_senha);
-        reset_senha = findViewById(R.id.txt_reset_senha);
+        btnEntrar = findViewById(R.id.btn_entrar);
+        btnCadastrarUsuario = findViewById(R.id.btn_entrar_cadastrar);
+        edtEmail = findViewById(R.id.ed_entrar_email);
+        edtSenha = findViewById(R.id.ed_entrar_senha);
+        txtResetSenha = findViewById(R.id.txt_reset_senha);
 
         getSupportActionBar().hide();
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -49,35 +53,41 @@ public class EntrarUsuarioActView extends AppCompatActivity {
 
         FirebaseApp.initializeApp(EntrarUsuarioActView.this);
 
-        AccessFirebase.getinstance().persistir_usuer(EntrarUsuarioActView.this);
+        UsuarioControler.getInstance().persistirUsuario(EntrarUsuarioActView.this, CadastroClienteActView.class);
 
-        btn_entrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnEntrar.setOnClickListener(this);
+        btnCadastrarUsuario.setOnClickListener(this);
+        txtResetSenha.setOnClickListener(this);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_entrar:
                 Usuario usuario = new Usuario();
-                usuario.setEmail(ed_email.getText().toString());
-                usuario.setSenha(ed_senha.getText().toString());
+                usuario.setEmail(edtEmail.getText().toString());
+                usuario.setSenha(edtSenha.getText().toString());
+                validacaoCamposEmailSenha(usuario);
+                break;
+            case R.id.btn_cadastrar:
+                IntentHelper.getInstance().intentWithFlags(EntrarUsuarioActView.this, CadastrarUsuarioActView.class);
+                break;
+            case R.id.txt_reset_senha:
+                IntentHelper.getInstance().intentWithOutFinish(EntrarUsuarioActView.this, ResetSenha.class);
+                break;
+            default:
+                break;
+        }
+    }
 
-                UsuarioControler.getInstance().entrar(usuario);
-            }
-        });
-
-        btn_user_cadastrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i_cadastrar = new Intent(getApplicationContext(), CadastroUser.class);
-                startActivity(i_cadastrar);
-                i_cadastrar.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-            }
-        });
-
-        reset_senha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i_reset = new Intent(getApplicationContext(), ResetSenha.class);
-                startActivity(i_reset);
-            }
-        });
+    private void validacaoCamposEmailSenha(Usuario usuario) {
+        if (usuario.emailVazio()) {
+            Toast.makeText(this, "Digite seu e-mail", Toast.LENGTH_SHORT).show();
+        } else if (usuario.senhaVazia()) {
+            Toast.makeText(this, "Digite sua senha", Toast.LENGTH_SHORT).show();
+        } else {
+            UsuarioControler.getInstance().entrar(usuario);
+        }
     }
 }

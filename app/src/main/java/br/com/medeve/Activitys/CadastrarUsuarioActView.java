@@ -19,11 +19,14 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 
-public class CadastroUser extends AppCompatActivity {
+public class CadastrarUsuarioActView extends AppCompatActivity {
 
-    EditText ed_user_nome, ed_user_email, ed_user_senha, ed_user_confirmasenha;
+    EditText edtNomeUsuario;
+    EditText edtEmailUsuario;
+    EditText edtSenhaUsuario;
+    EditText edtConfirmaSenhaUsuario;
 
-    Button cadastro;
+    Button btnCadastrarUsuario;
 
     RadioGroup rd_sexo;
     RadioButton rd_feminino, rd_masculino;
@@ -39,12 +42,12 @@ public class CadastroUser extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ed_user_nome = findViewById(R.id.ed_cad_user_nome);
-        ed_user_email = findViewById(R.id.ed_cad_user_email);
-        ed_user_senha = findViewById(R.id.ed_cad_user_senha);
-        ed_user_confirmasenha = findViewById(R.id.ed_cad_user_confirmasenha);
+        edtNomeUsuario = findViewById(R.id.ed_cad_user_nome);
+        edtEmailUsuario = findViewById(R.id.ed_cad_user_email);
+        edtSenhaUsuario = findViewById(R.id.ed_cad_user_senha);
+        edtConfirmaSenhaUsuario = findViewById(R.id.ed_cad_user_confirmasenha);
         rd_sexo = findViewById(R.id.rd_sexos);
-        cadastro = findViewById(R.id.btn_cadastrar);
+        btnCadastrarUsuario = findViewById(R.id.btn_cadastrar);
         rd_feminino = findViewById(R.id.femi);
         rd_masculino = findViewById(R.id.masc);
 
@@ -84,12 +87,11 @@ public class CadastroUser extends AppCompatActivity {
             }
         });
 
-        cadastro.setOnClickListener(new View.OnClickListener() {
+        btnCadastrarUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                 AccessFirebase.getinstance().cadastrar_user(ed_user_nome.getText().toString(), ed_user_email.getText().toString()
-                        , ed_user_senha.getText().toString(), ed_user_confirmasenha.getText().toString(), usuario.getSexo(), CadastroUser.this);
+                AccessFirebase.getinstance().cadastrar_user(edtNomeUsuario.getText().toString(), edtEmailUsuario.getText().toString()
+                        , edtSenhaUsuario.getText().toString(), edtConfirmaSenhaUsuario.getText().toString(), usuario.getSexo(), CadastrarUsuarioActView.this);
 
             }
         });

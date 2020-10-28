@@ -41,4 +41,28 @@ public class Usuario {
     public void setConfirmaSenha(String confirmaSenha) {
         this.confirmaSenha = confirmaSenha;
     }
+
+    public boolean nomeVazio(){
+        boolean nomeVazio = false;
+        if(getNome().isEmpty()){
+            nomeVazio = true;
+        }
+        return nomeVazio;
+    }
+
+    public boolean emailVazio(){
+        boolean emailVazio = false;
+        if(getEmail().isEmpty()){
+            emailVazio = true;
+        }
+        return emailVazio;
+    }
+
+    public boolean senhaVazia(){
+        boolean senhaVazia = false;
+        if(getSenha().isEmpty()){
+            senhaVazia = true;
+        }
+        return senhaVazia;
+    }
 }
