@@ -7,7 +7,6 @@ import br.com.medeve.Controlers.UsuarioControler;
 import br.com.medeve.Helpers.IntentHelper;
 import br.com.medeve.Models.Usuario;
 import br.com.medeve.R;
-import br.com.medeve.Helpers.AccessFirebase;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -41,7 +40,7 @@ public class EntrarUsuarioActView extends AppCompatActivity implements View.OnCl
         setSupportActionBar(toolbar);
 
         btnEntrar = findViewById(R.id.btn_entrar);
-        btnCadastrarUsuario = findViewById(R.id.btn_entrar_cadastrar);
+        btnCadastrarUsuario = findViewById(R.id.btn_cadastrar_usuario);
         edtEmail = findViewById(R.id.ed_entrar_email);
         edtSenha = findViewById(R.id.ed_entrar_senha);
         txtResetSenha = findViewById(R.id.txt_reset_senha);
@@ -70,7 +69,7 @@ public class EntrarUsuarioActView extends AppCompatActivity implements View.OnCl
                 usuario.setSenha(edtSenha.getText().toString());
                 validacaoCamposEmailSenha(usuario);
                 break;
-            case R.id.btn_cadastrar:
+            case R.id.btn_cadastrar_usuario:
                 IntentHelper.getInstance().intentWithFlags(EntrarUsuarioActView.this, CadastrarUsuarioActView.class);
                 break;
             case R.id.txt_reset_senha:
