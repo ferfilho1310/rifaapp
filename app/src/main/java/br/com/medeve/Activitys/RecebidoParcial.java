@@ -20,7 +20,6 @@ import br.com.medeve.Models.Produto;
 import br.com.medeve.R;
 import br.com.medeve.Adapters.AdapterRecebidosParcial;
 import br.com.medeve.Helpers.AccessFirebase;
-import br.com.medeve.Models.RecebidoParcialModel;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.ads.AdRequest;
@@ -49,7 +48,7 @@ public class RecebidoParcial extends AppCompatActivity {
 
     AdView ad_recebido_parcial;
 
-    RecebidoParcialModel recebidoParcial = new RecebidoParcialModel();
+    br.com.medeve.Models.RecebidoParcial recebidoParcial = new br.com.medeve.Models.RecebidoParcial();
 
     FirebaseAuth db_users = FirebaseAuth.getInstance();
 
@@ -140,8 +139,8 @@ public class RecebidoParcial extends AppCompatActivity {
 
         recebido = cl_recebido_parcial.whereEqualTo("id", id_produto);
 
-        fro_recebido = new FirestoreRecyclerOptions.Builder<RecebidoParcialModel>()
-                .setQuery(recebido, RecebidoParcialModel.class)
+        fro_recebido = new FirestoreRecyclerOptions.Builder<br.com.medeve.Models.RecebidoParcial>()
+                .setQuery(recebido, br.com.medeve.Models.RecebidoParcial.class)
                 .build();
 
         adapter_recebidos_parcial = new AdapterRecebidosParcial(fro_recebido, RecebidoParcial.this);

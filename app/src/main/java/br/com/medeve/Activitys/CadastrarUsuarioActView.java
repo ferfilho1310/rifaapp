@@ -1,8 +1,11 @@
 package br.com.medeve.Activitys;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
+import br.com.medeve.Controlers.UsuarioControler;
+import br.com.medeve.Models.Usuario;
 import br.com.medeve.R;
 import br.com.medeve.Helpers.AccessFirebase;
 import br.com.medeve.Models.Cliente;
@@ -19,7 +22,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 
-public class CadastrarUsuarioActView extends AppCompatActivity {
+public class CadastrarUsuarioActView extends AppCompatActivity implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     EditText edtNomeUsuario;
     EditText edtEmailUsuario;
@@ -31,9 +34,7 @@ public class CadastrarUsuarioActView extends AppCompatActivity {
     RadioGroup rd_sexo;
     RadioButton rd_feminino, rd_masculino;
 
-    String masculino, feminino;
-
-    Cliente usuario = new Cliente();
+    String sexo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,58 +57,70 @@ public class CadastrarUsuarioActView extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        rd_sexo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-
-                if (rd_feminino == null) {
-
-                    Toast.makeText(getApplicationContext(), "Informe o sexo", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (rd_masculino == null) {
-
-                    Toast.makeText(getApplicationContext(), "Informe o sexo", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (rd_feminino.isChecked()) {
-
-                    feminino = "Feminino";
-                    usuario.setSexo(feminino);
-                }
-
-                if (rd_masculino.isChecked()) {
-
-                    masculino = "Masculino";
-                    usuario.setSexo(masculino);
-
-                }
-            }
-        });
-
-        btnCadastrarUsuario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AccessFirebase.getinstance().cadastrar_user(edtNomeUsuario.getText().toString(), edtEmailUsuario.getText().toString()
-                        , edtSenhaUsuario.getText().toString(), edtConfirmaSenhaUsuario.getText().toString(), usuario.getSexo(), CadastrarUsuarioActView.this);
-
-            }
-        });
+        btnCadastrarUsuario.setOnClickListener(this);
+        rd_sexo.setOnCheckedChangeListener(this);
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (group.getId()) {
+            case R.id.rd_sexos:
+                if (rd_feminino.isChecked()) {
+                    sexo = "Feminino";
+                } else if (rd_masculino.isChecked()) {
+                    sexo = "Masculino";
+                }
+                break;
+        }
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_cadastrar:
+                Usuario usuario = new Usuario();
+                usuario.setSenha(edtSenhaUsuario.getText().toString());
+                usuario.setConfirmaSenha(edtConfirmaSenhaUsuario.getText().toString());
+                usuario.setEmail(edtEmailUsuario.getText().toString());
+                usuario.setNome(edtNomeUsuario.getText().toString());
+                usuario.setSexo(sexo);
+
+                validarCadastroUsuario(usuario);
+                break;
+        }
+    }
+
+
+    private void validarCadastroUsuario(Usuario usuario) {
+        if (usuario.nomeVazio()) {
+            Toast.makeText(this, "Digite o seu nome", Toast.LENGTH_SHORT).show();
+        } else if (usuario.senhaVazia()) {
+            Toast.makeText(this, "Digite sua senha", Toast.LENGTH_SHORT).show();
+        } else if (usuario.confirmarSenhaVazia()) {
+            Toast.makeText(this, "Confirme sua senha", Toast.LENGTH_SHORT).show();
+        } else if (usuario.nomeVazio()) {
+            Toast.makeText(this, "Digite seu nome", Toast.LENGTH_SHORT).show();
+        } else if (!usuario.getSenha().equals(usuario.getConfirmaSenha())) {
+            Toast.makeText(this, "As senhas estão diferentes", Toast.LENGTH_SHORT).show();
+        } else if (usuario.getSexo() == null){
+            Toast.makeText(this, "Informe seu sexo", Toast.LENGTH_SHORT).show();
+        } else {
+            UsuarioControler.getInstance().cadastrar(usuario, CadastrarUsuarioActView.this);
+        }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent i_cad_user = new Intent(getApplicationContext(), EntrarUsuarioActView.class);//ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
-                startActivity(i_cad_user);//O efeito ao ser pressionado do botão (no caso abre a activity)
-                finish();  //Método para matar a activity e não deixa-lá indexada na pilhagem
+                Intent i_cad_user = new Intent(getApplicationContext(), EntrarUsuarioActView.class);
+                startActivity(i_cad_user);
+                finish();
                 break;
             default:
                 break;
         }
         return true;
     }
-
 }

@@ -9,7 +9,7 @@ public interface IUsuarioControler {
 
     void entrar(Usuario usuario);
 
-    void cadastrar(Usuario usuario);
+    void cadastrar(Usuario usuario, Activity activity);
 
     void recuperarSenha(Usuario usuario);
 

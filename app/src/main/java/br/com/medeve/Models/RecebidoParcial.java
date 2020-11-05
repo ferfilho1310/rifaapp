@@ -1,16 +1,16 @@
 package br.com.medeve.Models;
 
-public class RecebidoParcialModel {
+public class RecebidoParcial {
 
     private String data;
     private String valor_recebido;
 
-    public RecebidoParcialModel(String data, String valor_recebido) {
+    public RecebidoParcial(String data, String valor_recebido) {
         this.data = data;
         this.valor_recebido = valor_recebido;
     }
 
-    public RecebidoParcialModel() {
+    public RecebidoParcial() {
     }
 
     public String getData() {

@@ -26,8 +26,8 @@ public class UsuarioControler implements IUsuarioControler {
     }
 
     @Override
-    public void cadastrar(Usuario usuario) {
-        iUsuarioDao.cadastrarUsuairo(usuario);
+    public void cadastrar(Usuario usuario, Activity activity) {
+        iUsuarioDao.cadastrarUsuairo(usuario, activity);
     }
 
     @Override

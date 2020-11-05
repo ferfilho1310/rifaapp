@@ -13,12 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import br.com.medeve.R;
-import br.com.medeve.Models.RecebidoParcialModel;
+import br.com.medeve.Models.RecebidoParcial;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.firestore.DocumentSnapshot;
 
-public class AdapterRecebidosParcial extends FirestoreRecyclerAdapter<RecebidoParcialModel, AdapterRecebidosParcial.View_Holder_Recebido_parcial> {
+public class AdapterRecebidosParcial extends FirestoreRecyclerAdapter<RecebidoParcial, AdapterRecebidosParcial.View_Holder_Recebido_parcial> {
 
     Context context;
 
@@ -28,7 +27,7 @@ public class AdapterRecebidosParcial extends FirestoreRecyclerAdapter<RecebidoPa
      *
      * @param options
      */
-    public AdapterRecebidosParcial(@NonNull FirestoreRecyclerOptions<RecebidoParcialModel> options, Context context) {
+    public AdapterRecebidosParcial(@NonNull FirestoreRecyclerOptions<RecebidoParcial> options, Context context) {
         super(options);
         this.context = context;
     }
@@ -43,7 +42,7 @@ public class AdapterRecebidosParcial extends FirestoreRecyclerAdapter<RecebidoPa
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull final View_Holder_Recebido_parcial holder, int position, @NonNull RecebidoParcialModel model) {
+    protected void onBindViewHolder(@NonNull final View_Holder_Recebido_parcial holder, int position, @NonNull RecebidoParcial model) {
 
         holder.txt_recebido_parcial.setText(model.getValor_recebido());
         holder.txt_data_recebido.setText(model.getData());

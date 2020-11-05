@@ -50,6 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_pessoa"
+                android:drawablePadding="8dp"
                 android:ems="10"
                 android:inputType="text" />
 
@@ -67,6 +68,7 @@
                 android:id="@+id/ed_cad_user_email"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_email"
                 android:ems="10"
                 android:inputType="textEmailAddress" />
@@ -79,12 +81,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            app:passwordToggleEnabled="true"
             android:hint="@string/confirma_senha">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ed_cad_user_confirmasenha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_password"
                 android:ems="10"
                 android:inputType="textPassword" />
@@ -98,12 +102,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            app:passwordToggleEnabled="true"
             android:hint="@string/senha">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ed_cad_user_senha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
                 android:drawableStart="@drawable/ic_password"
                 android:ems="10"
                 android:inputType="textPassword" />

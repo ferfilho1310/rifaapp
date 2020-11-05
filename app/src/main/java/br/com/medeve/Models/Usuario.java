@@ -6,6 +6,7 @@ public class Usuario {
     private String email;
     private String senha;
     private String confirmaSenha;
+    private String sexo;
 
     public Usuario() {
     }
@@ -42,6 +43,14 @@ public class Usuario {
         this.confirmaSenha = confirmaSenha;
     }
 
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
     public boolean nomeVazio(){
         boolean nomeVazio = false;
         if(getNome().isEmpty()){
@@ -64,5 +73,13 @@ public class Usuario {
             senhaVazia = true;
         }
         return senhaVazia;
+    }
+
+    public boolean confirmarSenhaVazia(){
+        boolean confirmaSenhaVazia = false;
+        if(getConfirmaSenha().isEmpty()){
+            confirmaSenhaVazia = true;
+        }
+        return confirmaSenhaVazia;
     }
 }
