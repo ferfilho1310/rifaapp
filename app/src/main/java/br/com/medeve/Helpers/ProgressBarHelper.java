@@ -13,6 +13,7 @@ public class ProgressBarHelper extends ProgressDialog {
         show();
     }
 
+
     public ProgressBarHelper(Context context, int theme) {
         super(context, theme);
     }

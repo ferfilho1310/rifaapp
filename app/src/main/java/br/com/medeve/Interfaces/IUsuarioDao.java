@@ -6,9 +6,9 @@ import br.com.medeve.Models.Usuario;
 
 public interface IUsuarioDao {
 
-    void cadastrarUsuairo(Usuario usuario, Activity activity);
+    int cadastrarUsuairo(Usuario usuario);
 
-    void entrarUsuario(Usuario usuario);
+    int entrarUsuario(Usuario usuario);
 
     void recuperarSenhaUsuario(Usuario usuario);
 
