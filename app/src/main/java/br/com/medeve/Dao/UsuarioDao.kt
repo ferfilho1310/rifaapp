@@ -1,17 +1,16 @@
 package br.com.medeve.Dao
 
-import br.com.medeve.Interfaces.IUsuarioDao
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import br.com.medeve.Models.Usuario
 import android.app.Activity
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import br.com.medeve.Helpers.IntentHelper
+import br.com.medeve.Interfaces.IUsuarioDao
+import br.com.medeve.Models.Usuario
+import br.com.medeve.Util.Resultados
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import br.com.medeve.Helpers.IntentHelper
-import br.com.medeve.Util.ResultadoCadastroUsuario
-import java.lang.Exception
-import java.util.HashMap
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
 
 class UsuarioDao : IUsuarioDao {
 
@@ -20,7 +19,8 @@ class UsuarioDao : IUsuarioDao {
 
     override fun cadastrarUsuairo(usuario: Usuario): Int {
 
-        var resultado = ResultadoCadastroUsuario.Resultados.ERRO_DESCONHECIDO_CADASTRO_USUARIO
+        var resultado = Resultados.CadastroUsuario.ERRO_DESCONHECIDO
+        var recebeResultado = 0
 
         firebaseAuth.createUserWithEmailAndPassword(usuario.email!!, usuario.senha!!).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -31,35 +31,37 @@ class UsuarioDao : IUsuarioDao {
                 map["Confirmar Senha"] = usuario.confirmaSenha
                 map["Sexo"] = usuario.sexo
                 collectionUser.add(map)
-                resultado = ResultadoCadastroUsuario.Resultados.SUCESSO_CADASTRO_USUARIO
+                resultado = Resultados.CadastroUsuario.SUCESSO_CADASTRO_USUARIO
+
             } else if (!task.isSuccessful) {
                 try {
                     throw task.exception!!
                 } catch (e: FirebaseAuthWeakPasswordException) {
-
+                    resultado = Resultados.CadastroUsuario.SENHA_COM_MENOS_DE_SEIS_CARACTERES
                 } catch (e: FirebaseAuthInvalidCredentialsException) {
-
+                    resultado = Resultados.CadastroUsuario.EMAIL_INVALIDO
                 } catch (e: FirebaseAuthUserCollisionException) {
-
+                    resultado = Resultados.CadastroUsuario.EMAIL_JA_CADASTRADO
                 } catch (e: Exception) {
-
+                    resultado = Resultados.CadastroUsuario.ERRO_DESCONHECIDO
                 }
-            }
-        }
-        return resultado;
-    }
-
-    override fun entrarUsuario(usuario: Usuario) : Int{
-        var resultado = 99
-        firebaseAuth.signInWithEmailLink(usuario.email!!,usuario.senha!!).addOnCompleteListener { task ->
-            if(task.isSuccessful){
-                resultado = 0
-            } else {
-                resultado = 1
             }
         }
         return resultado
     }
+
+    override fun entrarUsuario(usuario: Usuario): Int {
+        var resultado = Resultados.CadastroUsuario.ERRO_DESCONHECIDO
+        firebaseAuth.signInWithEmailLink(usuario.email!!, usuario.senha!!).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                resultado = Resultados.EntrarUsuario.LOGIN_REALIZADO_COM_SUCESSO
+            } else {
+                resultado = Resultados.EntrarUsuario.FALHA_NO_LOGIN
+            }
+        }
+        return resultado
+    }
+
     override fun recuperarSenhaUsuario(usuario: Usuario) {}
     override fun persistirUsuario(clazz: Class<*>?, activity: Activity) {
         if (firebaseAuth.currentUser != null) {

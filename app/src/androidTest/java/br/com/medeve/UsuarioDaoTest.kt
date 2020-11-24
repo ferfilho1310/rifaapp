@@ -1,8 +1,7 @@
 package br.com.medeve
 
-import br.com.medeve.Dao.UsuarioDao
 import br.com.medeve.Models.Usuario
-import br.com.medeve.Util.ResultadoCadastroUsuario
+import br.com.medeve.Util.Resultados
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -10,8 +9,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
 import org.junit.Assert
 import org.junit.Test
-import java.lang.Exception
-import java.util.HashMap
+import java.util.*
 
 class UsuarioDaoTest {
 
@@ -36,7 +34,7 @@ class UsuarioDaoTest {
                 map["Confirmar Senha"] = usuario.confirmaSenha
                 map["Sexo"] = usuario.sexo
                 collectionUser.add(map)
-                resultado = ResultadoCadastroUsuario.Resultados.SUCESSO_CADASTRO_USUARIO
+                resultado = Resultados.CadastroUsuario.SUCESSO_CADASTRO_USUARIO
             } else if (!task.isSuccessful) {
                 try {
                     throw task.exception!!
@@ -65,7 +63,7 @@ class UsuarioDaoTest {
 
         firebaseAuth.signInWithEmailLink(usuario.email!!,usuario.senha!!).addOnCompleteListener { task ->
             if(task.isSuccessful){
-                resultado = ResultadoCadastroUsuario.Resultados.SUCESSO_CADASTRO_USUARIO
+                resultado = Resultados.CadastroUsuario.SUCESSO_CADASTRO_USUARIO
             } else {
                 resultado = 1
             }
