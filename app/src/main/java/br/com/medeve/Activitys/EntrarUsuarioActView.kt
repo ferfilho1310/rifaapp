@@ -3,25 +3,22 @@ package br.com.medeve.Activitys
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import br.com.medeve.Controlers.UsuarioControler
+import br.com.medeve.ViewModels.UsuarioViewModel
 import br.com.medeve.Helpers.IntentHelper
+import br.com.medeve.Helpers.ProgressBarHelper
 import br.com.medeve.Models.Usuario
 import br.com.medeve.R
+import br.com.medeve.Util.Resultados
 import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_entrar_usuario.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
-    var btnEntrar: Button? = null
-    var btnCadastrarUsuario: Button? = null
-    var edtEmail: EditText? = null
-    var edtSenha: EditText? = null
-    var txtResetSenha: TextView? = null
+
+    val viewModelEntrarUsuario: UsuarioViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,21 +26,20 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        btnEntrar = findViewById(R.id.btn_entrar)
-        btnCadastrarUsuario = findViewById(R.id.btn_cadastrar_usuario)
-        edtEmail = findViewById(R.id.ed_entrar_email)
-        edtSenha = findViewById(R.id.ed_entrar_senha)
-        txtResetSenha = findViewById(R.id.txt_reset_senha)
-
         supportActionBar!!.hide()
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
         FirebaseApp.initializeApp(this@EntrarUsuarioActView)
-        UsuarioControler.instance!!.persistirUsuario(this@EntrarUsuarioActView, CadastroClienteActView::class.java)
+     /*   viewModelEntrarUsuario.persistirUsuario(
+            this@EntrarUsuarioActView,
+            CadastroClienteActView::class.java
+        )*/
 
-        btnEntrar!!.setOnClickListener(this)
-        btnCadastrarUsuario!!.setOnClickListener(this)
-        txtResetSenha!!.setOnClickListener(this)
+        btn_entrar!!.setOnClickListener(this)
+        btn_cadastrar_usuario!!.setOnClickListener(this)
+        txt_reset_senha!!.setOnClickListener(this)
+
+        setObservers()
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -51,12 +47,18 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
         when (v.id) {
             R.id.btn_entrar -> {
                 val usuario = Usuario()
-                usuario.email = edtEmail!!.text.toString()
-                usuario.senha = edtSenha!!.text.toString()
+                usuario.email = ed_entrar_email!!.text.toString()
+                usuario.senha = ed_entrar_senha!!.text.toString()
                 validacaoCamposEmailSenha(usuario)
             }
-            R.id.btn_cadastrar_usuario -> IntentHelper.instance!!.intentWithFlags(this@EntrarUsuarioActView, CadastrarUsuarioActView::class.java)
-            R.id.txt_reset_senha -> IntentHelper.instance!!.intentWithOutFinish(this@EntrarUsuarioActView, ResetSenha::class.java)
+            R.id.btn_cadastrar_usuario -> IntentHelper.instance!!.intentWithFlags(
+                this@EntrarUsuarioActView,
+                CadastrarUsuarioActView::class.java
+            )
+            R.id.txt_reset_senha -> IntentHelper.instance!!.intentWithOutFinish(
+                this@EntrarUsuarioActView,
+                ResetSenha::class.java
+            )
             else -> {
             }
         }
@@ -68,7 +70,25 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
         } else if (usuario.senhaVazia()) {
             Toast.makeText(this, "Digite sua senha", Toast.LENGTH_SHORT).show()
         } else {
-            UsuarioControler.instance!!.entrar(usuario)
+            viewModelEntrarUsuario.entrarUsuario(usuario)
         }
     }
+
+    fun setObservers() {
+        viewModelEntrarUsuario.resultadoEntrarUsuario.observe(this, {
+            val progressBarHelper = ProgressBarHelper(this)
+
+            when (it) {
+                Resultados.EntrarUsuario.LOGIN_REALIZADO_COM_SUCESSO -> {
+                    Toast.makeText(this, "Login realizado com sucesso.", Toast.LENGTH_LONG)
+                        .show()
+                }
+                Resultados.EntrarUsuario.FALHA_NO_LOGIN -> {
+                    Toast.makeText(this, "Falha no login", Toast.LENGTH_LONG).show()
+                    progressBarHelper.dismiss()
+                }
+            }
+        })
+    }
+
 }

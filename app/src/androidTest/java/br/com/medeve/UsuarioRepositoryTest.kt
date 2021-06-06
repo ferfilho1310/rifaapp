@@ -11,7 +11,7 @@ import org.junit.Assert
 import org.junit.Test
 import java.util.*
 
-class UsuarioDaoTest {
+class UsuarioRepositoryTest {
 
     private val firebaseAuth = FirebaseAuth.getInstance()
     var collectionUser = FirebaseFirestore.getInstance().collection("Users")

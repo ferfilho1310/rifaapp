@@ -12,7 +12,7 @@ class Resultados  {
 
     object EntrarUsuario {
         const val LOGIN_REALIZADO_COM_SUCESSO = 0
-        const val FALHA_NO_LOGIN = 0
+        const val FALHA_NO_LOGIN = 1
     }
 
 }

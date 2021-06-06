@@ -1,34 +1,46 @@
-package br.com.medeve.Controlers
+package br.com.medeve.ViewModels
 
-import android.app.Activity
-import android.widget.Toast
-import br.com.medeve.Activitys.CadastroClienteActView
-import br.com.medeve.Dao.UsuarioDao
-import br.com.medeve.Helpers.IntentHelper
-import br.com.medeve.Helpers.ProgressBarHelper
-import br.com.medeve.Interfaces.IUsuarioControler
-import br.com.medeve.Interfaces.IUsuarioDao
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import br.com.medeve.Repository.UsuarioRepository
 import br.com.medeve.Models.Usuario
-import br.com.medeve.Util.Resultados
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class UsuarioControler : IUsuarioControler {
+class UsuarioViewModel(val usuarioRepository: UsuarioRepository) : ViewModel() {
 
-    companion object {
-        private var usuarioControler: UsuarioControler? = null
-        private var iUsuarioDao: IUsuarioDao? = null
+    private val entrarUsuario = MutableLiveData<Int>()
+    val resultadoEntrarUsuario = entrarUsuario
 
-        @JvmStatic
-        @get:Synchronized
-        val instance: UsuarioControler?
-            get() {
-                if (usuarioControler == null) {
-                    usuarioControler = UsuarioControler()
-                }
-                iUsuarioDao = UsuarioDao()
-                return usuarioControler
+    private val cadastrarUsuario = MutableLiveData<Int>()
+    val resultadoCadastroUsuario = cadastrarUsuario
+
+    fun entrarUsuario(usuario: Usuario) {
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                usuarioRepository.entrarUsuario(usuario)
+            }.onSuccess {
+                resultadoEntrarUsuario.postValue(it.value)
+            }.onFailure {
+
             }
+        }
     }
 
+    fun cadastrarUsuario(usuario: Usuario){
+        CoroutineScope(Dispatchers.IO).launch {
+            runCatching {
+                usuarioRepository.cadastrarUsuairo(usuario)
+            }.onSuccess {
+                resultadoCadastroUsuario.postValue(it.value)
+            }.onFailure {
+
+            }
+        }
+    }
+
+    /*
     override fun entrar(usuario: Usuario?) {
         iUsuarioDao!!.entrarUsuario(usuario)
     }
@@ -72,5 +84,5 @@ class UsuarioControler : IUsuarioControler {
 
     override fun sair(activity: Activity?, clazz: Class<*>?) {
         iUsuarioDao!!.sair(activity, clazz)
-    }
+    }*/
 }

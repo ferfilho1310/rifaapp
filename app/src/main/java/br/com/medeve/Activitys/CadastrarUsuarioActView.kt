@@ -8,20 +8,20 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import br.com.medeve.Controlers.UsuarioControler.Companion.instance
+import br.com.medeve.Helpers.ProgressBarHelper
 import br.com.medeve.Models.Usuario
 import br.com.medeve.R
+import br.com.medeve.Util.Resultados
+import br.com.medeve.ViewModels.UsuarioViewModel
+import kotlinx.android.synthetic.main.activity_cadastro_user.*
+import kotlinx.android.synthetic.main.activity_entrar_usuario.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CadastrarUsuarioActView : AppCompatActivity(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
-    var edtNomeUsuario: EditText? = null
-    var edtEmailUsuario: EditText? = null
-    var edtSenhaUsuario: EditText? = null
-    var edtConfirmaSenhaUsuario: EditText? = null
-    var btnCadastrarUsuario: Button? = null
-    var rd_sexo: RadioGroup? = null
-    var rd_feminino: RadioButton? = null
-    var rd_masculino: RadioButton? = null
-    var sexo: String? = null
+
+    var sexo : String? = null
+
+    val viewModelCadastroUsuario : UsuarioViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,29 +29,21 @@ class CadastrarUsuarioActView : AppCompatActivity(), View.OnClickListener, Radio
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        edtNomeUsuario = findViewById(R.id.ed_cad_user_nome)
-        edtEmailUsuario = findViewById(R.id.ed_cad_user_email)
-        edtSenhaUsuario = findViewById(R.id.ed_cad_user_senha)
-        edtConfirmaSenhaUsuario = findViewById(R.id.ed_cad_user_confirmasenha)
-        rd_sexo = findViewById(R.id.rd_sexos)
-        btnCadastrarUsuario = findViewById(R.id.btn_cadastrar)
-        rd_feminino = findViewById(R.id.femi)
-        rd_masculino = findViewById(R.id.masc)
-
         title = "Cadastre-se"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeButtonEnabled(true)
-        
-        btnCadastrarUsuario!!.setOnClickListener(this)
-        rd_sexo!!.setOnCheckedChangeListener(this)
+
+        btn_cadastrar!!.setOnClickListener(this)
+        rd_sexos!!.setOnCheckedChangeListener(this)
+
+        setObservers()
     }
 
-    @SuppressLint("NonConstantResourceId")
     override fun onCheckedChanged(group: RadioGroup, checkedId: Int) {
         when (group.id) {
-            R.id.rd_sexos -> if (rd_feminino!!.isChecked) {
+            R.id.rd_sexos -> if (femi!!.isChecked) {
                 sexo = "Feminino"
-            } else if (rd_masculino!!.isChecked) {
+            } else if (masc!!.isChecked) {
                 sexo = "Masculino"
             }
         }
@@ -62,14 +54,27 @@ class CadastrarUsuarioActView : AppCompatActivity(), View.OnClickListener, Radio
         when (v.id) {
             R.id.btn_cadastrar -> {
                 val usuario = Usuario()
-                usuario.senha = edtSenhaUsuario!!.text.toString()
-                usuario.confirmaSenha = edtConfirmaSenhaUsuario!!.text.toString()
-                usuario.email = edtEmailUsuario!!.text.toString()
-                usuario.nome = edtNomeUsuario!!.text.toString()
+                usuario.senha = ed_cad_user_senha!!.text.toString()
+                usuario.confirmaSenha = ed_cad_user_confirmasenha!!.text.toString()
+                usuario.email = ed_cad_user_email!!.text.toString()
+                usuario.nome = ed_cad_user_nome!!.text.toString()
                 usuario.sexo = sexo
                 validarCadastroUsuario(usuario)
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                val i_cad_user = Intent(applicationContext, EntrarUsuarioActView::class.java)
+                startActivity(i_cad_user)
+                finish()
+            }
+            else -> {
+            }
+        }
+        return true
     }
 
     private fun validarCadastroUsuario(usuario: Usuario) {
@@ -86,20 +91,37 @@ class CadastrarUsuarioActView : AppCompatActivity(), View.OnClickListener, Radio
         } else if (usuario.sexo == null) {
             Toast.makeText(this, "Informe seu sexo", Toast.LENGTH_SHORT).show()
         } else {
-            instance!!.cadastrar(usuario, this@CadastrarUsuarioActView)
+            viewModelCadastroUsuario.cadastrarUsuario(usuario)
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                val i_cad_user = Intent(applicationContext, EntrarUsuarioActView::class.java)
-                startActivity(i_cad_user)
-                finish()
+    private fun setObservers(){
+
+        viewModelCadastroUsuario.resultadoCadastroUsuario.observe(this, {
+
+            val progressBarHelper = ProgressBarHelper(this)
+            when (it) {
+                Resultados.CadastroUsuario.SUCESSO_CADASTRO_USUARIO -> {
+                    Toast.makeText(this, "Usuário cadastrado com sucesso.", Toast.LENGTH_LONG).show()
+                    //IntentHelper.instance!!.intentWithFinish(this,CadastroClienteActView::class.java)
+                }
+                Resultados.CadastroUsuario.EMAIL_JA_CADASTRADO -> {
+                    Toast.makeText(this, "Email já cadastrado", Toast.LENGTH_LONG).show()
+                    progressBarHelper.dismiss()
+                }
+                Resultados.CadastroUsuario.EMAIL_INVALIDO -> {
+                    Toast.makeText(this, "Email inválido", Toast.LENGTH_LONG).show()
+                    progressBarHelper.dismiss()
+                }
+                Resultados.CadastroUsuario.SENHA_COM_MENOS_DE_SEIS_CARACTERES -> {
+                    Toast.makeText(this, "Senha inferior a 6 caracteres", Toast.LENGTH_LONG).show()
+                    progressBarHelper.dismiss()
+                }
+                Resultados.CadastroUsuario.ERRO_DESCONHECIDO -> {
+                    Toast.makeText(this, "Erro Desconhecido. Falha. Ao cadastar usuário", Toast.LENGTH_LONG).show()
+                    progressBarHelper.dismiss()
+                }
             }
-            else -> {
-            }
-        }
-        return true
+        })
     }
 }
