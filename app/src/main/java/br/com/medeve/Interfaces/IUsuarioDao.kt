@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import br.com.medeve.Models.Usuario
 
 interface IUsuarioDao {
-    suspend fun cadastrarUsuairo(usuario: Usuario?): MutableLiveData<Int>
-    suspend fun entrarUsuario(usuario: Usuario?): MutableLiveData<Int>
+    fun cadastrarUsuairo(usuario: Usuario?)
+    fun entrarUsuario(usuario: Usuario?)
     fun recuperarSenhaUsuario(usuario: Usuario?)
     fun persistirUsuario(clazz: Class<*>?, activity: Activity?)
     fun sair(activity: Activity?, clazz: Class<*>?)

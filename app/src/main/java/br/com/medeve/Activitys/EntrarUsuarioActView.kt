@@ -6,12 +6,11 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import br.com.medeve.ViewModels.UsuarioViewModel
 import br.com.medeve.Helpers.IntentHelper
-import br.com.medeve.Helpers.ProgressBarHelper
 import br.com.medeve.Models.Usuario
 import br.com.medeve.R
-import br.com.medeve.Util.Resultados
+import br.com.medeve.Util.Constantes
+import br.com.medeve.ViewModels.UsuarioViewModel
 import com.google.firebase.FirebaseApp
 import kotlinx.android.synthetic.main.activity_entrar_usuario.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -30,10 +29,10 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
         FirebaseApp.initializeApp(this@EntrarUsuarioActView)
-     /*   viewModelEntrarUsuario.persistirUsuario(
-            this@EntrarUsuarioActView,
-            CadastroClienteActView::class.java
-        )*/
+        /*   viewModelEntrarUsuario.persistirUsuario(
+               this@EntrarUsuarioActView,
+               CadastroClienteActView::class.java
+           )*/
 
         btn_entrar!!.setOnClickListener(this)
         btn_cadastrar_usuario!!.setOnClickListener(this)
@@ -51,11 +50,11 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
                 usuario.senha = ed_entrar_senha!!.text.toString()
                 validacaoCamposEmailSenha(usuario)
             }
-            R.id.btn_cadastrar_usuario -> IntentHelper.instance!!.intentWithFlags(
+            R.id.btn_cadastrar_usuario -> IntentHelper.intentWithFlags(
                 this@EntrarUsuarioActView,
                 CadastrarUsuarioActView::class.java
             )
-            R.id.txt_reset_senha -> IntentHelper.instance!!.intentWithOutFinish(
+            R.id.txt_reset_senha -> IntentHelper.intentWithOutFinish(
                 this@EntrarUsuarioActView,
                 ResetSenha::class.java
             )
@@ -63,6 +62,7 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
 
     private fun validacaoCamposEmailSenha(usuario: Usuario) {
         if (usuario.emailVazio()) {
@@ -75,17 +75,29 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
     }
 
     fun setObservers() {
-        viewModelEntrarUsuario.resultadoEntrarUsuario.observe(this, {
-            val progressBarHelper = ProgressBarHelper(this)
-
+        viewModelEntrarUsuario.getUsuarioEntrarMutableLiveData().observe(this, {
+            //val progressBarHelper = ProgressBarHelper(this)
             when (it) {
-                Resultados.EntrarUsuario.LOGIN_REALIZADO_COM_SUCESSO -> {
+                Constantes.EntrarUsuario.LOGIN_REALIZADO_COM_SUCESSO -> {
                     Toast.makeText(this, "Login realizado com sucesso.", Toast.LENGTH_LONG)
                         .show()
                 }
-                Resultados.EntrarUsuario.FALHA_NO_LOGIN -> {
-                    Toast.makeText(this, "Falha no login", Toast.LENGTH_LONG).show()
-                    progressBarHelper.dismiss()
+                Constantes.CadastroUsuario.EMAIL_INVALIDO -> {
+                    Toast.makeText(this, "Email e/ou senha inválido", Toast.LENGTH_LONG).show()
+                    //    progressBarHelper.dismiss()
+                }
+
+                Constantes.CadastroUsuario.INTERNET_OFF -> {
+                    Toast.makeText(this, "Verifique a conexão de internet", Toast.LENGTH_LONG)
+                        .show()
+                }
+                Constantes.CadastroUsuario.ERRO_DESCONHECIDO -> {
+                    Toast.makeText(
+                        this,
+                        "Erro Desconhecido.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    //    progressBarHelper.dismiss()
                 }
             }
         })

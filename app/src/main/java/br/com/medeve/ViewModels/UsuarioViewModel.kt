@@ -1,5 +1,6 @@
 package br.com.medeve.ViewModels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import br.com.medeve.Repository.UsuarioRepository
@@ -8,73 +9,35 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class UsuarioViewModel(val usuarioRepository: UsuarioRepository) : ViewModel() {
-
-    private val entrarUsuario = MutableLiveData<Int>()
-    val resultadoEntrarUsuario = entrarUsuario
-
-    private val cadastrarUsuario = MutableLiveData<Int>()
-    val resultadoCadastroUsuario = cadastrarUsuario
+class UsuarioViewModel(
+    val usuarioRepository: UsuarioRepository,
+) : ViewModel() {
 
     fun entrarUsuario(usuario: Usuario) {
-        CoroutineScope(Dispatchers.IO).launch {
-            runCatching {
-                usuarioRepository.entrarUsuario(usuario)
-            }.onSuccess {
-                resultadoEntrarUsuario.postValue(it.value)
-            }.onFailure {
-
-            }
-        }
+        usuarioRepository.entrarUsuario(usuario)
     }
 
-    fun cadastrarUsuario(usuario: Usuario){
-        CoroutineScope(Dispatchers.IO).launch {
-            runCatching {
-                usuarioRepository.cadastrarUsuairo(usuario)
-            }.onSuccess {
-                resultadoCadastroUsuario.postValue(it.value)
-            }.onFailure {
-
-            }
-        }
+    fun getUsuarioEntrarMutableLiveData(): MutableLiveData<Int> {
+        return usuarioRepository.getEntrarUsuarioMutable()
     }
 
-    /*
-    override fun entrar(usuario: Usuario?) {
-        iUsuarioDao!!.entrarUsuario(usuario)
+    fun cadastrarUsuario(usuario: Usuario) {
+        usuarioRepository.cadastrarUsuairo(usuario)
     }
 
-    override fun cadastrar(usuario: Usuario?, activity: Activity?) {
-
-        val progressBarHelper = ProgressBarHelper(activity)
-        val resultado = iUsuarioDao!!.cadastrarUsuairo(usuario)
-
-        when (resultado) {
-            Resultados.CadastroUsuario.SUCESSO_CADASTRO_USUARIO -> {
-                Toast.makeText(activity, "Usuário cadastrado com sucesso.", Toast.LENGTH_LONG).show()
-                IntentHelper.instance!!.intentWithFinish(activity,CadastroClienteActView::class.java)
-            }
-            Resultados.CadastroUsuario.EMAIL_JA_CADASTRADO -> {
-                Toast.makeText(activity, "Email já cadastrado", Toast.LENGTH_LONG).show()
-                progressBarHelper.dismiss()
-            }
-            Resultados.CadastroUsuario.EMAIL_INVALIDO -> {
-                Toast.makeText(activity, "Email inválido", Toast.LENGTH_LONG).show()
-                progressBarHelper.dismiss()
-            }
-            Resultados.CadastroUsuario.SENHA_COM_MENOS_DE_SEIS_CARACTERES -> {
-                Toast.makeText(activity, "Senha inferior a 6 caracteres", Toast.LENGTH_LONG).show()
-                progressBarHelper.dismiss()
-            }
-            Resultados.CadastroUsuario.ERRO_DESCONHECIDO -> {
-                Toast.makeText(activity, "Erro Desconhecido. Falha. Ao cadastar usuário", Toast.LENGTH_LONG).show()
-                progressBarHelper.dismiss()
-            }
-        }
+    fun getUsuarioCadastrarMutableLiveData(): MutableLiveData<Int> {
+        return usuarioRepository.getCadastrarUsuarioMutable()
     }
 
-    override fun recuperarSenha(usuario: Usuario?) {
+    fun resetSenhaUsuario(usuario: Usuario){
+        usuarioRepository.recuperarSenhaUsuario(usuario)
+    }
+
+    fun getResetSenhaUsuarioMutableLiveData() : MutableLiveData<Int> {
+        return usuarioRepository.getRecuperarSenhaMutable()
+    }
+
+  /*  override fun recuperarSenha(usuario: Usuario?) {
         iUsuarioDao!!.recuperarSenhaUsuario(usuario)
     }
 

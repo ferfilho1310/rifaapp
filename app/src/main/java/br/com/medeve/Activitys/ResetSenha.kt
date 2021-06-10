@@ -1,60 +1,93 @@
-package br.com.medeve.Activitys;
+package br.com.medeve.Activitys
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.content.Intent
+import android.os.Bundle
+import android.text.TextUtils
+import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import br.com.medeve.Models.Usuario
+import br.com.medeve.R
+import br.com.medeve.Util.Constantes
+import br.com.medeve.ViewModels.UsuarioViewModel
+import kotlinx.android.synthetic.main.activity_reset_senha.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-import br.com.medeve.R;
-import br.com.medeve.Helpers.AccessFirebase;
+class ResetSenha : AppCompatActivity(), View.OnClickListener {
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+    val usuarioViewModel: UsuarioViewModel by viewModel()
 
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_reset_senha)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setHomeButtonEnabled(true)
+        title = "Trocar senha"
 
-public class ResetSenha extends AppCompatActivity {
+        btn_alterar_senha.setOnClickListener(this)
 
-    EditText email_reset;
-    Button reset_senha;
+        setObservers()
+    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reset_senha);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        reset_senha = findViewById(R.id.btn_alterar_senha);
-        email_reset = findViewById(R.id.ed_reset_email);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        setTitle("Trocar senha");
-
-        reset_senha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                AccessFirebase.getinstance().reset_senha(email_reset.getText().toString(), ResetSenha.this);
-
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.btn_alterar_senha -> {
+                val usuario = Usuario()
+                usuario.email = ed_reset_email.text.toString()
+                if (usuario.email.isNullOrEmpty()) {
+                    Toast.makeText(this, "Informe o seu e-mail.", Toast.LENGTH_LONG).show()
+                } else {
+                    usuarioViewModel.resetSenhaUsuario(usuario)
+                }
             }
-        });
+        }
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) { //Botão adicional na ToolBar
-        switch (item.getItemId()) {
-            case android.R.id.home:  //ID do seu botão (gerado automaticamente pelo android, usando como está, deve funcionar
-                startActivity(new Intent(getApplicationContext(), EntrarUsuarioActView.class));  //O efeito ao ser pressionado do botão (no caso abre a activity)
-                finish();  //Método para matar a activity e não deixa-lá indexada na pilhagem
-                break;
-            default:
-                break;
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                startActivity(
+                    Intent(
+                        applicationContext,
+                        EntrarUsuarioActView::class.java
+                    )
+                )
+                finish()
+            }
+            else -> {
+            }
         }
-        return true;
+        return true
     }
+
+    fun setObservers() {
+        usuarioViewModel.getResetSenhaUsuarioMutableLiveData().observe(this, {
+            when (it) {
+                Constantes.ResetSenha.RESET_SENHA_SUCESSO -> {
+                    Toast.makeText(
+                        this,
+                        "E-mail de reset de senha enviado para ${ed_reset_email.text.toString()}",
+                        Toast.LENGTH_LONG
+                    )
+                        .show()
+                }
+                Constantes.ResetSenha.EMAIL_INVALIDO -> {
+                    Toast.makeText(this, "E-mail Inválido", Toast.LENGTH_LONG)
+                        .show()
+                }
+                Constantes.ResetSenha.ERRO_ENVIO_EMAIL -> {
+                    Toast.makeText(this, "Erro ao enviar o e-mail.", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+        })
+    }
+
 
 }
+

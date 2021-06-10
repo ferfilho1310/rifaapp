@@ -8,19 +8,18 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import br.com.medeve.Helpers.IntentHelper
 import br.com.medeve.Helpers.ProgressBarHelper
 import br.com.medeve.Models.Usuario
 import br.com.medeve.R
-import br.com.medeve.Util.Resultados
+import br.com.medeve.Util.Constantes
 import br.com.medeve.ViewModels.UsuarioViewModel
 import kotlinx.android.synthetic.main.activity_cadastro_user.*
-import kotlinx.android.synthetic.main.activity_entrar_usuario.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CadastrarUsuarioActView : AppCompatActivity(), View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     var sexo : String? = null
-
     val viewModelCadastroUsuario : UsuarioViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,8 +66,8 @@ class CadastrarUsuarioActView : AppCompatActivity(), View.OnClickListener, Radio
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                val i_cad_user = Intent(applicationContext, EntrarUsuarioActView::class.java)
-                startActivity(i_cad_user)
+                val iCadUser = Intent(applicationContext, EntrarUsuarioActView::class.java)
+                startActivity(iCadUser)
                 finish()
             }
             else -> {
@@ -97,27 +96,27 @@ class CadastrarUsuarioActView : AppCompatActivity(), View.OnClickListener, Radio
 
     private fun setObservers(){
 
-        viewModelCadastroUsuario.resultadoCadastroUsuario.observe(this, {
+        viewModelCadastroUsuario.getUsuarioCadastrarMutableLiveData().observe(this, {
 
             val progressBarHelper = ProgressBarHelper(this)
             when (it) {
-                Resultados.CadastroUsuario.SUCESSO_CADASTRO_USUARIO -> {
+                Constantes.CadastroUsuario.SUCESSO_CADASTRO_USUARIO -> {
                     Toast.makeText(this, "Usuário cadastrado com sucesso.", Toast.LENGTH_LONG).show()
-                    //IntentHelper.instance!!.intentWithFinish(this,CadastroClienteActView::class.java)
+                    IntentHelper.intentWithFinish(this,CadastroClienteActView::class.java)
                 }
-                Resultados.CadastroUsuario.EMAIL_JA_CADASTRADO -> {
+                Constantes.CadastroUsuario.EMAIL_JA_CADASTRADO -> {
                     Toast.makeText(this, "Email já cadastrado", Toast.LENGTH_LONG).show()
                     progressBarHelper.dismiss()
                 }
-                Resultados.CadastroUsuario.EMAIL_INVALIDO -> {
+                Constantes.CadastroUsuario.EMAIL_INVALIDO -> {
                     Toast.makeText(this, "Email inválido", Toast.LENGTH_LONG).show()
                     progressBarHelper.dismiss()
                 }
-                Resultados.CadastroUsuario.SENHA_COM_MENOS_DE_SEIS_CARACTERES -> {
+                Constantes.CadastroUsuario.SENHA_COM_MENOS_DE_SEIS_CARACTERES -> {
                     Toast.makeText(this, "Senha inferior a 6 caracteres", Toast.LENGTH_LONG).show()
                     progressBarHelper.dismiss()
                 }
-                Resultados.CadastroUsuario.ERRO_DESCONHECIDO -> {
+                Constantes.CadastroUsuario.ERRO_DESCONHECIDO -> {
                     Toast.makeText(this, "Erro Desconhecido. Falha. Ao cadastar usuário", Toast.LENGTH_LONG).show()
                     progressBarHelper.dismiss()
                 }

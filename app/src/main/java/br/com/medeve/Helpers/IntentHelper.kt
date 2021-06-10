@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import br.com.medeve.Interfaces.IIntent
 
-class IntentHelper : IIntent {
+object IntentHelper : IIntent {
     override fun intentWithFinish(activity: Activity?, clazz: Class<*>?) {
         val intent = Intent(activity, clazz)
         activity!!.startActivity(intent)
@@ -22,17 +22,4 @@ class IntentHelper : IIntent {
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
     }
 
-    companion object {
-        private var intentHelper: IntentHelper? = null
-
-        @JvmStatic
-        @get:Synchronized
-        val instance: IntentHelper?
-            get() {
-                if (intentHelper == null) {
-                    intentHelper = IntentHelper()
-                }
-                return intentHelper
-            }
-    }
 }

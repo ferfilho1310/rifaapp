@@ -366,36 +366,9 @@ public class AccessFirebase extends AppCompatActivity {
 
     public void reset_senha(final String email, final Activity context) {
 
-        if (TextUtils.isEmpty(email)) {
 
-            Toast.makeText(context, "Informe um e-mail.", Toast.LENGTH_LONG).show();
-            return;
-        }
 
-        firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
 
-                try {
-                    if (task.isSuccessful()) {
-
-                        Toast.makeText(context, "Enviado e-mail para reset de senha para " + email, Toast.LENGTH_LONG).show();
-
-                        Intent intent = new Intent(context, EntrarUsuarioActView.class);
-                        context.startActivity(intent);
-                        context.finish();
-
-                    } else {
-
-                        Toast.makeText(context, "E-mail inválido", Toast.LENGTH_LONG).show();
-                    }
-                } catch (Exception e) {
-
-                    Toast.makeText(context, "Erro ao enviar e-mail de recuperação:" + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        });
     }
 }
 

@@ -1,7 +1,7 @@
 package br.com.medeve
 
 import br.com.medeve.Models.Usuario
-import br.com.medeve.Util.Resultados
+import br.com.medeve.Util.Constantes
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -34,7 +34,7 @@ class UsuarioRepositoryTest {
                 map["Confirmar Senha"] = usuario.confirmaSenha
                 map["Sexo"] = usuario.sexo
                 collectionUser.add(map)
-                resultado = Resultados.CadastroUsuario.SUCESSO_CADASTRO_USUARIO
+                resultado = Constantes.CadastroUsuario.SUCESSO_CADASTRO_USUARIO
             } else if (!task.isSuccessful) {
                 try {
                     throw task.exception!!
@@ -63,7 +63,7 @@ class UsuarioRepositoryTest {
 
         firebaseAuth.signInWithEmailLink(usuario.email!!,usuario.senha!!).addOnCompleteListener { task ->
             if(task.isSuccessful){
-                resultado = Resultados.CadastroUsuario.SUCESSO_CADASTRO_USUARIO
+                resultado = Constantes.CadastroUsuario.SUCESSO_CADASTRO_USUARIO
             } else {
                 resultado = 1
             }
