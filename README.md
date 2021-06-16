@@ -14,7 +14,6 @@ Acesse o link da play store para baixar: https://play.google.com/store/apps/deta
 - Android Studio
 - MVVM
 - Koin
-- Coroutines
 
 <strong>Imagens da aplicação</strong>
 
