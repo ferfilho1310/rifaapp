@@ -1,26 +1,15 @@
 package br.com.medeve.Helpers;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import br.com.medeve.R;
-import br.com.medeve.Activitys.EntrarUsuarioActView;
-import br.com.medeve.Activitys.CadastroClienteActView;
-import br.com.medeve.Models.Cliente;
-import br.com.medeve.Retrofit.RetrofitInit;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,9 +25,8 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import br.com.medeve.Activitys.EntrarUsuarioActView;
+import br.com.medeve.Models.Cliente;
 
 public class AccessFirebase extends AppCompatActivity {
 
@@ -69,6 +57,7 @@ public class AccessFirebase extends AppCompatActivity {
     }
 
     public void cadastro_cliente(View view, final Cliente cliente, final Activity context) {
+/*
 
         AlertDialog.Builder alrt_update_client = new AlertDialog.Builder(context);
         final View custom_layout = LayoutInflater.from(view.getContext()).inflate(R.layout.dialog_cad_clientes, null);
@@ -151,6 +140,7 @@ public class AccessFirebase extends AppCompatActivity {
         }).setNegativeButton("Cancelar", null);
 
         alrt_update_client.show();
+*/
 
     }
 
@@ -302,15 +292,15 @@ public class AccessFirebase extends AppCompatActivity {
         }
     }
 
-    public void persistir_usuer(Activity activity) {
+/*    public void persistir_usuer(Activity activity) {
 
         if (firebaseAuth.getCurrentUser() != null) {
 
-            Intent intent = new Intent(activity, CadastroClienteActView.class);
+            Intent intent = new Intent(activity, CadastroClienteActViewOld.class);
             activity.startActivity(intent);
             activity.finish();
         }
-    }
+    }*/
 
     public void sign_out_firebase(Activity activity) {
 
@@ -321,7 +311,7 @@ public class AccessFirebase extends AppCompatActivity {
         firebaseAuth.signOut();
     }
 
-    public void entrar_firebase(final String email, String senha, final Activity activity) {
+   /* public void entrar_firebase(final String email, String senha, final Activity activity) {
 
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(activity, "Digite seu e-mail", Toast.LENGTH_LONG).show();
@@ -344,7 +334,7 @@ public class AccessFirebase extends AppCompatActivity {
                 try {
                     if (task.isSuccessful()) {
 
-                        Intent i_entrar_prof = new Intent(activity, CadastroClienteActView.class);
+                        Intent i_entrar_prof = new Intent(activity, CadastroClienteActViewOld.class);
                         i_entrar_prof.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         activity.startActivity(i_entrar_prof);
                         activity.finish();
@@ -362,7 +352,7 @@ public class AccessFirebase extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         });
-    }
+    }*/
 
     public void reset_senha(final String email, final Activity context) {
 

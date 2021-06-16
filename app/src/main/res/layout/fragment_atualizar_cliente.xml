@@ -28,7 +28,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edNomeClienteDialogAtualizar"
+                    android:id="@+id/edNomeClienteAdapterAtualizar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text" />
@@ -46,7 +46,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ed_telefoneDialogAtualizar"
+                    android:id="@+id/ed_telefoneAdapterAtualizar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="phone" />
@@ -62,12 +62,12 @@
                 android:layout_marginEnd="8dp"
                 android:hint="@string/cep"
                 app:counterMaxLength="8"
-                app:layout_constraintEnd_toStartOf="@+id/btnBuscarCepDialogAtualizar"
+                app:layout_constraintEnd_toStartOf="@+id/btnBuscarCepAdapterAtualizar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout15">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ed_cepDialogAtualizar"
+                    android:id="@+id/ed_cepAdapterAtualizar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number" />
@@ -75,7 +75,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btnBuscarCepDialogAtualizar"
+                android:id="@+id/btnBuscarCepAdapterAtualizar"
                 android:layout_width="75dp"
                 android:layout_height="55dp"
                 android:background="@drawable/corner_color"
@@ -97,7 +97,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edEnderecoDialogAtualizar"
+                    android:id="@+id/edEnderecoAdapterAtualizar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text" />
@@ -116,7 +116,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edBairroDialogAtualizar"
+                    android:id="@+id/edBairroAdapterAtualizar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text" />
@@ -135,7 +135,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edCidadeDialogAtualizar"
+                    android:id="@+id/edCidadeAdapterAtualizar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text" />
@@ -154,7 +154,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout10">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ed_numeroDialogAtualizar"
+                    android:id="@+id/ed_numeroAdapterAtualizar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number" />
@@ -173,7 +173,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edEstadoDialogAtualizar"
+                    android:id="@+id/edEstadoAdapterAtualizar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text" />

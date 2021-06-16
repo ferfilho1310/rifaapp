@@ -18,7 +18,9 @@ class ApplicationKoin : Application() {
                 listOf(
                     Modules.activityModules,
                     Modules.repository,
-                    Modules.viewModel
+                    Modules.viewModel,
+                    Modules.retrofit,
+                    Modules.adapters
                 )
             )
         }

@@ -2,8 +2,6 @@ package br.com.medeve.Adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,273 +12,197 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
-
-import br.com.medeve.R;
-import br.com.medeve.Models.Cliente;
-import br.com.medeve.Retrofit.RetrofitInit;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.medeve.Models.Cliente;
+import br.com.medeve.R;
+import br.com.medeve.ViewModels.CepViewModel;
+import br.com.medeve.ViewModels.ClienteViewModel;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCliente.Viewholder_clientes> {
+public class AdapterCliente extends FirestoreRecyclerAdapter<Cliente, AdapterCliente.ViewHolderCliente> {
 
     OnItemClickListener listener;
     private Context context;
+    private CepViewModel cepViewModel;
+    private ClienteViewModel clienteViewModel;
     private EditText ed_nome, ed_endereco, ed_numero, ed_bairro, ed_cidade, ed_estado, ed_cep, ed_telefone;
 
-    FirebaseAuth db_users = FirebaseAuth.getInstance();
-
-    FirebaseFirestore db_datas = FirebaseFirestore.getInstance();
-    CollectionReference cl_datas = db_datas.collection("datas_cobranca")
-            .document(db_users.getUid())
-            .collection("data_de_cobraca");
-
-    /**
-     * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
-     * FirestoreRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
-    public AdapterCliente(@NonNull FirestoreRecyclerOptions<Cliente> options, Context context) {
+    public AdapterCliente(@NonNull FirestoreRecyclerOptions<Cliente> options,
+                          Context context,
+                          CepViewModel cepViewModel,
+                          ClienteViewModel clienteViewModel) {
         super(options);
         this.context = context;
-
+        this.cepViewModel = cepViewModel;
+        this.clienteViewModel = clienteViewModel;
     }
 
     @NonNull
     @Override
-    public AdapterCliente.Viewholder_clientes onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolderCliente onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view_normal = LayoutInflater.from(parent.getContext()).inflate(R.layout.mostra_dados_db_cliente, parent, false);
-        return new Viewholder_clientes(view_normal);
+        View view_normal = LayoutInflater.from(parent.getContext()).inflate(R.layout.dados_cliente_item, parent, false);
+        return new ViewHolderCliente(view_normal);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull final AdapterCliente.Viewholder_clientes viewholder_clientes, int i, @NonNull final Cliente cliente) {
+    protected void onBindViewHolder(@NonNull final ViewHolderCliente viewHolderCliente, int i, @NonNull final Cliente cliente) {
 
-        viewholder_clientes.nome.setText(cliente.getNome());
-        viewholder_clientes.endereco_cli.setText(cliente.getLogradouro());
-        viewholder_clientes.numero.setText(cliente.getNumero());
-        viewholder_clientes.bairro.setText(cliente.getBairro());
-        viewholder_clientes.cidade.setText(cliente.getCidade());
-        viewholder_clientes.estado.setText(cliente.getEstado());
-        viewholder_clientes.telefone.setText(cliente.getTelefone());
+        viewHolderCliente.nome.setText(cliente.getNome());
+        viewHolderCliente.endereco_cli.setText(cliente.getLogradouro());
+        viewHolderCliente.numero.setText(cliente.getNumero());
+        viewHolderCliente.bairro.setText(cliente.getBairro());
+        viewHolderCliente.cidade.setText(cliente.getCidade());
+        viewHolderCliente.estado.setText(cliente.getEstado());
+        viewHolderCliente.telefone.setText(cliente.getTelefone());
 
-        viewholder_clientes.excluir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
+        viewHolderCliente.excluir.setOnClickListener(view -> {
 
-                AlertDialog.Builder alert_excluir = new AlertDialog.Builder(context);
-                alert_excluir.setMessage("Deseja realmente excluir os dados do cliente ?");
+            AlertDialog.Builder alertDialogExcluir = new AlertDialog.Builder(context);
+            alertDialogExcluir.setMessage("Deseja realmente excluir os dados do cliente ?");
 
-                alert_excluir.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+            alertDialogExcluir.setPositiveButton("Ok", (dialogInterface, i1) ->
+                    deleteCliente(viewHolderCliente.getAdapterPosition()))
+                    .setNegativeButton("Cancelar", null);
 
-                        delete_categoria(viewholder_clientes.getAdapterPosition(), view);
-
-                    }
-                }).setNegativeButton("Cancelar", null);
-
-                alert_excluir.show();
-            }
+            alertDialogExcluir.show();
         });
 
-        viewholder_clientes.editar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-
-                atualiza_dados_cliente(viewholder_clientes, view, cliente);
-
-            }
-        });
+        viewHolderCliente.editar.setOnClickListener(view -> atualizaDadosCliente(viewHolderCliente, view, cliente));
     }
 
-    public void atualiza_dados_cliente(final AdapterCliente.Viewholder_clientes viewholder_clientes, View view, final Cliente cliente) {
 
-        AlertDialog.Builder alrt_update_client = new AlertDialog.Builder(context);
-        final View custom_layout = LayoutInflater.from(view.getContext()).inflate(R.layout.dialog_cad_clientes, null);
-        alrt_update_client.setTitle("Informe os dados do cliente:");
-        alrt_update_client.setView(custom_layout);
+    public void atualizaDadosCliente(final ViewHolderCliente viewHolderCliente, View view, final Cliente cliente) {
 
-        ed_nome = custom_layout.findViewById(R.id.ed_nome);
-        ed_endereco = custom_layout.findViewById(R.id.edend);
-        ed_numero = custom_layout.findViewById(R.id.ed_numero);
-        ed_bairro = custom_layout.findViewById(R.id.ed_bairro);
-        ed_cidade = custom_layout.findViewById(R.id.ed_cidade);
-        ed_estado = custom_layout.findViewById(R.id.ed_estado);
-        ed_cep = custom_layout.findViewById(R.id.ed_cep);
-        ed_telefone = custom_layout.findViewById(R.id.ed_telefone);
+        AlertDialog.Builder atualizarDadosClienteDialog = new AlertDialog.Builder(context);
+        final View inflateLayoutDialogAtualizaDadosCliente = LayoutInflater.from(view.getContext()).inflate(R.layout.dialog_cad_clientes, null);
+        atualizarDadosClienteDialog.setTitle("Quais dados do(a) " + cliente.getNome() + " serão atualizados ? ");
+        atualizarDadosClienteDialog.setView(inflateLayoutDialogAtualizaDadosCliente);
 
-        Button btn_cep = custom_layout.findViewById(R.id.btn_busca_cep);
+        ed_nome = inflateLayoutDialogAtualizaDadosCliente.findViewById(R.id.edNomeClienteDialogAtualizar);
+        ed_endereco = inflateLayoutDialogAtualizaDadosCliente.findViewById(R.id.edEnderecoDialogAtualizar);
+        ed_numero = inflateLayoutDialogAtualizaDadosCliente.findViewById(R.id.ed_numeroDialogAtualizar);
+        ed_bairro = inflateLayoutDialogAtualizaDadosCliente.findViewById(R.id.edBairroDialogAtualizar);
+        ed_cidade = inflateLayoutDialogAtualizaDadosCliente.findViewById(R.id.edCidadeDialogAtualizar);
+        ed_estado = inflateLayoutDialogAtualizaDadosCliente.findViewById(R.id.edEstadoDialogAtualizar);
+        ed_cep = inflateLayoutDialogAtualizaDadosCliente.findViewById(R.id.ed_cepDialogAtualizar);
+        ed_telefone = inflateLayoutDialogAtualizaDadosCliente.findViewById(R.id.ed_telefoneDialogAtualizar);
 
-        btn_cep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        //preenchendo dialog com dados antigos do cliente
+        ed_nome.setText(cliente.getNome());
+        ed_endereco.setText(cliente.getLogradouro());
+        ed_numero.setText(cliente.getNumero());
+        ed_bairro.setText(cliente.getBairro());
+        ed_cidade.setText(cliente.getCidade());
+        ed_estado.setText(cliente.getEstado());
+        ed_cep.setText(cliente.getCep());
+        ed_telefone.setText(cliente.getTelefone());
 
-                if (ed_cep.length() < 8 || ed_cep.length() > 8) {
-                    Toast.makeText(context, "CEP inválido", Toast.LENGTH_LONG).show();
-                    return;
-                }
+        Button btnCep = inflateLayoutDialogAtualizaDadosCliente.findViewById(R.id.btnBuscarCepDialogAtualizar);
 
-                Call<Cliente> call_cep = new RetrofitInit().getcep().cep(ed_cep.getText().toString());
+        btnCep.setOnClickListener(v ->
+                cepViewModel.getCep(ed_cep.getText().toString()));
 
-                call_cep.enqueue(new Callback<Cliente>() {
-                    @Override
-                    public void onResponse(Call<Cliente> call, Response<Cliente> response) {
+        cepViewModel.getCelClienteObserver().observe((LifecycleOwner) context, cep -> {
 
-                        if (response.isSuccessful() && response != null) {
+            ed_bairro.setText(cep.getBairro());
+            ed_cidade.setText(cep.getBairro());
+            ed_endereco.setText(cep.getLogradouro());
+            ed_estado.setText(cep.getUf());
 
-                            Cliente cliente_cep = response.body();
-
-                            Log.d("Retrono WBC", response.toString());
-
-                            String cl_endereco = cliente_cep.getLogradouro();
-                            String cl_bairro = cliente_cep.getBairro();
-                            String cl_cidade = cliente_cep.getCidade();
-                            String cl_estado = cliente_cep.getEstado();
-
-                            ed_endereco.setText(cl_endereco);
-                            ed_bairro.setText(cl_bairro);
-                            ed_cidade.setText(cl_cidade);
-                            ed_estado.setText(cl_estado);
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Cliente> call, Throwable t) {
-
-                        Toast.makeText(context, "Erro ao consultar o CEP", Toast.LENGTH_LONG).show();
-                        Log.e("Error", t.getMessage());
-                    }
-                });
-            }
         });
 
-        alrt_update_client.setPositiveButton("OK", null)
+        atualizarDadosClienteDialog.setPositiveButton("OK", null)
                 .setNegativeButton("Cancelar", null);
 
-        final AlertDialog valida_campos = alrt_update_client.create();
-        valida_campos.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(final DialogInterface dialogInterface) {
+        final AlertDialog btnOkDialog = atualizarDadosClienteDialog.create();
+        btnOkDialog.setOnShowListener(dialogInterface -> {
 
-                Button btn_ok = valida_campos.getButton(AlertDialog.BUTTON_POSITIVE);
+            Button btnOkDadosClienteDialog = btnOkDialog.getButton(AlertDialog.BUTTON_POSITIVE);
 
-                btn_ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+            btnOkDadosClienteDialog.setOnClickListener(view1 -> {
 
-                        cliente.setNome(ed_nome.getText().toString());
-                        cliente.setLogradouro(ed_endereco.getText().toString());
-                        cliente.setNumero(ed_numero.getText().toString());
-                        cliente.setBairro(ed_bairro.getText().toString());
-                        cliente.setCidade(ed_cidade.getText().toString());
-                        cliente.setEstado(ed_estado.getText().toString());
-                        cliente.setCep(ed_cep.getText().toString());
-                        cliente.setTelefone(ed_telefone.getText().toString());
+                cliente.setNome(ed_nome.getText().toString());
+                cliente.setLogradouro(ed_endereco.getText().toString());
+                cliente.setNumero(ed_numero.getText().toString());
+                cliente.setBairro(ed_bairro.getText().toString());
+                cliente.setCidade(ed_cidade.getText().toString());
+                cliente.setEstado(ed_estado.getText().toString());
+                cliente.setCep(ed_cep.getText().toString());
+                cliente.setTelefone(ed_telefone.getText().toString());
 
-                        if (ed_nome.getText().length() == 0) {
-                            ed_nome.setError("Informe o novo nome");
-                        } else if (ed_endereco.getText().length() == 0) {
-                            ed_endereco.setError("Informe o novo endereço");
-                        } else if (ed_numero.getText().length() == 0) {
-                            ed_numero.setError("Informe o novo número");
-                        } else if (ed_bairro.getText().length() == 0) {
-                            ed_bairro.setError("Informe o novo bairro");
-                        } else if (ed_cidade.getText().length() == 0) {
-                            ed_cidade.setError("Informe a nova cidade");
-                        } else if (ed_estado.getText().length() == 0) {
-                            ed_estado.setError("Informe o novo estado");
-                        } else if (ed_telefone.getText().length() == 0) {
-                            ed_telefone.setError("Informe o novo telefone");
-                        } else {
-                            atualizada_dados_cliente_adapter(viewholder_clientes.getAdapterPosition(), cliente.getNome(), cliente.getNome(), cliente.getLogradouro(), cliente.getNumero()
-                                    , cliente.getBairro(), cliente.getCidade(), cliente.getCep(), cliente.getEstado(), cliente.getTelefone());
-                            dialogInterface.dismiss();
-                        }
-                    }
-                });
-            }
+                if (ed_nome.getText().length() == 0) {
+                    ed_nome.setError("Informe o novo nome");
+                } else if (ed_endereco.getText().length() == 0) {
+                    ed_endereco.setError("Informe o novo endereço");
+                } else if (ed_numero.getText().length() == 0) {
+                    ed_numero.setError("Informe o novo número");
+                } else if (ed_bairro.getText().length() == 0) {
+                    ed_bairro.setError("Informe o novo bairro");
+                } else if (ed_cidade.getText().length() == 0) {
+                    ed_cidade.setError("Informe a nova cidade");
+                } else if (ed_estado.getText().length() == 0) {
+                    ed_estado.setError("Informe o novo estado");
+                } else if (ed_telefone.getText().length() == 0) {
+                    ed_telefone.setError("Informe o novo telefone");
+                } else {
+                    atualizaDadosClienteAdapter(viewHolderCliente.getAdapterPosition(), cliente);
+                    dialogInterface.dismiss();
+                }
+            });
         });
 
-        valida_campos.show();
-
+        btnOkDialog.show();
     }
 
-    public void delete_categoria(final int i, final View view) {
+    public void deleteCliente(final int i) {
 
         final DocumentReference documentReference = getSnapshots().getSnapshot(i).getReference();
 
-        cl_datas
-                .whereEqualTo("id_data", documentReference.getId())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        QuerySnapshot queryDocumentSnapshot = task.getResult();
-
-                        if (!queryDocumentSnapshot.isEmpty()) {
-
-                            Snackbar.make(view, "Há datas de vendas associadas a este cliente", Snackbar.LENGTH_LONG)
-                                    .show();
-
-                        } else {
-
-                            documentReference.delete();
-                        }
-                    }
-
-                });
+        clienteViewModel.deleteUsuario(documentReference);
+        clienteViewModel.deleteClienteMutableLiveData().observe((LifecycleOwner) context, aBoolean -> {
+            if (aBoolean){
+                Toast.makeText(context,"Cliente deletado",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context,"Cliente possui contas em aberto",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    public void atualizada_dados_cliente_adapter(int i, String nome, String nome_maiusculo, String enderecocliente,
-                                                 String numero, String bairro, String cidade, String cep,
-                                                 String estado, String telefone) {
+    public void atualizaDadosClienteAdapter(int i, Cliente cliente) {
 
         Map<String, Object> map = new HashMap<>();
 
-        map.put("nome", nome);
-        map.put("nome_maiusculo", nome_maiusculo.toUpperCase());
-        map.put("logradouro", enderecocliente);
-        map.put("numero", numero);
-        map.put("bairro", bairro);
-        map.put("cidade", cidade);
-        map.put("cep", cep);
-        map.put("estado", estado);
-        map.put("telefone", telefone);
+        map.put("nome", cliente.getNome());
+        map.put("nome_maiusculo", cliente.getBairro().toUpperCase());
+        map.put("logradouro", cliente.getLogradouro());
+        map.put("numero", cliente.getNumero());
+        map.put("bairro", cliente.getBairro());
+        map.put("cidade", cliente.getCidade());
+        map.put("cep", cliente.getCep());
+        map.put("estado", cliente.getEstado());
+        map.put("telefone", cliente.getTelefone());
 
         getSnapshots().getSnapshot(i).getReference().set(map, SetOptions.merge());
     }
 
 
-    public class Viewholder_clientes extends RecyclerView.ViewHolder {
+    public class ViewHolderCliente extends RecyclerView.ViewHolder {
 
         TextView nome, endereco_cli, numero, bairro, cidade, estado, telefone;
         ImageButton excluir, editar;
 
-        public Viewholder_clientes(@NonNull View itemView) {
+        public ViewHolderCliente(@NonNull View itemView) {
             super(itemView);
 
             nome = itemView.findViewById(R.id.txt_nome_cliente);

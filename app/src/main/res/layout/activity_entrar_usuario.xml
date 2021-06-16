@@ -25,11 +25,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingRight="30dp"
         android:paddingLeft="30dp"
+        android:paddingRight="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,11 +80,11 @@
             android:id="@+id/btn_entrar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="25dp"
             android:layout_marginTop="24dp"
             android:background="@drawable/corner_color"
+            android:padding="25dp"
             android:text="@string/entrar"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/btn_cadastrar_usuario"
@@ -99,10 +99,10 @@
         <TextView
             android:id="@+id/txt_reset_senha"
             android:layout_width="match_parent"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:clickable="true"
+            android:gravity="center"
             android:text="@string/esqueceu_sua_senha_clique_aqui"
             android:textSize="15sp"
             android:textStyle="bold" />

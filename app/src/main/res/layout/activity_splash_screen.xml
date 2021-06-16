@@ -34,11 +34,11 @@
         app:layout_constraintVertical_bias="0.753" />
 
     <TextView
-        android:id="@+id/versão_app"
+        android:id="@+id/versao_app"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Versão"
+        android:text="Versao"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"

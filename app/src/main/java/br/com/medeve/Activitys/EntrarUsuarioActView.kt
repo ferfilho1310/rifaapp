@@ -1,12 +1,17 @@
 package br.com.medeve.Activitys
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import br.com.medeve.Helpers.IntentHelper
+import br.com.medeve.Helpers.ProgressBarHelper
 import br.com.medeve.Models.Usuario
 import br.com.medeve.R
 import br.com.medeve.Util.Constantes
@@ -14,6 +19,7 @@ import br.com.medeve.ViewModels.UsuarioViewModel
 import com.google.firebase.FirebaseApp
 import kotlinx.android.synthetic.main.activity_entrar_usuario.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
 
@@ -63,7 +69,6 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-
     private fun validacaoCamposEmailSenha(usuario: Usuario) {
         if (usuario.emailVazio()) {
             Toast.makeText(this, "Digite seu e-mail", Toast.LENGTH_SHORT).show()
@@ -71,36 +76,70 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
             Toast.makeText(this, "Digite sua senha", Toast.LENGTH_SHORT).show()
         } else {
             viewModelEntrarUsuario.entrarUsuario(usuario)
+            val progressBarHelper = ProgressBarHelper(this)
+            progressBarHelper.show()
+            hideKeyboard(this)
         }
     }
 
     fun setObservers() {
         viewModelEntrarUsuario.getUsuarioEntrarMutableLiveData().observe(this, {
-            //val progressBarHelper = ProgressBarHelper(this)
+            val progressBarHelper = ProgressBarHelper(this)
             when (it) {
                 Constantes.EntrarUsuario.LOGIN_REALIZADO_COM_SUCESSO -> {
-                    Toast.makeText(this, "Login realizado com sucesso.", Toast.LENGTH_LONG)
-                        .show()
+                    IntentHelper.intentWithFinish(this, CadastroClienteActView::class.java)
+                    Toast.makeText(
+                        applicationContext,
+                        "Login realizado com sucesso.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    progressBarHelper.dismiss()
                 }
                 Constantes.CadastroUsuario.EMAIL_INVALIDO -> {
-                    Toast.makeText(this, "Email e/ou senha inválido", Toast.LENGTH_LONG).show()
-                    //    progressBarHelper.dismiss()
+                    Toast.makeText(
+                        applicationContext,
+                        "Email e/ou senha inválido",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    progressBarHelper.dismiss()
                 }
 
                 Constantes.CadastroUsuario.INTERNET_OFF -> {
-                    Toast.makeText(this, "Verifique a conexão de internet", Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        applicationContext,
+                        "Verifique a conexão de internet",
+                        Toast.LENGTH_LONG
+                    )
                         .show()
+                    progressBarHelper.dismiss()
                 }
                 Constantes.CadastroUsuario.ERRO_DESCONHECIDO -> {
                     Toast.makeText(
-                        this,
+                        applicationContext,
                         "Erro Desconhecido.",
                         Toast.LENGTH_LONG
                     ).show()
-                    //    progressBarHelper.dismiss()
+                    progressBarHelper.dismiss()
                 }
             }
         })
+
+        viewModelEntrarUsuario.getUserPersistence().observe(this, {
+            if (it) {
+                IntentHelper.intentWithFinish(this, CadastroClienteActView::class.java)
+            }
+        })
+
+    }
+
+    fun hideKeyboard(activity: Activity) {
+        val imm: InputMethodManager =
+            activity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        var view = activity.currentFocus
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
 }

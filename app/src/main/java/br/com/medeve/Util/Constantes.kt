@@ -21,4 +21,9 @@ class Constantes  {
         const val EMAIL_INVALIDO = 1
         const val ERRO_ENVIO_EMAIL = 2
     }
+
+    object ClienteRepository {
+        const val CLIENTE_SALVO_SUCESSO = 0
+        const val FALHA_AO_SALVAR_CLIENTE = 1
+    }
 }

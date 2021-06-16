@@ -1,11 +1,7 @@
 package br.com.medeve.Repository
 
-import android.app.Activity
-import android.content.Intent
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import br.com.medeve.Activitys.EntrarUsuarioActView
-import br.com.medeve.Interfaces.IUsuarioDao
+import br.com.medeve.Interfaces.IUsuarioRepository
 import br.com.medeve.Models.Usuario
 import br.com.medeve.Util.Constantes
 import com.google.firebase.FirebaseNetworkException
@@ -16,11 +12,13 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
-class UsuarioRepository : IUsuarioDao {
+class UsuarioRepository : IUsuarioRepository {
 
     val entrarUsuarioMutableLiveData: MutableLiveData<Int> = MutableLiveData()
     val cadasUsuarioMutableLiveData: MutableLiveData<Int> = MutableLiveData()
-    val recuperarSenhaMutableLiveData : MutableLiveData<Int> = MutableLiveData()
+    val recuperarSenhaMutableLiveData: MutableLiveData<Int> = MutableLiveData()
+    val firebaseUserPersistence: MutableLiveData<Boolean> = MutableLiveData()
+    val firebaseUserSingOut: MutableLiveData<Void> = MutableLiveData()
 
     val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     val collectionUser = FirebaseFirestore.getInstance().collection("Users")
@@ -88,12 +86,17 @@ class UsuarioRepository : IUsuarioDao {
         }
     }
 
-    override fun persistirUsuario(clazz: Class<*>?, activity: Activity?) {
-        TODO("Not yet implemented")
+    override fun persistirUsuario() {
+        if (firebaseAuth.currentUser != null) {
+            firebaseUserPersistence.postValue(true)
+        } else {
+            firebaseUserPersistence.postValue(false)
+        }
     }
 
-    override fun sair(activity: Activity?, clazz: Class<*>?) {
-        TODO("Not yet implemented")
+    override fun sair() {
+        firebaseAuth.signOut()
+        firebaseUserSingOut.postValue(null)
     }
 
     fun getEntrarUsuarioMutable(): MutableLiveData<Int> {
@@ -108,15 +111,11 @@ class UsuarioRepository : IUsuarioDao {
         return recuperarSenhaMutableLiveData
     }
 
-    /*  override fun recuperarSenhaUsuario(usuario: Usuario) {}
-      override fun persistirUsuario(clazz: Class<*>?, activity: Activity) {
-          if (firebaseAuth.currentUser != null) {
-              IntentHelper.instance!!.intentWithFinish(activity, clazz)
-          }
-      }
+    fun getUserPersistence(): MutableLiveData<Boolean> {
+        return firebaseUserPersistence
+    }
 
-      override fun sair(activity: Activity, clazz: Class<*>?) {
-          IntentHelper.instance!!.intentWithFinish(activity, clazz)
-      }*/
-
+    fun getUserSignOut(): MutableLiveData<Void> {
+        return firebaseUserSingOut
+    }
 }

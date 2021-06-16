@@ -102,7 +102,8 @@ class CadastrarUsuarioActView : AppCompatActivity(), View.OnClickListener, Radio
             when (it) {
                 Constantes.CadastroUsuario.SUCESSO_CADASTRO_USUARIO -> {
                     Toast.makeText(this, "Usuário cadastrado com sucesso.", Toast.LENGTH_LONG).show()
-                    IntentHelper.intentWithFinish(this,CadastroClienteActView::class.java)
+                    IntentHelper.intentWithFinish(this,
+                        CadastroClienteActView::class.java)
                 }
                 Constantes.CadastroUsuario.EMAIL_JA_CADASTRADO -> {
                     Toast.makeText(this, "Email já cadastrado", Toast.LENGTH_LONG).show()

@@ -19,7 +19,7 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        txt_versao = findViewById(R.id.versão_app);
+        txt_versao = findViewById(R.id.versao_app);
 
         Handler h_splash = new Handler();
 

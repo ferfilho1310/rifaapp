@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Me Pague</string>
     <string name="action_settings">Sair</string>
-    <string name="nome_do_cliente">Nome do cliente:</string>
-    <string name="endereco">Endereço</string>
+    <string name="nome_do_cliente">Nome do cliente</string>
+    <string name="endereco">Endereço:</string>
     <string name="numero">Número:</string>
     <string name="bairro">Bairro:</string>
-    <string name="cidade">Cidade</string>
+    <string name="cidade">Cidade:</string>
     <string name="title_activity_entrar_usuario">EntrarUsuario</string>
     <string name="email">E-mail</string>
     <string name="senha">Senha</string>
@@ -28,7 +28,7 @@
     <string name="atualizar">Atualizar</string>
     <string name="pesquisar">Pesquisar</string>
     <string name="buscar">Buscar</string>
-    <string name="estado">Estado</string>
+    <string name="estado">Estado:</string>
     <string name="data_compra">Data da compra</string>
     <string name="title_activity_reset_senha">Reset_senha</string>
     <string name="voc_receber_um_e_mail_de_altera_o_de_senha_no_e_mail_cadastrado_como_login">Você receberá um e-mail de alteração de senha no e-mail cadastrado</string>
@@ -38,7 +38,7 @@
     <string name="cadastrar_produtos">Cadastrar Produtos</string>
     <string name="total">Total:</string>
     <string name="cadastrar_datas">Cadastrar datas</string>
-    <string name="cadastrar_cliente">Cadastrar Cliente</string>
+    <string name="cadastrar_cliente">Cadastrar\nCliente</string>
     <string name="data_da_venda">Data da venda</string>
     <string name="data_de_cobran_a">Data de cobrar</string>
     <string name="devolvido">Devolvido</string>
@@ -53,4 +53,13 @@
     <string name="telefone">Telefone</string>
     <string name="cadastrar_datas_de_vendas">CADASTRE AS DATAS DE VENDAS - CLIQUE AQUI</string>
     <string name="cadastre_os_produtos_vendidos_clique_aqui">CADASTRE OS PRODUTOS VENDIDOS - CLIQUE AQUI</string>
+    <string name="title_activity_cadastro_usuario_act_view">CadastroUsuarioActView</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

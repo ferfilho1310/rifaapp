@@ -3,17 +3,16 @@ package br.com.medeve.Retrofit
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitInit {
-    private val retrofit: Retrofit
+private val retrofit: Retrofit? = null
+val URL: String = "https://viacep.com.br/ws/"
 
-    fun getcep(): PostmonService {
-        return retrofit.create(PostmonService::class.java)
-    }
+fun getcepService(retrofit: Retrofit) = retrofit.create(ICepService::class.java)!!
 
-    init {
-        retrofit = Retrofit.Builder()
-                .baseUrl("http://ws.matheuscastiglioni.com.br/ws/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-    }
+
+fun retrofitBuilder(): Retrofit {
+    return Retrofit.Builder()
+        .baseUrl(URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
 }

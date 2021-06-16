@@ -1,3 +1,4 @@
+/*
 package br.com.medeve.Activitys;
 
 import android.annotation.SuppressLint;
@@ -41,7 +42,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 @SuppressLint("Registered")
-public class CadastroClienteActView extends AppCompatActivity {
+public class CadastroClienteActViewOld extends AppCompatActivity {
 
     private static final int TIME_INTERVAL = 3000; //Intervalo de tempo ao clicar no botão de voltar para sair do aplicativo
     private long mBackPressed;
@@ -83,13 +84,13 @@ public class CadastroClienteActView extends AppCompatActivity {
         no_data = findViewById(R.id.no_data);
 
         FirebaseInstanceId.getInstance();
-        firebaseAnalytics = FirebaseAnalytics.getInstance(CadastroClienteActView.this);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(CadastroClienteActViewOld.this);
 
-        FirebaseApp.initializeApp(CadastroClienteActView.this);
+        FirebaseApp.initializeApp(CadastroClienteActViewOld.this);
 
         setTitle("Dados dos clientes");
 
-        MobileAds.initialize(CadastroClienteActView.this, "ca-app-pub-2528240545678093~1740905001");
+        MobileAds.initialize(CadastroClienteActViewOld.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("B6D5B7288C97DD6A90A5F0E267BADDA5")
@@ -105,7 +106,7 @@ public class CadastroClienteActView extends AppCompatActivity {
         fab_cad_cliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AccessFirebase.getinstance().cadastro_cliente(view, cliente, CadastroClienteActView.this);
+                AccessFirebase.getinstance().cadastro_cliente(view, cliente, CadastroClienteActViewOld.this);
             }
         });
     }
@@ -119,8 +120,8 @@ public class CadastroClienteActView extends AppCompatActivity {
                 .setQuery(query, Cliente.class)
                 .build();
 
-        adapter_cliente = new AdapterCliente(firt_cad_clientes, CadastroClienteActView.this);
-        layout_manager_cliente = new GridLayoutManager(CadastroClienteActView.this, 1);
+        adapter_cliente = new AdapterCliente(firt_cad_clientes, CadastroClienteActViewOld.this);
+        layout_manager_cliente = new GridLayoutManager(CadastroClienteActViewOld.this, 1);
 
         rc_produto.setLayoutManager(layout_manager_cliente);
         rc_produto.setHasFixedSize(true);
@@ -151,8 +152,8 @@ public class CadastroClienteActView extends AppCompatActivity {
                 .setQuery(query, Cliente.class)
                 .build();
 
-        adapter_cliente = new AdapterCliente(firt_cad_clientes, CadastroClienteActView.this);
-        layout_manager_cliente = new GridLayoutManager(CadastroClienteActView.this, 1);
+        adapter_cliente = new AdapterCliente(firt_cad_clientes, CadastroClienteActViewOld.this);
+        layout_manager_cliente = new GridLayoutManager(CadastroClienteActViewOld.this, 1);
 
         rc_produto.setHasFixedSize(true);
         rc_produto.setAdapter(adapter_cliente);
@@ -164,7 +165,7 @@ public class CadastroClienteActView extends AppCompatActivity {
                 Cliente cliente_snap = documentSnapshot.toObject(Cliente.class);
                 String id_cliente = documentSnapshot.getId();
 
-                Intent i_cliente = new Intent(CadastroClienteActView.this, DatasVendasCobranca.class);
+                Intent i_cliente = new Intent(CadastroClienteActViewOld.this, DatasVendasCobranca.class);
                 i_cliente.putExtra("info_cliente", cliente_snap);
                 i_cliente.putExtra("id_cliente", id_cliente);
                 startActivity(i_cliente);
@@ -229,7 +230,7 @@ public class CadastroClienteActView extends AppCompatActivity {
             return;
         } else {
 
-            Toast.makeText(CadastroClienteActView.this, "Toque novamente para sair", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CadastroClienteActViewOld.this, "Toque novamente para sair", Toast.LENGTH_SHORT).show();
             mBackPressed = System.currentTimeMillis();
         }
     }
@@ -240,12 +241,12 @@ public class CadastroClienteActView extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            AlertDialog.Builder alert_exit = new AlertDialog.Builder(CadastroClienteActView.this);
+            AlertDialog.Builder alert_exit = new AlertDialog.Builder(CadastroClienteActViewOld.this);
             alert_exit.setMessage("Você deseja realmente sair ?");
             alert_exit.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    AccessFirebase.getinstance().sign_out_firebase(CadastroClienteActView.this);
+                    AccessFirebase.getinstance().sign_out_firebase(CadastroClienteActViewOld.this);
                 }
             }).setNegativeButton("Cancelar", null);
 
@@ -254,4 +255,4 @@ public class CadastroClienteActView extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-}
+}*/
