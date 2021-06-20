@@ -19,7 +19,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning,HardcodedDebugMode">
         <activity
-            android:name=".Activitys.CadastroClienteActView"
+            android:name=".Activitys.CadastrarUsuarioActView"
             android:label="@string/title_activity_cadastro_usuario_act_view"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
@@ -36,9 +36,10 @@
             android:name=".Activitys.RecebidoParcial"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activitys.DatasVendasCobranca"
+            android:name=".Activitys.DatasVendasCliente"
             android:label="@string/title_activity_datas_vendas_cobranca"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Activitys.ResetSenha"
             android:label="@string/title_activity_reset_senha"
@@ -50,17 +51,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activitys.CadastrarUsuarioActView"
-            android:label="@string/title_activity_cadastro_user"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".Activitys.EntrarUsuarioActView"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activitys.CadastroClienteActViewOld"
+            android:name=".Activitys.CadastroClienteActView"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />

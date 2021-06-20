@@ -102,7 +102,7 @@ class CadastroClienteActView : AppCompatActivity(), View.OnClickListener {
 
                 val snapShotCliente = documentSnapshot.toObject(Cliente::class.java)
                 val idCliente = documentSnapshot.id
-                val iCliente = Intent(applicationContext, DatasVendasCobranca::class.java)
+                val iCliente = Intent(applicationContext, DatasVendasCliente::class.java)
                 iCliente.putExtra("info_cliente", snapShotCliente)
                 iCliente.putExtra("id_cliente", idCliente)
                 startActivity(iCliente)
@@ -136,7 +136,7 @@ class CadastroClienteActView : AppCompatActivity(), View.OnClickListener {
             adapter_cliente!!.setOnItemClicklistener { documentSnapshot, position ->
                 val snapShotCliente = documentSnapshot.toObject(Cliente::class.java)
                 val idCliente = documentSnapshot.id
-                val iCliente = Intent(applicationContext, DatasVendasCobranca::class.java)
+                val iCliente = Intent(applicationContext, DatasVendasCliente::class.java)
                 iCliente.putExtra("info_cliente", snapShotCliente)
                 iCliente.putExtra("id_cliente", idCliente)
                 startActivity(iCliente)
@@ -180,7 +180,6 @@ class CadastroClienteActView : AppCompatActivity(), View.OnClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
 
-        //TODO: Resolver problema de sair da aplicação
         if (id == R.id.action_settings) {
             val alertExit = AlertDialog.Builder(this)
             alertExit.setMessage("Você deseja realmente sair ?")
@@ -193,7 +192,7 @@ class CadastroClienteActView : AppCompatActivity(), View.OnClickListener {
             alertExit.show()
             return true
         }
-        return super.onOptionsItemSelected(item)
+        return false
     }
 
     override fun onBackPressed() {

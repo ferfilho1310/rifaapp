@@ -28,18 +28,9 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_entrar_usuario)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-        supportActionBar!!.hide()
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
 
         FirebaseApp.initializeApp(this@EntrarUsuarioActView)
-        /*   viewModelEntrarUsuario.persistirUsuario(
-               this@EntrarUsuarioActView,
-               CadastroClienteActView::class.java
-           )*/
-
+    
         btn_entrar!!.setOnClickListener(this)
         btn_cadastrar_usuario!!.setOnClickListener(this)
         txt_reset_senha!!.setOnClickListener(this)
@@ -76,15 +67,16 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
             Toast.makeText(this, "Digite sua senha", Toast.LENGTH_SHORT).show()
         } else {
             viewModelEntrarUsuario.entrarUsuario(usuario)
-            val progressBarHelper = ProgressBarHelper(this)
-            progressBarHelper.show()
+            prbEntrar.visibility = View.VISIBLE
+            btn_entrar.visibility = View.GONE
+            btn_cadastrar_usuario.isEnabled = false
+            txt_reset_senha.isEnabled = false
             hideKeyboard(this)
         }
     }
 
     fun setObservers() {
         viewModelEntrarUsuario.getUsuarioEntrarMutableLiveData().observe(this, {
-            val progressBarHelper = ProgressBarHelper(this)
             when (it) {
                 Constantes.EntrarUsuario.LOGIN_REALIZADO_COM_SUCESSO -> {
                     IntentHelper.intentWithFinish(this, CadastroClienteActView::class.java)
@@ -93,7 +85,11 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
                         "Login realizado com sucesso.",
                         Toast.LENGTH_SHORT
                     ).show()
-                    progressBarHelper.dismiss()
+                    prbEntrar.visibility = View.GONE
+                    btn_entrar.visibility = View.VISIBLE
+                    btn_cadastrar_usuario.isEnabled = true
+                    txt_reset_senha.isEnabled = true
+                    viewModelEntrarUsuario.getUsuarioEntrarMutableLiveData().value = null
                 }
                 Constantes.CadastroUsuario.EMAIL_INVALIDO -> {
                     Toast.makeText(
@@ -101,7 +97,11 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
                         "Email e/ou senha inválido",
                         Toast.LENGTH_LONG
                     ).show()
-                    progressBarHelper.dismiss()
+                    prbEntrar.visibility = View.GONE
+                    btn_entrar.visibility = View.VISIBLE
+                    btn_cadastrar_usuario.isEnabled = true
+                    txt_reset_senha.isEnabled = true
+                    viewModelEntrarUsuario.getUsuarioEntrarMutableLiveData().value = null
                 }
 
                 Constantes.CadastroUsuario.INTERNET_OFF -> {
@@ -109,9 +109,12 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
                         applicationContext,
                         "Verifique a conexão de internet",
                         Toast.LENGTH_LONG
-                    )
-                        .show()
-                    progressBarHelper.dismiss()
+                    ).show()
+                    prbEntrar.visibility = View.GONE
+                    btn_entrar.visibility = View.VISIBLE
+                    btn_cadastrar_usuario.isEnabled = true
+                    txt_reset_senha.isEnabled = true
+                    viewModelEntrarUsuario.getUsuarioEntrarMutableLiveData().value = null
                 }
                 Constantes.CadastroUsuario.ERRO_DESCONHECIDO -> {
                     Toast.makeText(
@@ -119,14 +122,12 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
                         "Erro Desconhecido.",
                         Toast.LENGTH_LONG
                     ).show()
-                    progressBarHelper.dismiss()
+                    prbEntrar.visibility = View.GONE
+                    btn_entrar.visibility = View.VISIBLE
+                    btn_cadastrar_usuario.isEnabled = true
+                    txt_reset_senha.isEnabled = true
+                    viewModelEntrarUsuario.getUsuarioEntrarMutableLiveData().value = null
                 }
-            }
-        })
-
-        viewModelEntrarUsuario.getUserPersistence().observe(this, {
-            if (it) {
-                IntentHelper.intentWithFinish(this, CadastroClienteActView::class.java)
             }
         })
 
@@ -140,6 +141,15 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
             view = View(activity)
         }
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModelEntrarUsuario.getUserPersistence().observe(this, {
+            if (it) {
+                IntentHelper.intentWithFinish(this, CadastroClienteActView::class.java)
+            }
+        })
     }
 
 }

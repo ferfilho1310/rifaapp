@@ -1,45 +1,34 @@
-package br.com.medeve.Activitys;
+package br.com.medeve.Activitys
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent
+import android.os.Bundle
+import android.os.Handler
+import android.util.Log
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import br.com.medeve.R
+import kotlinx.android.synthetic.main.activity_splash_screen.*
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.widget.TextView;
+class SplashScreen : AppCompatActivity() {
 
-import br.com.medeve.R;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_splash_screen)
 
-public class SplashScreen extends AppCompatActivity {
+        val h_splash = Handler()
 
-    TextView txt_versao;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
-
-        txt_versao = findViewById(R.id.versao_app);
-
-        Handler h_splash = new Handler();
-
-        h_splash.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                Intent i_splash = new Intent(SplashScreen.this, EntrarUsuarioActView.class);
-                startActivity(i_splash);
-                finish();
-
-            }
-        }, 2000);
+        h_splash.postDelayed({
+            val i_splash = Intent(this@SplashScreen, EntrarUsuarioActView::class.java)
+            startActivity(i_splash)
+            finish()
+        }, 2000)
 
         try {
-            String version = this.getPackageManager().getPackageInfo("br.com.medeve", 0).versionName;
-            txt_versao.setText(version);
-        } catch (Exception e) {
-
-            Log.d("Erro", "Versão não encontrada", e);
+            val version = this.packageManager.getPackageInfo("br.com.medeve", 0).versionName
+            versao_app.text = version
+        } catch (e: Exception) {
+            Log.d("Erro", "Versão não encontrada", e)
         }
+
     }
 }

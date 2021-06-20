@@ -231,6 +231,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="8dp"
+            android:background="@drawable/shadow_dialog"
             app:layout_constraintTop_toBottomOf="@+id/txt_estado">
 
             <ImageButton
@@ -256,6 +258,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:orientation="vertical"
+            android:padding="8dp"
+            android:background="@drawable/shadow_dialog"
             app:layout_constraintEnd_toStartOf="@+id/view1"
             app:layout_constraintTop_toBottomOf="@+id/txt_estado">
 

@@ -231,7 +231,6 @@
         android:text="Informe os dados do cliente"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        android:textStyle="italic"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

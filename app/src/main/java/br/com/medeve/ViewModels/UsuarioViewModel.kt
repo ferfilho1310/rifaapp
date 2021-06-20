@@ -50,16 +50,4 @@ class UsuarioViewModel(
     fun getUserSignOut() : MutableLiveData<Void> {
         return usuarioRepository.getUserSignOut()
     }
-
-  /*  override fun recuperarSenha(usuario: Usuario?) {
-        iUsuarioDao!!.recuperarSenhaUsuario(usuario)
-    }
-
-    override fun persistirUsuario(activity: Activity?, clazz: Class<*>?) {
-        iUsuarioDao!!.persistirUsuario(clazz, activity)
-    }
-
-    override fun sair(activity: Activity?, clazz: Class<*>?) {
-        iUsuarioDao!!.sair(activity, clazz)
-    }*/
 }

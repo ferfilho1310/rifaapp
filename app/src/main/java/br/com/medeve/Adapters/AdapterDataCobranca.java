@@ -55,7 +55,7 @@ public class AdapterDataCobranca extends FirestoreRecyclerAdapter<DataCobrancaVe
     @Override
     public ViewHolder_datas onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mostra_dados_datas, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.data_venda_cliente_item, parent, false);
 
         return new ViewHolder_datas(view);
     }

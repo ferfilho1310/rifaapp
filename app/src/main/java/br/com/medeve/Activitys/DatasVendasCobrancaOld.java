@@ -1,3 +1,4 @@
+/*
 package br.com.medeve.Activitys;
 
 import android.annotation.SuppressLint;
@@ -45,7 +46,7 @@ import com.google.firebase.firestore.Query;
 
 import java.util.Calendar;
 
-public class DatasVendasCobranca extends AppCompatActivity {
+public class DatasVendasCobrancaOld extends AppCompatActivity {
 
     FloatingActionButton fab;
     Query query;
@@ -73,7 +74,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_datas_vendas_cobranca);
+        setContentView(R.layout.activity_datas_vendas_cliente);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -96,7 +97,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
         nome_cliente_extra.setText(cliente.getNome());
         telefone_extra.setText(cliente.getTelefone());
 
-        MobileAds.initialize(DatasVendasCobranca.this, "ca-app-pub-2528240545678093~1740905001");
+        MobileAds.initialize(DatasVendasCobrancaOld.this, "ca-app-pub-2528240545678093~1740905001");
 
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice("B6D5B7288C97DD6A90A5F0E267BADDA5")
@@ -118,7 +119,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder cliente = new AlertDialog.Builder(DatasVendasCobranca.this);
+                AlertDialog.Builder cliente = new AlertDialog.Builder(DatasVendasCobrancaOld.this);
                 final View custom_layout = getLayoutInflater().inflate(R.layout.dialog_data_cobranca, null);
                 cliente.setTitle("Informe as datas:");
                 cliente.setView(custom_layout);
@@ -134,11 +135,11 @@ public class DatasVendasCobranca extends AppCompatActivity {
                 final int mes = calendar.get(Calendar.MONTH);
                 final int ano = calendar.get(Calendar.YEAR);
 
-                inseri_data_venda.setOnClickListener(new View.OnClickListener() {
+                btn_data_venda.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(DatasVendasCobranca.this, new DatePickerDialog.OnDateSetListener() {
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(DatasVendasCobrancaOld.this, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
 
@@ -160,11 +161,11 @@ public class DatasVendasCobranca extends AppCompatActivity {
                 final int mes_cobranca = calendar_cobranca.get(Calendar.MONTH);
                 final int ano_cobranca = calendar_cobranca.get(Calendar.YEAR);
 
-                inseri_data_cobranca.setOnClickListener(new View.OnClickListener() {
+                btn_data_cobranca.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(DatasVendasCobranca.this, new DatePickerDialog.OnDateSetListener() {
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(DatasVendasCobrancaOld.this, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
 
@@ -216,9 +217,9 @@ public class DatasVendasCobranca extends AppCompatActivity {
                 .setQuery(query, DataCobrancaVenda.class)
                 .build();
 
-        adapter_datas = new AdapterDataCobranca(rc_options_datas, DatasVendasCobranca.this);
+        adapter_datas = new AdapterDataCobranca(rc_options_datas, DatasVendasCobrancaOld.this);
         rc_datas.setAdapter(adapter_datas);
-        rc_datas.setLayoutManager(new LinearLayoutManager(DatasVendasCobranca.this, LinearLayoutManager.VERTICAL, false));
+        rc_datas.setLayoutManager(new LinearLayoutManager(DatasVendasCobrancaOld.this, LinearLayoutManager.VERTICAL, false));
         rc_datas.setHasFixedSize(true);
 
         adapter_datas.setOnItemClicklistener(new AdapterDataCobranca.OnItemClickListener() {
@@ -245,9 +246,9 @@ public class DatasVendasCobranca extends AppCompatActivity {
                 .setQuery(query, DataCobrancaVenda.class)
                 .build();
 
-        adapter_datas = new AdapterDataCobranca(rc_options_datas, DatasVendasCobranca.this);
+        adapter_datas = new AdapterDataCobranca(rc_options_datas, DatasVendasCobrancaOld.this);
         rc_datas.setAdapter(adapter_datas);
-        rc_datas.setLayoutManager(new LinearLayoutManager(DatasVendasCobranca.this, LinearLayoutManager.VERTICAL, false));
+        rc_datas.setLayoutManager(new LinearLayoutManager(DatasVendasCobrancaOld.this, LinearLayoutManager.VERTICAL, false));
         rc_datas.setHasFixedSize(true);
 
         adapter_datas.setOnItemClicklistener(new AdapterDataCobranca.OnItemClickListener() {
@@ -332,7 +333,7 @@ public class DatasVendasCobranca extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
 
-                Intent i_cad_user = new Intent(DatasVendasCobranca.this, CadastroClienteActView.class);
+                Intent i_cad_user = new Intent(DatasVendasCobrancaOld.this, CadastroClienteActView.class);
                 i_cad_user.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i_cad_user);
                 finish();
@@ -345,3 +346,4 @@ public class DatasVendasCobranca extends AppCompatActivity {
     }
 
 }
+*/
