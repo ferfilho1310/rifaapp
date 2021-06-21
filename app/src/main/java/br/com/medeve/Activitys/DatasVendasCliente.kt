@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.medeve.Adapters.AdapterDataCobranca
 import br.com.medeve.Fragment.CadastrarDataVendaClienteFragment
 import br.com.medeve.Models.Cliente
@@ -17,7 +15,6 @@ import br.com.medeve.ViewModels.DataVendasClienteViewModel
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_datas_vendas_cliente.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -61,12 +58,12 @@ class DatasVendasCliente : AppCompatActivity(), View.OnClickListener {
 
         buscaDatasCliente(idClient!!)
 
-        fab_data_venda.setOnClickListener(this)
+        fabDataVenda.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.fab_data_venda -> {
+            R.id.fabDataVenda -> {
                 val fragmentCadastroDatasCobrancaVenda = CadastrarDataVendaClienteFragment()
                 fragmentCadastroDatasCobrancaVenda.show(
                     supportFragmentManager.beginTransaction(),
@@ -85,7 +82,7 @@ class DatasVendasCliente : AppCompatActivity(), View.OnClickListener {
                 .setQuery(it, DataCobrancaVenda::class.java)
                 .build()
 
-            adapter_datas = AdapterDataCobranca(rcOptionsDatasVendaCobranca!!, this)
+            adapter_datas = AdapterDataCobranca(rcOptionsDatasVendaCobranca!!, this, dataVendasClienteViewModel)
             rc_data_cobranca.adapter = adapter_datas
             rc_data_cobranca.layoutManager = GridLayoutManager(
                 this, 2

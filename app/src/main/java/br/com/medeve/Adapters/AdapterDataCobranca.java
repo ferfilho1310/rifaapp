@@ -8,55 +8,39 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import br.com.medeve.R;
 import br.com.medeve.Models.DataCobrancaVenda;
+import br.com.medeve.ViewModels.DataVendasClienteViewModel;
+
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 public class AdapterDataCobranca extends FirestoreRecyclerAdapter<DataCobrancaVenda, AdapterDataCobranca.ViewHolder_datas> {
 
     OnItemClickListener listener;
     Context context;
 
-    FirebaseAuth db_users = FirebaseAuth.getInstance();
+    DataVendasClienteViewModel dataVendasClienteViewModel;
 
-    //Criando instancia do banco de dados para salvar os produtos na coleção "produtos"
-
-    FirebaseFirestore db_clientes = FirebaseFirestore.getInstance();
-    CollectionReference cl_clientes = db_clientes.collection("produtos_cliente")
-            .document(db_users.getUid())
-            .collection("produtos");
-
-
-    /**
-     * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
-     * FirestoreRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
-    public AdapterDataCobranca(@NonNull FirestoreRecyclerOptions<DataCobrancaVenda> options, Context context) {
+    public AdapterDataCobranca(@NonNull FirestoreRecyclerOptions<DataCobrancaVenda> options, Context context,
+                               DataVendasClienteViewModel dataVendasClienteViewModel) {
         super(options);
         this.context = context;
+        this.dataVendasClienteViewModel = dataVendasClienteViewModel;
     }
 
     @NonNull
     @Override
     public ViewHolder_datas onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.data_venda_cliente_item, parent, false);
-
         return new ViewHolder_datas(view);
     }
 
@@ -66,51 +50,29 @@ public class AdapterDataCobranca extends FirestoreRecyclerAdapter<DataCobrancaVe
         viewHolder_datas.datavenda.setText(datasVendasCobranca.getData_venda());
         viewHolder_datas.datacobranca.setText(datasVendasCobranca.getData_cobranca());
 
-        viewHolder_datas.excluir_data.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
+        viewHolder_datas.excluir_data.setOnClickListener(view -> {
 
-                AlertDialog.Builder alert_datas = new AlertDialog.Builder(context);
-                alert_datas.setMessage("Deseja realmente exlcuir a data ?");
+            AlertDialog.Builder alert_datas = new AlertDialog.Builder(context);
+            alert_datas.setMessage("Deseja realmente exlcuir a data ?");
 
-                alert_datas.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+            alert_datas.setPositiveButton("Ok", (dialogInterface, i1) ->
+                    excluirDataVendaCliente(viewHolder_datas.getAdapterPosition())).setNegativeButton("Cancelar", null);
 
-                        excluir_data(viewHolder_datas.getAdapterPosition(),view);
-
-                    }
-                }).setNegativeButton("Cancelar", null);
-
-                alert_datas.show();
-            }
+            alert_datas.show();
         });
     }
 
-    public void excluir_data(int i, final View view) {
-
+    public void excluirDataVendaCliente(int i) {
         final DocumentReference documentReference = getSnapshots().getSnapshot(i).getReference();
+        dataVendasClienteViewModel.deleteDataVendaCliente(documentReference);
 
-        cl_clientes
-                .whereEqualTo("id", documentReference.getId())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                        QuerySnapshot queryDocumentSnapshot = task.getResult();
-
-                        if (!queryDocumentSnapshot.isEmpty()) {
-
-                            Snackbar.make(view,"Há vendas associadas a esta data.",Snackbar.LENGTH_LONG)
-                                    .show();
-
-                        } else {
-
-                            documentReference.delete();
-                        }
-                    }
-                });
+        dataVendasClienteViewModel.deleteDataVendaClienteMutableLiveData().observe((LifecycleOwner) context, aBoolean -> {
+            if (aBoolean){
+                Toast.makeText(context,"Data de venda e cobrança deletado",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context,"Você possui produtos vendidos nessa data",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public class ViewHolder_datas extends RecyclerView.ViewHolder {
@@ -125,15 +87,12 @@ public class AdapterDataCobranca extends FirestoreRecyclerAdapter<DataCobrancaVe
             datavenda = itemView.findViewById(R.id.txt_data_venda);
             excluir_data = itemView.findViewById(R.id.btn_excluir_data);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            itemView.setOnClickListener(view -> {
 
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION && listener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION && listener != null) {
 
-                        listener.onItemClick(getSnapshots().getSnapshot(position), position);
-                    }
+                    listener.onItemClick(getSnapshots().getSnapshot(position), position);
                 }
             });
         }

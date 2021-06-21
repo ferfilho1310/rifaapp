@@ -5,10 +5,7 @@ import br.com.medeve.Interfaces.IUsuarioRepository
 import br.com.medeve.Models.Usuario
 import br.com.medeve.Util.Constantes
 import com.google.firebase.FirebaseNetworkException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
+import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
@@ -65,6 +62,8 @@ class UsuarioRepository : IUsuarioRepository {
                         entrarUsuarioMutableLiveData.postValue(Constantes.CadastroUsuario.EMAIL_INVALIDO)
                     } catch (e: FirebaseNetworkException) {
                         entrarUsuarioMutableLiveData.postValue(Constantes.CadastroUsuario.INTERNET_OFF)
+                    } catch (e : FirebaseAuthInvalidUserException){
+                        entrarUsuarioMutableLiveData.postValue(Constantes.CadastroUsuario.USUARIO_NAO_CADASTRADO)
                     } catch (e: Exception) {
                         entrarUsuarioMutableLiveData.postValue(Constantes.CadastroUsuario.ERRO_DESCONHECIDO)
                     }

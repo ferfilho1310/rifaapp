@@ -123,7 +123,7 @@
         android:layout_marginEnd="8dp">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_data_venda"
+            android:id="@+id/fabDataVenda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

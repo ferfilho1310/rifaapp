@@ -116,6 +116,14 @@ class EntrarUsuarioActView : AppCompatActivity(), View.OnClickListener {
                     txt_reset_senha.isEnabled = true
                     viewModelEntrarUsuario.getUsuarioEntrarMutableLiveData().value = null
                 }
+                Constantes.CadastroUsuario.USUARIO_NAO_CADASTRADO -> {
+                    Toast.makeText(this, "Usuário não cadastrado", Toast.LENGTH_LONG).show()
+                    prbEntrar.visibility = View.GONE
+                    btn_entrar.visibility = View.VISIBLE
+                    btn_cadastrar_usuario.isEnabled = true
+                    txt_reset_senha.isEnabled = true
+                    viewModelEntrarUsuario.getUsuarioEntrarMutableLiveData().value = null
+                }
                 Constantes.CadastroUsuario.ERRO_DESCONHECIDO -> {
                     Toast.makeText(
                         applicationContext,

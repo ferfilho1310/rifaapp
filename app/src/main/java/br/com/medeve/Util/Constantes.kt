@@ -9,6 +9,7 @@ class Constantes  {
         const val EMAIL_JA_CADASTRADO = 3
         const val ERRO_DESCONHECIDO = 99
         const val INTERNET_OFF = 4
+        const val USUARIO_NAO_CADASTRADO = 5
     }
 
     object EntrarUsuario {

@@ -3,7 +3,10 @@ package br.com.medeve.Repository
 import androidx.lifecycle.MutableLiveData
 import br.com.medeve.Interfaces.IDataVendasClienteRepository
 import br.com.medeve.Models.DataCobrancaVenda
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import java.util.*
@@ -14,14 +17,19 @@ class DatasVendasClienteRepository : IDataVendasClienteRepository {
         MutableLiveData()
     val buscaDatasClienteFiltrandoRepository: MutableLiveData<Query> =
         MutableLiveData()
+    val deleteDatasVendasCliente : MutableLiveData<Boolean> =
+        MutableLiveData()
 
     var firebaseAuthDatasVendasCliente = FirebaseAuth.getInstance()
-    var db_datas_cobranca = FirebaseFirestore.getInstance().collection("datas_cobranca")
+    var salvarDatasVendasCliente = FirebaseFirestore.getInstance().collection("datas_cobranca")
 
-    var dbDatasVendasClienteInstace = FirebaseFirestore.getInstance()
-    var collectionDatasVendasCliente = dbDatasVendasClienteInstace.collection("datas_cobranca")
+    var collectionDatasVendasCliente = FirebaseFirestore.getInstance().collection("datas_cobranca")
         .document(firebaseAuthDatasVendasCliente.uid!!)
         .collection("data_de_cobraca")
+
+    var cl_clientes: CollectionReference = FirebaseFirestore.getInstance().collection("produtos_cliente")
+        .document(firebaseAuthDatasVendasCliente.uid!!)
+        .collection("produtos")
 
     var query: Query? = null
 
@@ -41,7 +49,7 @@ class DatasVendasClienteRepository : IDataVendasClienteRepository {
         map["data_venda"] = datasVendasCliente.data_venda
         map["data_cobranca"] = datasVendasCliente.data_cobranca
 
-        db_datas_cobranca.document(firebaseAuthDatasVendasCliente.uid!!)
+        salvarDatasVendasCliente.document(firebaseAuthDatasVendasCliente.uid!!)
             .collection("data_de_cobraca")
             .add(map)
     }
@@ -55,6 +63,25 @@ class DatasVendasClienteRepository : IDataVendasClienteRepository {
         buscaDatasClienteFiltrandoRepository.postValue(query)
     }
 
+    override fun excluirDataVendasCliente(documentReference : DocumentReference){
+        cl_clientes
+            .whereEqualTo("id", documentReference.id)
+            .get()
+            .addOnCompleteListener { task ->
+                val queryDocumentSnapshot = task.result
+                if (!queryDocumentSnapshot!!.isEmpty) {
+                    deleteDatasVendasCliente.postValue(false)
+                } else {
+                    deleteDatasVendasCliente.postValue(true)
+                    documentReference.delete()
+                }
+            }
+    }
+
+    override fun excluirDataVendasClienteMutableLiveData(): MutableLiveData<Boolean> {
+        return deleteDatasVendasCliente
+    }
+
     override fun buscaDatasVendasClienteMutableLiveData() : MutableLiveData<Query>  {
         return buscaDatasVendasClienteRepository
     }
@@ -62,6 +89,8 @@ class DatasVendasClienteRepository : IDataVendasClienteRepository {
     override fun buscaDatasClienteFiltrandoRepositoryMutableLiveData(): MutableLiveData<Query> {
         return buscaDatasClienteFiltrandoRepository
     }
+
+
 
 
 }

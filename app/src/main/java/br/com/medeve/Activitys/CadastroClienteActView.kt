@@ -34,7 +34,6 @@ class CadastroClienteActView : AppCompatActivity(), View.OnClickListener {
     private var mBackPressed: Long = 0
 
     val clienteViewModel: ClienteViewModel by viewModel()
-    val usuarioViewModel: UsuarioViewModel by viewModel()
     val cepViewModel: CepViewModel by viewModel()
 
     var adapter_cliente: AdapterCliente? = null
@@ -53,7 +52,6 @@ class CadastroClienteActView : AppCompatActivity(), View.OnClickListener {
 
         loadAds()
         buscarClientes()
-        setObserver()
 
         fab_cad_clientes.setOnClickListener(this)
     }
@@ -114,10 +112,9 @@ class CadastroClienteActView : AppCompatActivity(), View.OnClickListener {
     }
 
     fun buscaClienteSearchView(nomeCliente: String) {
-        clienteViewModel.buscaClienteWithSearchView(nomeCliente)
-    }
 
-    fun setObserver() {
+        clienteViewModel.buscaClienteWithSearchView(nomeCliente)
+
         clienteViewModel.buscaClienteComSearchView().observe(this, {
             firestoreRecyclerOptions = FirestoreRecyclerOptions.Builder<Cliente>()
                 .setQuery(it, Cliente::class.java)
@@ -151,29 +148,31 @@ class CadastroClienteActView : AppCompatActivity(), View.OnClickListener {
         val searchitem = menu!!.findItem(R.id.search)
         searchView = MenuItemCompat.getActionView(searchitem) as SearchView
 
-        searchView!!.queryHint = "Digite o nome do cliente"
-        searchView!!.isIconified = true
-        searchView!!.isFocusable = true
-
         searchitem.expandActionView()
 
-        searchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(s: String): Boolean {
+        searchView?.apply {
+            queryHint = "Digite o nome do cliente"
+            isIconified = true
+            isFocusable = true
 
-                return false
-            }
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(s: String): Boolean {
 
-            override fun onQueryTextChange(s: String): Boolean {
-                if (s.trim().isEmpty()) {
-                    buscaClienteSearchView(s)
-                    adapter_cliente?.startListening()
-                } else {
-                    buscaClienteSearchView(s)
-                    adapter_cliente?.startListening()
+                    return false
                 }
-                return false
-            }
-        })
+
+                override fun onQueryTextChange(s: String): Boolean {
+                    if (s.trim().isEmpty()) {
+                        buscaClienteSearchView(s)
+                        adapter_cliente?.startListening()
+                    } else {
+                        buscaClienteSearchView(s)
+                        adapter_cliente?.startListening()
+                    }
+                    return false
+                }
+            })
+        }
         return true
     }
 

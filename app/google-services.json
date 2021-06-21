@@ -1,42 +1,33 @@
 {
   "project_info": {
-    "project_number": "237237182115",
-    "firebase_url": "https://apprifa-b89c1.firebaseio.com",
-    "project_id": "apprifa-b89c1",
-    "storage_bucket": "apprifa-b89c1.appspot.com"
+    "project_number": "564405208809",
+    "project_id": "rifaapp-teste",
+    "storage_bucket": "rifaapp-teste.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:237237182115:android:44e6afe00248ed3c",
+        "mobilesdk_app_id": "1:564405208809:android:e19e58e33c97b6d2861278",
         "android_client_info": {
           "package_name": "br.com.medeve"
         }
       },
       "oauth_client": [
         {
-          "client_id": "237237182115-qfe42uoggi5spt9kt24viq96gc63qdjb.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "br.com.medeve",
-            "certificate_hash": "1a25dcd749a38cedda61870799afefb2985f9d05"
-          }
-        },
-        {
-          "client_id": "237237182115-nn2rqtqf5tncppb6a34n50imiivhocek.apps.googleusercontent.com",
+          "client_id": "564405208809-oig07621n0lr9brslglcssc77joju20c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBlK9m9ih7RUkySxJo4SdeplTTWqhGYB3M"
+          "current_key": "AIzaSyBdzO7xNVZYYYwFkc0tjuxdLBvn61SqjAk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "237237182115-nn2rqtqf5tncppb6a34n50imiivhocek.apps.googleusercontent.com",
+              "client_id": "564405208809-oig07621n0lr9brslglcssc77joju20c.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
