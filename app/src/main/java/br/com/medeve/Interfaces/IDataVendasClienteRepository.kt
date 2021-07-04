@@ -13,5 +13,6 @@ interface IDataVendasClienteRepository {
     fun buscaDatasVendasClienteMutableLiveData(): MutableLiveData<Query>
     fun buscaDatasClienteFiltrandoRepositoryMutableLiveData(): MutableLiveData<Query>
     fun excluirDataVendasCliente(documentReference : DocumentReference)
-    fun excluirDataVendasClienteMutableLiveData() :MutableLiveData<Boolean>
+    fun excluirDataVendasClienteMutableLiveData() : MutableLiveData<Boolean>
+    fun saveData() : MutableLiveData<Int>
 }

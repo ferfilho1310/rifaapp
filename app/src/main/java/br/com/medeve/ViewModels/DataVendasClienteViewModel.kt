@@ -43,4 +43,8 @@ class DataVendasClienteViewModel(val datasVendasClienteRepository: DatasVendasCl
         return datasVendasClienteRepository.excluirDataVendasClienteMutableLiveData()
     }
 
+    fun saveData() : MutableLiveData<Int> {
+        return  datasVendasClienteRepository.saveData()
+    }
+
 }

@@ -3,6 +3,7 @@ package br.com.medeve.Repository
 import androidx.lifecycle.MutableLiveData
 import br.com.medeve.Interfaces.IDataVendasClienteRepository
 import br.com.medeve.Models.DataCobrancaVenda
+import br.com.medeve.Util.Constantes
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -18,6 +19,8 @@ class DatasVendasClienteRepository : IDataVendasClienteRepository {
     val buscaDatasClienteFiltrandoRepository: MutableLiveData<Query> =
         MutableLiveData()
     val deleteDatasVendasCliente : MutableLiveData<Boolean> =
+        MutableLiveData()
+    val saveData : MutableLiveData<Int> =
         MutableLiveData()
 
     var firebaseAuthDatasVendasCliente = FirebaseAuth.getInstance()
@@ -51,7 +54,11 @@ class DatasVendasClienteRepository : IDataVendasClienteRepository {
 
         salvarDatasVendasCliente.document(firebaseAuthDatasVendasCliente.uid!!)
             .collection("data_de_cobraca")
-            .add(map)
+            .add(map).addOnSuccessListener { documentReferent ->
+                saveData.postValue(Constantes.ClienteRepository.CLIENTE_SALVO_SUCESSO)
+            }.addOnFailureListener { failure ->
+                saveData.postValue(Constantes.ClienteRepository.FALHA_AO_SALVAR_CLIENTE)
+            }
     }
 
     override fun buscaDatasClienteFiltrandoRepository(
@@ -80,6 +87,10 @@ class DatasVendasClienteRepository : IDataVendasClienteRepository {
 
     override fun excluirDataVendasClienteMutableLiveData(): MutableLiveData<Boolean> {
         return deleteDatasVendasCliente
+    }
+
+    override fun saveData(): MutableLiveData<Int> {
+        return saveData
     }
 
     override fun buscaDatasVendasClienteMutableLiveData() : MutableLiveData<Query>  {

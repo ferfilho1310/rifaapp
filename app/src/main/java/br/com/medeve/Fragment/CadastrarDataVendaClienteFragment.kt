@@ -15,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.fragment_cadastro_data_venda_cliente.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
+import javax.xml.datatype.DatatypeConstants.MONTHS
 
 class CadastrarDataVendaClienteFragment : BottomSheetDialogFragment(), View.OnClickListener {
 
@@ -61,10 +62,11 @@ class CadastrarDataVendaClienteFragment : BottomSheetDialogFragment(), View.OnCl
                         dataVendaCliente.data_cobranca = ed_data_venda.text.toString()
                         dataVendaCliente.data_venda = ed_data_cobranca.text.toString()
 
-                        /*dataVendasClienteViewModel.adicionarDatasVendaCliente(
+                        dataVendasClienteViewModel.adicionarDatasVendaCliente(
                             idClient,
                             dataVendaCliente
-                        )*/
+                        )
+                        dismiss()
                     }
                 }
             }
@@ -79,16 +81,22 @@ class CadastrarDataVendaClienteFragment : BottomSheetDialogFragment(), View.OnCl
         val ano = calendar[Calendar.YEAR]
 
         btn_data_venda.setOnClickListener {
-            val datePickerDialog = DatePickerDialog(
-                activity?.baseContext!!,
-                { _, i, i1, i2 ->
-                    val data = i2.toString() + "/" + (i1 + 1) + "/" + i
+            ed_data_venda.setText("")
+            val dpd = DatePickerDialog(
+                requireActivity(), { view, year, monthOfYear, dayOfMonth ->
+                    var data = ""
+
+                    if(monthOfYear.toString().length > 1){
+                        data = dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
+                    } else {
+                        data = dayOfMonth.toString() + "/" + "0" + (monthOfYear + 1) + "/" + year
+                    }
 
                     ed_data_venda.setText(data)
 
-                }, ano, mes, dia
-            )
-            datePickerDialog.show()
+                }, ano, mes, dia)
+
+            dpd.show()
         }
     }
 
@@ -99,14 +107,22 @@ class CadastrarDataVendaClienteFragment : BottomSheetDialogFragment(), View.OnCl
         val ano_cobranca = calendar_cobranca[Calendar.YEAR]
 
         btn_data_cobranca.setOnClickListener {
-            val datePickerDialog = DatePickerDialog(
-                activity?.baseContext!!,
-                { _, i, i1, i2 ->
-                    val data = i2.toString() + "/" + (i1 + 1) + "/" + i
+            ed_data_venda.setText("")
+            val dpd = DatePickerDialog(
+                requireActivity(), { view, year, monthOfYear, dayOfMonth ->
+                    var data: String
+
+                    if(monthOfYear.toString().length > 1){
+                        data = dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
+                    } else {
+                        data = dayOfMonth.toString() + "/" + "0" + (monthOfYear + 1) + "/" + year
+                    }
+
                     ed_data_cobranca.setText(data)
-                }, ano_cobranca, mes_cobranca, dia_cobranca
-            )
-            datePickerDialog.show()
+
+                }, ano_cobranca, mes_cobranca, dia_cobranca)
+
+            dpd.show()
         }
     }
 

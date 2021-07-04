@@ -104,6 +104,7 @@ class DatasVendasCliente : AppCompatActivity(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
         adapter_datas?.startListening()
+        buscaDatasCliente(idClient!!)
     }
 
     override fun onStop() {
@@ -111,4 +112,9 @@ class DatasVendasCliente : AppCompatActivity(), View.OnClickListener {
         adapter_datas?.stopListening()
     }
 
+    override fun onResume() {
+        super.onResume()
+        buscaDatasCliente(idClient!!)
+        adapter_datas?.startListening()
+    }
 }
