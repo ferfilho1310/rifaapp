@@ -48,13 +48,6 @@ public class AdapterProdutosCliente extends FirestoreRecyclerAdapter<Produto, Ad
             .document(db_users.getUid())
             .collection("recebido_parcial");
 
-    /**
-     * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
-     * FirestoreRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
-
     public AdapterProdutosCliente(@NonNull FirestoreRecyclerOptions<Produto> options, Context context) {
         super(options);
         this.context = context;

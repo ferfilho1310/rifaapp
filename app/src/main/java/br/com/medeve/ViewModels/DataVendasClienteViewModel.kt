@@ -12,7 +12,9 @@ class DataVendasClienteViewModel(val datasVendasClienteRepository: DatasVendasCl
     ViewModel() {
 
     init {
-        buscaDatasVendaCobranca()
+        runBlocking {
+            buscaDatasVendaCobranca()
+        }
     }
 
     fun adicionarDatasVendaCliente(

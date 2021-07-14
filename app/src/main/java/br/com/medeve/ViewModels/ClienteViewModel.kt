@@ -6,8 +6,15 @@ import br.com.medeve.Models.Cliente
 import br.com.medeve.Repository.ClienteRepository
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.Query
+import kotlinx.coroutines.runBlocking
 
 class ClienteViewModel(val clienteRepository: ClienteRepository) : ViewModel() {
+
+    init {
+        runBlocking {
+            buscarClienteRepository()
+        }
+    }
 
     fun buscarClienteRepository() {
         clienteRepository.queryFireStoreBuscaCliente()

@@ -80,7 +80,7 @@ public class ProdutosCliente extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_produtos_cliente);
+        setContentView(R.layout.activity_produtos_cliente_new);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -134,7 +134,6 @@ public class ProdutosCliente extends AppCompatActivity {
         ler_dados_clientes();
         soma_total();
         recebido();
-        fab_cad_produto_cliente();
         //valor_a_receber();
     }
 

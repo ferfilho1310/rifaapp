@@ -51,7 +51,7 @@ class DatasVendasCliente : AppCompatActivity(), View.OnClickListener {
         MobileAds.initialize(this, "ca-app-pub-2528240545678093~1740905001")
 
         val adRequest = AdRequest.Builder()
-            .addTestDevice("B6D5B7288C97DD6A90A5F0E267BADDA5")
+            .addTestDevice("26FFD13C87DFF920A8B4B64F26667E72")
             .build()
 
         adView_datas.loadAd(adRequest)
@@ -92,7 +92,7 @@ class DatasVendasCliente : AppCompatActivity(), View.OnClickListener {
             adapter_datas!!.setOnItemClicklistener { documentSnapshot, position ->
 
                 val id_data = documentSnapshot.id
-                val i_data = Intent(applicationContext, ProdutosCliente::class.java)
+                val i_data = Intent(applicationContext, ProdutosClienteNew::class.java)
                 i_data.putExtra("id_data_compra", id_data)
                 i_data.putExtra("dados_cliente", cliente)
                 startActivity(i_data)

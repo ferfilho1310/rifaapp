@@ -19,7 +19,6 @@ import br.com.medeve.Models.Cliente
 import br.com.medeve.R
 import br.com.medeve.ViewModels.CepViewModel
 import br.com.medeve.ViewModels.ClienteViewModel
-import br.com.medeve.ViewModels.UsuarioViewModel
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
@@ -72,7 +71,7 @@ class CadastroClienteActView : AppCompatActivity(), View.OnClickListener {
         )
 
         val adRequest = AdRequest.Builder()
-            .addTestDevice("B6D5B7288C97DD6A90A5F0E267BADDA5")
+            .addTestDevice("26FFD13C87DFF920A8B4B64F26667E72")
             .build()
 
         adView.loadAd(adRequest)
@@ -213,7 +212,7 @@ class CadastroClienteActView : AppCompatActivity(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
         adapter_cliente?.startListening()
-        clienteViewModel.buscarClienteRepository()
+        //clienteViewModel.buscarClienteRepository()
         clienteViewModel.buscaClienteWithSearchView("")
     }
 

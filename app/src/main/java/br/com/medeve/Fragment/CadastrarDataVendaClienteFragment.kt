@@ -2,7 +2,6 @@ package br.com.medeve.Fragment
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.fragment_cadastro_data_venda_cliente.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
 
 class CadastrarDataVendaClienteFragment : BottomSheetDialogFragment(), View.OnClickListener {
 

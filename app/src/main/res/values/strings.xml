@@ -35,7 +35,7 @@
     <string name="enviar_e_mail">Enviar E-mail</string>
     <string name="title_activity_datas_vendas_cobranca">DatasVendasCobranca</string>
     <string name="recebido">Recebido</string>
-    <string name="cadastrar_produtos">Cadastrar Produtos</string>
+    <string name="cadastrar_produtos">Cadastrar\n Produtos</string>
     <string name="total">Total:</string>
     <string name="cadastrar_datas">Cadastrar datas</string>
     <string name="cadastrar_cliente">Cadastrar\nCliente</string>

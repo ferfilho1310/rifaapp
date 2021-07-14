@@ -10,13 +10,16 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class UsuarioViewModel(
     val usuarioRepository: UsuarioRepository,
 ) : ViewModel() {
 
     init {
-        getUserPersistence()
+        runBlocking {
+            getUserPersistence()
+        }
     }
 
     fun entrarUsuario(usuario: Usuario) {

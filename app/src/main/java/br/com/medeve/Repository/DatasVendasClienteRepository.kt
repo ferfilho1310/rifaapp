@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import br.com.medeve.Interfaces.IDataVendasClienteRepository
 import br.com.medeve.Models.DataCobrancaVenda
 import br.com.medeve.Util.Constantes
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
